@@ -39,7 +39,8 @@ myConfig = defaultConfig{
    modMask = myModmask,
    borderWidth = myBW,
    workspaces = myWS,
-   focusedBorderColor = myFBC
+   focusedBorderColor = myFBC,
+   manageHook = myManageHooks
    } `additionalKeys` myKeys
 
 
@@ -69,8 +70,13 @@ toggleStrutsKey XConfig {XMonad.modMask = modMask} = (modMask, xK_b)
 myKeys = [
  	((mod4Mask, xK_l), spawn "xscreensaver-command -lock"),
         ((mod4Mask, xK_u), spawn "$HOME/xmonad-update.sh"),
-        ((0, xK_Print), spawn "scrot")
-         ]
+        ((0, xK_Print), spawn "scrot"),
+
+        -- MUSIC RELATED
+        ((0, xK_Pause), spawn "mpc toggle"),
+	((mod4Mask, xK_Page_Up), spawn "mpc prev"),
+        ((mod4Mask, xK_Page_Down), spawn "mpc next")                                         
+	 ]
 
 
 -- color & indicator of the active workspace
@@ -84,8 +90,9 @@ myPP = xmobarPP {ppCurrent = xmobarColor "#ff0000" "" . wrap "{" "}"}
 -}
 myManageHooks = composeAll
                 [
-                 className =? "Chromium"	--> doShift "WWW",
-                 className =? "Qutebowser"	--> doShift "WWW"
+                 className =? "Qutebrowser"	--> doShift "WWW",
+                 className =? "qutebrowser"	--> doShift "WWW",
+		 className =? "mutt"		--> doShift "MAIL"
                 ]
 
 {-
@@ -93,7 +100,7 @@ myManageHooks = composeAll
   WORKSPACE NAMES
 ======================
  -}
-myWS = ["WWW", "CODE", "COMPILE", "MISC", "XMONAD", "LATEX", "MUSIC", "VPN"]
+myWS = ["WWW", "CODE", "COMPILE", "MISC", "XMONAD", "LATEX", "MUSIC", "VPN", "MAIL"]
 
        
 {-
