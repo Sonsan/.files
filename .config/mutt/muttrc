@@ -14,4 +14,8 @@ set record = "+Sent"
 set trash = "+Trash"
 set postponed = "+Drafts"
 
+set editor = "/usr/bin/vim"
+
 mailboxes =INBOX =Sent =Trash =Drafts
+
+source color.muttrc
