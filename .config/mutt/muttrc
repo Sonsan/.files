@@ -1,0 +1,17 @@
+# ~/.config/mutt/muttrc
+# Basic (Neo)mutt configuration
+# Author: Nils Sterz
+
+set folder = "imaps://<STUDENT_NUMBER>@imap.server.uni-frankfurt.de:993"
+
+# university smpt servers apparently dont accept smpts
+set smtp_url = "smtp://<STUDENT_NUMBER>@smtpauth.rz.uni-frankfurt.de:587"
+
+set from = "<STUDENT_NUMBER>@stud.uni-frankfurt.de"
+
+set spoolfile = "+INBOX"
+set record = "+Sent"
+set trash = "+Trash"
+set postponed = "+Drafts"
+
+mailboxes =INBOX =Sent =Trash =Drafts
