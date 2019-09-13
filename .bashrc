@@ -10,6 +10,7 @@ PATH=$PATH:/usr/bin/python
 alias ls='ls --color=auto'
 alias gotop='gotop -b -c monokai'
 alias restart='shutdown -r now'
+alias mutt='neomutt'
 
 # get current branch in git repo
 function git_branch() {
