@@ -1,0 +1,23 @@
+-- ~/.xmobarrc
+
+Config {
+	bgColor = "black",
+
+	-- commands from: https://archives.haskell.org/projects.haskell.org/xmobar/#system-monitor-plugins
+	commands = [
+		Run StdinReader,
+    		Run Memory ["-t","Mem: <usedratio>%","-H","8192","-L","4096","-h","#FFFFFF","-l","#0000FF","-n","#FFFFFF"] 10,
+    		Run Network "wls1" ["-t","Net: <rx>, <tx>","-H","200","-L","10","-h","#FFB6B0","-l","#CEFFAC","-n","#FFFFCC"] 10,
+		Run CoreTemp [ "--template" , "Temp: <core0>°C | <core1>°C"
+                   , "--Low"      , "50"        -- units: °C
+                   , "--High"     , "70"        -- units: °C
+                   , "--low"      , "green"
+                   , "--normal"   , "darkorange"
+                   , "--high"     , "darkred"
+                 ] 50,
+		Run Date "<fc=#ff0000>%H:%M:%S</fc> <fc=#800080>%a %b %_d</fc>" "date" 10
+	],
+	sepChar = "%",
+	alignSep = "}{",
+	template = "%StdinReader% }{ %coretemp% --- %memory% --- %date%"
+}
