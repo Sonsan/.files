@@ -1,16 +1,67 @@
-(setq inhibit-startup-screen nil)
-
-
 ;; BASIC SETTINGS =================================
-
-;; disable/enable things
 (tool-bar-mode 0)
 (menu-bar-mode 0)
 (setq visible-bell t)
 (setq inhibit-startup-screen t)
-(setq initial-scratch-message "YEET")
-(setq-default frame-title-format '("%b"))
-(define-key menu-bar-tools-menu [games] nil)
+(setq initial-scratch-message "
+LaTeX Commands:
+
+Notes: 
+	/_ M is Alt
+	/_ C is Strg/Ctrl
+	/_ X-Y means pressing keys X and Y together
+
+TODO: Change Insert Enviroment aka `LaTeX-enviroment` to insert lables 
+
+------- Enviroment Related -------
+	Insert Enviroment: 			C-c C-e RET `env-name`
+	Insert Labled Section:	C-c C-s RET `chapter|section|(sub^*)section`
+
+	Close open Enviroment: 	C-c ]
+	move to \\begin{..}: 		C-M-a
+	move to \\end{..}:			C-M-e
+
+------- Text Related -------
+	Bold: 			C-c C-f C-b
+	Italic: 		C-c C-f C-i
+	Emphazised: C-c C-f C-e
+	Slanted: 		C-c C-f C-s
+	
+	To reset the font format on cursor position,
+	type: C-c C-f C-d
+	i.e.: let | be the cursor position
+		\\textbf{This is| bold} --> C-c C-f C-d --> This is| bold
+	
+	Matching Curly-braces: C-c {
+	Properly sized braces: C-c C-m	
+
+
+------- Completion -------
+	Show possible completions: M-TAB
+		i.e.: pressing M-TAB after ` \\begin{i ` will yield \\begin{itemize}
+					pressing after `\\begin{ ` will open a buffer listing all possible completions
+
+
+------- Selection -------
+	Mark current section: 		C-c *
+	Mark current Enviroment: 	C-c .
+
+------- Output Format -------
+	Toggle between DVI & PDF: C-C C-t C-p
+	Toggle interactive mode: 	C-c C-t C-i
+	
+	To compile a specific region, do the following:
+		1. Mark the region, which you wish to compile
+		2. type C-c C-r
+		3.1. open the file with a pdf viewer
+		3.2. type C-c C-c View
+
+	Note: 3.2 doesn't work FOR PDF in my case(i probably accidentaly chaged something in `TeX-evince-sync-view` config)
+		/_ DVI works fine  
+")
+
+(setq-default frame-title-format '("Emacs - %b"))
+(define-key menu-bar-tools-menu [games] nil)			;; Disable games
 (column-number-mode t)
 (scroll-bar-mode 0)
 
@@ -25,9 +76,7 @@
 
 
 ;; Search-Copy-Paste
-(setq-default case-fold-search t)   ;; make search case Sensitive
-;;(global-unset-key "\C-c ") ;; paste with Ctrl+v
-;;(cua-mode t) ;; normal copy & paste
+(setq-default case-fold-search nil)   ;; make search case insensitive
 
 ;; =================================================
 
@@ -42,10 +91,6 @@
 (add-hook 'haskell-mode-hook 'haskell-indent-mode)
 (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
 
-;; =========================================================
-
-
-;; DEFUN & DEFAULTS ==========================================
 (setq default-directory "~/")
 
 ;; set the default widths
@@ -60,18 +105,22 @@
 (global-set-key (kbd "TAB") 'myTab) ; same as Ctrl+i
 
 
-(defun toggle-transparency ()
-  (interactive)
-  (let ((alpha (frame-parameter nil 'alpha)))
-    (set-frame-parameter
-     nil 'alpha
-     (if (eql (cond ((numberp alpha) alpha)
-                    ((numberp (cdr alpha)) (cdr alpha))
-                    ;; Also handle undocumented (<active> <inactive>) form.
-                    ((numberp (cadr alpha)) (cadr alpha)))
-              100)
-         '(60 . 100) '(100 . 100)))))
-(global-set-key (kbd "C-c t") 'toggle-transparency)
+;; LATEX-RELATED =============================
+
+;; AUCTeX settings
+(setq TeX-auto-save t)
+(setq TeX-parse-self t)
+(setq-default TeX-master nil)
+
+
+(add-hook 'reftex-load-hook 'imenu-add-menubar-index)
+(add-hook 'reftex-mode-hook 'imenu-add-menubar-index)
+
+(global-set-key [down-mouse-3] 'imenu)
+
+(setq-default TeX-PDF-from-DVI t)
+
+;; ===========================================
 
 
 ;; PACKAGES(Auto-Generated) ======================================
@@ -88,7 +137,6 @@
 
 ;; load the file containing the annoying to look at variables
 (load annoying-customs-file nil t)
-
 
 ;; ============================================
 
@@ -152,6 +200,7 @@
  '(weechat-color-list
 	 (quote
 		(unspecified "#272822" "#3C3D37" "#F70057" "#F92672" "#86C30D" "#A6E22E" "#BEB244" "#E6DB74" "#40CAE4" "#66D9EF" "#FB35EA" "#FD5FF0" "#74DBCD" "#A1EFE4" "#F8F8F2" "#F8F8F0"))))
+
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
