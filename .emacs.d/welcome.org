@@ -1,0 +1,54 @@
+ LaTeX Commands:                                                                                                       
+                                                                                                                       
+ Notes:                                                                                                                
+  /_ M is Alt                                                                                                          
+  /_ C is Strg/Ctrl                                                                                                    
+  /_ X-Y means pressing keys X and Y together                                                                          
+                                                                                                                       
+ TODO: Change Insert Enviroment aka `LaTeX-enviroment` to insert lables                                                
+                                                                                                                       
+ ------- Enviroment Related -------                                                                                    
+  Insert Enviroment:      C-c C-e RET `env-name`                                                                       
+  Insert Labled Section:  C-c C-s RET `chapter|section|(sub^*)section`                                                 
+                                                                                                                       
+  Close open Enviroment:  C-c ]                                                                                        
+  move to \\begin{..}:    C-M-a                                                                                        
+  move to \\end{..}:      C-M-e                                                                                        
+                                                                                                                       
+ ------- Text Related -------                                                                                          
+  Bold:       C-c C-f C-b                                                                                              
+  Italic:     C-c C-f C-i                                                                                              
+  Emphazised: C-c C-f C-e                                                                                              
+  Slanted:    C-c C-f C-s                                                                                              
+                                                                                                                       
+  To reset the font format on cursor position,                                                                         
+  type: C-c C-f C-d                                                                                                    
+  i.e.: let | be the cursor position                                                                                   
+    \\textbf{This is| bold} --> C-c C-f C-d --> This is| bold                                                          
+                                                                                                                       
+  Matching Curly-braces: C-c {                                                                                         
+  Properly sized braces: C-c C-m                                                                                       
+                                                                                                                       
+                                                                                                                       
+ ------- Completion -------                                                                                            
+  Show possible completions: M-TAB                                                                                     
+    i.e.: pressing M-TAB after ` \\begin{i ` will yield \\begin{itemize}                                               
+          pressing after `\\begin{ ` will open a buffer listing all possible completions                               
+                                                                                                                       
+                                                                                                                       
+ ------- Selection -------                                                                                             
+  Mark current section:     C-c *                                                                                      
+  Mark current Enviroment:  C-c .                                                                                      
+                                                                                                                       
+ ------- Output Format -------                                                                                         
+  Toggle between DVI & PDF: C-C C-t C-p                                                                                
+  Toggle interactive mode:  C-c C-t C-i                                                                                
+                                                                                                                       
+  To compile a specific region, do the following:                                                                      
+    1. Mark the region, which you wish to compile                                                                      
+    2. type C-c C-r                                                                                                    
+    3.1. open the file with a pdf viewer                                                                               
+    3.2. type C-c C-c View                                                                                             
+                                                                                                                       
+  Note: 3.2 doesn't work FOR PDF in my case(i probably accidentaly chaged something in `TeX-evince-sync-view` config)  
+    /_ DVI works fine                                                                                                  
