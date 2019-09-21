@@ -2,20 +2,32 @@
 # Basic (Neo)mutt configuration
 # Author: Nils Sterz
 
-set folder = "imaps://<STUDENT_NUMBER>@imap.server.uni-frankfurt.de:993"
+# Minimal Settings for use with goethe university
+set folder = "imaps://<S-NUMMER>@imap.server.uni-frankfurt.de:993"
+set smtp_url = "smtp://<S-NUMMER>@smtpauth.rz.uni-frankfurt.de:587"
+set from = "<S-NUMMER>@stud.uni-frankfurt.de"
 
-# university smpt servers apparently dont accept smpts
-set smtp_url = "smtp://<STUDENT_NUMBER>@smtpauth.rz.uni-frankfurt.de:587"
-
-set from = "<STUDENT_NUMBER>@stud.uni-frankfurt.de"
-
+# Specific Mail directories
 set spoolfile = "+INBOX"
 set record = "+Sent"
 set trash = "+Trash"
 set postponed = "+Drafts"
+mailboxes =INBOX =Sent =Trash =Drafts
 
 set editor = "/usr/bin/vim"
 
-mailboxes =INBOX =Sent =Trash =Drafts
+# BASIC SETTINGS
+set markers = no							# dont show '+' on linebreak
+set include										# always include message in reply
+set mail_check = 120					# check for new mail every 2 min
+set mark_old = no							# i have to actually read the mail
+
+# SETTINGS FOR SIDEBAR
+set sidebar_visible = yes
+set sidebar_width = 15
+bind index,pager \Cj sidebar-next						# goto next folder
+bind index,pager \Ck sidebar-prev						# goto previous folder
+bind index,pager \Co sidebar-open						# go inside folder
+bind index,pager B sidebar-toggle-visible
 
 source color.muttrc
