@@ -4,7 +4,7 @@
 
 # Minimal Settings for use with goethe university
 set folder = "imaps://<S-NUMMER>@imap.server.uni-frankfurt.de:993"
-set smtp_url = "smtp://<S-NUMMER>@smtpauth.rz.uni-frankfurt.de:587"
+set smtp_url = "smtps://<S-NUMMER>@smtpauth.rz.uni-frankfurt.de:587"
 set from = "<S-NUMMER>@stud.uni-frankfurt.de"
 
 # Specific Mail directories
