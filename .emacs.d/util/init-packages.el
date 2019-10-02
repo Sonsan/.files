@@ -12,17 +12,23 @@
 (add-to-list 'load-path "~/.emacs.d/site-lisp/")
 
 (setq package-list
-			'(zenburn-theme
-				pdf-tools
-				org-bullets
-				magit
-				haskell-mode
-				el2org
-				auctex
-				auctex-latexmk
-				expand-region
-				multiple-cursors
-				))
+      '(auctex
+	auctex-latexmk
+	zenburn-theme
+	projectile
+	pdf-tools
+	company
+	company-bibtex
+	ac-c-headers
+	rainbow-delimiters
+	org-bullets
+	magit
+	haskell-mode
+	el2org
+	auctex-latexmk
+	expand-region
+	multiple-cursors
+	))
 
 (package-initialize)
 

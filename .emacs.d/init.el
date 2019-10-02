@@ -89,8 +89,30 @@
 ;; *.tex --> *.dvi --> *.ps --> *.pdf
 (setq-default TeX-PDF-from-DVI "Dvips")
 
+;; BiBTeX
+(require 'company-bibtex)
+(add-to-list 'company-backends 'company-bibtex)
+
+(setq company-bibtex-bibliography
+      '("~/Documents/University/LaTeX/uni.bib"))
+
 
 ;;; PROGRAMMING
+
+;; CODE COMPLETION
+(require 'company)
+(add-hook 'after-init-hook 'global-company-mode)
+
+;; PROJECT MANAGEMENT
+(projectile-mode +1)
+(define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+
+;; C/C++
+(add-hook 'c-mode-hook
+            (lambda ()
+              (add-to-list 'ac-sources 'ac-source-c-headers)
+              (add-to-list 'ac-sources 'ac-source-c-header-symbols t)))
+
 
 ;; HASKELL STUFF
 (setq haskell-process-log t)
@@ -104,23 +126,3 @@
 
 (global-set-key (kbd "C-x g") 'magit-status)
 
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(ansi-color-names-vector
-	 ["#242424" "#e5786d" "#95e454" "#cae682" "#8ac6f2" "#333366" "#ccaa8f" "#f6f3e8"])
- '(custom-enabled-themes (quote (nord)))
- '(custom-safe-themes
-	 (quote
-		("82358261c32ebedfee2ca0f87299f74008a2e5ba5c502bde7aaa15db20ee3731" "84890723510d225c45aaff941a7e201606a48b973f0121cb9bcb0b9399be8cba" default)))
- '(package-selected-packages
-	 (quote
-		(expand-region rainbow-delimiters nord-theme zenburn-theme auctex-latexmk auctex el2org haskell-mode magit org-bullets pdf-tools))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
