@@ -1,7 +1,7 @@
 setxkbmap -layout de
 
-xsetroot -cursor_name left_ptr
+~/.fehbg & 
 
-~/.fehbg &
-
-exec xmonad
+sxhkd &
+termite & 
+exec bspwm
