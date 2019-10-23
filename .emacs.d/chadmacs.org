@@ -1,0 +1,244 @@
+Just like my old init.el, but in CHAD-org mode
+
+
+* Basics
+** MISC
+   #+BEGIN_SRC emacs-lisp
+   (tool-bar-mode 0)
+   (menu-bar-mode 0)
+   (setq visible-bell t)
+   (setq inhibit-startup-screen t)
+   (setq initial-scratch-message nil)
+   (define-key menu-bar-tools-menu [games] nil)			;; Disable games
+   (column-number-mode t)
+   (scroll-bar-mode 0)
+   (setq backup-directory-alist '(("." . "~/.emacs-saves")))       ;; autosave directory
+   (fset 'yes-or-no-p 'y-or-n-p)                                   ;; y/n instead of yes/no
+   (add-hook 'before-save-hook 'delete-trailing-whitespace)
+   #+END_SRC
+
+** Buffer
+   #+BEGIN_SRC emacs-lisp
+   (setq-default frame-title-format '("Emacs - %b"))
+     ;; show line numbers
+     (when (version<= "26.0.50" emacs-version )
+       (global-display-line-numbers-mode))
+
+   ;; set font
+   (set-default-font "Source Code Pro")
+
+   ;; transparancy
+   (defun transparency (value)
+     "Sets the transparency of the frame window. 0=transparent/100=opaque"
+     (interactive "nTransparency Value 0 - 100 opaque:")
+     (set-frame-parameter (selected-frame) 'alpha value))
+     (global-set-key (kbd "C-c C-t") 'transparency)
+   #+END_SRC
+** Search / Copy / Paste
+   #+BEGIN_SRC emacs-lisp
+   (setq-default case-fold-search nil)
+   (setq mouse-yank-at-point t)
+   #+END_SRC
+* Package Installation
+#+BEGIN_SRC emacs-lisp
+(require 'package)
+(setq package-enable-at-startup nil)
+(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
+(add-to-list 'package-archives '("melpa-stable" . "http://melpa-stable.milkbox.net/packages/") t)
+(package-initialize)
+#+END_SRC
+** Use Package
+#+BEGIN_SRC emacs-lisp
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
+#+END_SRC
+* Visual
+** Parentheses
+   #+BEGIN_SRC emacs-lisp
+   (use-package rainbow-delimiters
+     :ensure t
+     :hook (prog-mode . rainbow-delimiters-mode))
+   #+END_SRC
+** Colorful Colorcodes
+   #+BEGIN_SRC emacs-lisp
+   (use-package rainbow-mode
+     :ensure t
+     :init (rainbow-mode t))
+   #+END_SRC
+** Indentation
+   #+BEGIN_SRC emacs-lisp
+   (setq-default indent-tabs-mode t)
+   (setq tab-width 2)
+   (define-key global-map (kbd "RET") 'newline-and-indent)
+   #+END_SRC
+* Movement
+** Windows
+    #+BEGIN_SRC emacs-lisp
+    (defun split-and-follow-horizontal ()
+      "When splitting the window horizontally, go to new window"
+      (interactive)
+      (split-window-below)
+      (balance-windows)
+      (other-window 1))
+
+    (defun split-and-follow-vertical ()
+      "When splitting the window vertically, go to new window"
+      (interactive)
+      (split-window-right)
+      (balance-windows)
+      (other-window 1))
+
+    (global-set-key (kbd "C-x 2") 'split-and-follow-horizontal)
+    (global-set-key (kbd "C-x 3") 'split-and-follow-vertical)
+  #+END_SRC
+** Lines
+   #+BEGIN_SRC emacs-lisp
+   (defun move-line-up ()
+     "Move current line up."
+     (interactive)
+     (transpose-lines 1)
+     (forward-line -2)
+     (indent-according-to-mode))
+
+   (defun move-line-down ()
+     "Move current line down."
+     (interactive)
+     (forward-line 1)
+     (transpose-lines 1)
+     (forward-line -1)
+     (indent-according-to-mode))
+
+   (defun move-word-left ()
+     "Move the current word left."
+     (interactive)
+     (forward-word -1)
+     (transpose-words 1)
+     (forward-word 1))
+
+   (defun move-word-right ()
+     "Move the current word right"
+     (interactive)
+     (forward-word 1)
+     (transpose-words 1)
+     (forward-word -1))
+
+   ;; Move lines up or down
+   (global-set-key [(control shift up)]  'move-line-up)
+   (global-set-key [(control shift down)]  'move-line-down)
+   (global-set-key [(control shift left)] 'move-word-left)
+   (global-set-key [(control shift right)] 'move-word-right)
+   #+END_SRC
+** Buffer via Avy
+   #+BEGIN_SRC emacs-lisp
+   (use-package avy
+     :ensure t
+     :bind
+     ("M-s" . avy-goto-char))
+   #+END_SRC
+* Marking
+  #+BEGIN_SRC emacs-lisp
+  (use-package expand-region
+    :ensure t
+    :bind (("C-=" . er/expand-region))
+    :config
+    (pending-delete-mode t))
+  #+END_SRC
+* LaTeX
+  #+BEGIN_SRC emacs-lisp
+  ;; LaTeX SETTINGS
+  ;; AUCTeX settings
+  ;; (use-package auctex
+  ;  :ensure t
+  ;  :config
+  ;  (setq TeX-auto-save t)
+  ;  (setq TeX-parse-self t)
+  ;  (setq-default TeX-master nil))
+
+  (add-hook 'LaTeX-mode-hook 'visual-line-mode)
+  (add-hook 'LaTeX-mode-hook 'flyspell-mode)
+  (add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
+
+  ;; *.tex —> *.dvi -> *.ps -> *.pdf
+  (setq-default TeX-PDF-from-DVI "Dvips")
+  #+END_SRC
+* BiBTeX
+  #+BEGIN_SRC emacs-lisp
+  (use-package company-bibtex
+    :ensure t
+    :config
+    (add-to-list 'company-backends 'company-bibtex)
+    (setq company-bibtex-bibliography '("~/Documents/University/TeX/uni.bib")))
+
+  (use-package helm-bibtex
+    :ensure t
+    :config
+    (setq bibtex-completion-bibliography
+      '("~/Documents/University/TeX/uni.bib")))
+    (setq bibtex-completion-library-path
+      '("~/Documents/University/Books/" "~/Documents/University/Scripts/"))
+  #+END_SRC
+* Programming
+** Code Completion
+    #+BEGIN_SRC emacs-lisp
+    (use-package company
+      :ensure t
+      :config
+      (add-hook 'after-init-hook 'global-company-mode)
+      (use-package company-bibtex
+        :ensure t))
+    #+END_SRC
+** Project Management
+   #+BEGIN_SRC emacs-lisp
+   (use-package projectile
+     :ensure t
+     :config
+     (projectile-mode t)
+     (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map))
+   #+END_SRC
+
+** C/C++
+   #+BEGIN_SRC emacs-lisp
+   (add-hook 'c-mode-hook
+     (lambda ()
+       (add-to-list 'ac-sources 'ac-source-c-headers)
+       (add-to-list 'ac-sources 'ac-source-c-header-symbols t)))
+   #+END_SRC
+** Haskell
+   #+BEGIN_SRC emacs-lisp
+   (setq haskell-process-log t)
+   (add-hook 'haskell-mode-hook 'haskell-indent-mode)
+   (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
+   #+END_SRC
+* Version Control
+  #+BEGIN_SRC emacs-lisp
+  (use-package magit
+    :ensure t
+    :config
+    (global-set-key (kbd "C-x g") 'magit-status))
+  #+END_SRC
+* Org-Mode
+  #+BEGIN_SRC emacs-lisp
+  (org-babel-do-load-languages
+    'org-babel-load-languages
+    '((haskell . t) (python . t)))
+
+  ;; org bullets
+  (use-package org-bullets
+    :ensure t
+    :config
+    (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+
+   (add-hook 'org-mode 'flyspell-mode)
+
+   ;; My own todo states :3
+   (setq org-todo-keywords
+     '((sequence "TODO" "VERIFY" "|" "DONE")))
+
+     ;; LaTeX Stuff in org
+     (defun tex-org-mode-hook ()
+       "Activate Latex input for org-mode"
+       (activate-input-method "TeX"))
+
+(add-hook 'org-mode-hook 'tex-org-mode-hook)
+  #+END_SRC
