@@ -1,7 +1,7 @@
 configuration {
   display-drun: "";
   display-run: "";
-  drun-display-format: "{icon}{name}";
+  drun-display-format: "{icon}↪{name}↩";
 	modi: "window,drun,run,ssh";
 	combi-modi: "drun,run,ssh";
   font: "Cascadian Code 12";
@@ -25,7 +25,7 @@ window {
 
 mainbox {
   children: [ inputbar, listview ];
-  padding: 56% 82% 12% 4%;
+  padding: 5% 5% 75% 65%;
   background-color: rgba(28, 26, 20, 0);
 }
 
@@ -37,21 +37,21 @@ listview {
 
 element {
   background-color: rgba(28, 26, 20, 0.8);
-  text-color: #CACBB9;
+  text-color: #ffffff;
   border-radius: 10;
-  orientation: vertical;
+  orientation: horizontal;
   padding: 8;
-	margin: 0 10 0 0;
+	margin: 0 10 0 80;
 }
 
 element selected {
-  background-color: rgba(212, 110, 105, 1);
+  background-color: rgba(113, 23, 203, 1);
   text-color: #CACBB9;
   transition: 20;
 }
 
 element-icon {
-  size: 60;
+  size: 70;
 }
 
 element-text {
@@ -60,20 +60,20 @@ element-text {
 }
 
 inputbar {
-	margin: 0 0 8 0;
+	margin: 0 0 2 80;
 }
 
 prompt {
-  background-color: #d46e69;
-  padding: 8;
-  border-radius: 10 0 0 12;
-  text-color: #CACBB9;
+  background-color: #ff6600;
+  padding: 4;
+  border-radius: 20 0 0 1;
+  text-color: #000000;
   enabled: true;
 }
 
 entry {
-  border-radius: 0 12 12 0;
+  border-radius: 0 20 1 0;
   background-color: rgba(165, 166, 153);
   text-color: rgba(28, 26, 20, 1);
-  padding: 8;
+  padding: 1;
 }
