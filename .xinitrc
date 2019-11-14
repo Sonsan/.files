@@ -2,6 +2,8 @@ setxkbmap -layout de
 
 ~/.fehbg & 
 
-sxhkd &
+# sxhkd &
 termite & 
-exec bspwm
+compton -b
+exec xmonad
+# exec bspwm

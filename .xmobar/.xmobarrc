@@ -1,0 +1,92 @@
+-- ~/.xmobarrc
+
+Config {
+        font = "xft:SourceCodePro-9",
+	-- font = "xft:Sauce Code Pro:size=10",
+	--font = "xft:terminus-9",
+	bgColor = "#000000",
+	fgColor = "#ffffff",
+	position = Bottom,
+	iconRoot = "/home/nils/.local/share/icons",
+
+	-- commands from: https://archives.haskell.org/projects.haskell.org/xmobar/#system-monitor-plugins
+	commands = [
+		 Run StdinReader
+
+		,Run Cpu [ "--template" , "<ipat><total>%"
+                    , "--Low"      , "55"      -- units: %
+                    , "--High"     , "77"      -- units: %
+                    , "--low"      , "#b5bd68"
+                    , "--normal"   , "#de935f"
+                    , "--high"     , "#a54242"
+                    , "--ppad"              , "3"
+                    , "--width"             , "3"
+                    , "--maxtwidth"         , "4"
+                    , "--"
+                    , "--load-icon-pattern" , "<icon=cpu/cpu_%%.xpm/>"
+                   ] 10
+
+		,Run Memory [ "--template" , "<usedipat><usedratio>%"
+                    , "--Low"      , "55"      -- units: %
+                    , "--High"     , "77"      -- units: %
+                    , "--low"      , "#b5bd68"
+                    , "--normal"   , "#de935f"
+                    , "--high"     , "#a54242"
+                    , "--ppad"      , "3"
+                    , "--width"     , "3"
+                    , "--maxtwidth" , "4"
+                    , "--"
+                     , "--used-icon-pattern" , "<icon=ram/ram_%%.xpm/>"
+                    ] 10
+
+		,Run DynNetwork [ "--template" , "<txipat><rxipat>"
+                        , "--Low"      , "10000"   -- units: B/s
+                        , "--High"     , "100000"  -- units: B/s
+                        , "--low"      , "#b5bd68"
+                        , "--normal"   , "#de935f"
+                        , "--high"     , "#a54242"
+                        , "--maxtwidth" , "0"
+                        , "--"
+                          , "--rx-icon-pattern" , "<icon=network/rx/network_rx_%%.xpm/>"
+                          , "--tx-icon-pattern" , "<icon=network/tx/network_tx_%%.xpm/>"
+                        ] 10
+
+		,Run MultiCoreTemp [ "--template" , "<maxipat><max>°C"
+                           , "--Low"      , "64"      -- units: °C
+                           , "--High"     , "73"      -- units: °C
+                           , "--low"      , "#b5bd68"
+                           , "--normal"   , "#de935f"
+                           , "--high"     , "#a54242"
+                           , "--ppad"      , "3"
+                           , "--width"     , "3"
+                           , "--maxtwidth" , "5"
+                           , "--"
+                             , "--max-icon-pattern" , "<icon=temperature/temperature_%%.xpm/>"
+                             , "--mintemp" , "20"
+                             , "--maxtemp" , "100"
+                           ] 50
+
+		 ,Run Battery [ "--template"  , "<leftipat> <acstatus>"
+                     , "--Low"       , "36"      -- units: %
+                     , "--High"      , "71"      -- units: %
+                     , "--low"       , "#a54242"
+                     , "--normal"    , "#de935f"
+                     , "--high"      , "#b5bd68"
+                     , "--maxtwidth" , "10"
+                     , "--"
+		     , "--on-icon-pattern"   , "<icon=battery/on/battery_on_%%.xpm/>"
+                     , "--off-icon-pattern"  , "<icon=battery/off/battery_off_%%.xpm/>"
+                     , "--idle-icon-pattern" , "<icon=battery/idle/battery_idle_%%.xpm/>"
+                     , "-o" , "<left><fc=#c5c8c6>%</fc> <timeleft>" -- discharging status
+                     , "-O" , "<left><fc=#c5c8c6>% <timeleft></fc>" -- plugged in status
+                     , "-i" , "<fc=#707880>IDLE</fc>"               -- charged status
+                     ] 50
+
+		 --,Run Weather "EDDF" ["-t", "<station>: <tempC>C"] 36000
+
+		 ,Run Date " %a %d/%m/%y <icon=seperators/seperator.xpm/> %T" "date" 10
+	],
+	sepChar = "%",
+	alignSep = "}{",
+	template = "%StdinReader% }{ %battery% <icon=seperators/seperator.xpm/> %cpu% <icon=seperators/seperator.xpm/> %multicoretemp% <icon=seperators/seperator.xpm/> %memory% <icon=seperators/seperator.xpm/> %dynnetwork% <icon=seperators/seperator.xpm/> %date%"
+}
