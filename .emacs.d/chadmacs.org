@@ -1,4 +1,4 @@
-Just like my old init.el, but in CHAD-org mode
+Just like my old init.el, but in CHAD-LIKE-org mode
 
 
 * Basics
@@ -17,6 +17,14 @@ Just like my old init.el, but in CHAD-org mode
    (add-hook 'before-save-hook 'delete-trailing-whitespace)
    #+END_SRC
 
+** Encoding
+   #+BEGIN_SRC emacs-lisp
+   (setq locale-coding-system 'utf-8)
+   (set-terminal-coding-system 'utf-8)
+   (set-keyboard-coding-system 'utf-8)
+   (set-selection-coding-system 'utf-8)
+   (prefer-coding-system 'utf-8)
+   #+END_SRC
 ** Buffer
    #+BEGIN_SRC emacs-lisp
    (setq-default frame-title-format '("Emacs - %b"))
@@ -39,6 +47,10 @@ Just like my old init.el, but in CHAD-org mode
    (setq-default case-fold-search nil)
    (setq mouse-yank-at-point t)
    #+END_SRC
+** Startup
+   #+BEGIN_SRC emacs-lisp
+   (find-file "~/.emacs.d/chadmacs.org")
+   #+END_SRC
 * Package Installation
 #+BEGIN_SRC emacs-lisp
 (require 'package)
@@ -53,6 +65,17 @@ Just like my old init.el, but in CHAD-org mode
   (package-refresh-contents)
   (package-install 'use-package))
 #+END_SRC
+* Editing
+** Multiple Cursors
+	 #+BEGIN_SRC emacs-lisp
+	 (use-package multiple-cursors
+	   :ensure t
+		 :config
+		 (global-set-key (kbd "C->") 'mc/mark-next-like-this)
+		 (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+		 (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
+		 )
+	 #+END_SRC
 * Visual
 ** Parentheses
    #+BEGIN_SRC emacs-lisp
@@ -71,6 +94,17 @@ Just like my old init.el, but in CHAD-org mode
    (setq-default indent-tabs-mode t)
    (setq tab-width 2)
    (define-key global-map (kbd "RET") 'newline-and-indent)
+   #+END_SRC
+** Startup
+   #+BEGIN_SRC emacs-lisp
+   (use-package dashboard
+   :ensure t
+   :config
+    (dashboard-setup-startup-hook)
+    ;(setq dashboard-startup-banner "~/.emacs.d/img/dashLogo.png")
+    (setq dashboard-items '((recents  . 5)
+                            (projects . 5)))
+    (setq dashboard-banner-logo-title ""))
    #+END_SRC
 * Movement
 ** Windows
@@ -145,15 +179,13 @@ Just like my old init.el, but in CHAD-org mode
     (pending-delete-mode t))
   #+END_SRC
 * LaTeX
+** Basics
   #+BEGIN_SRC emacs-lisp
   ;; LaTeX SETTINGS
   ;; AUCTeX settings
-  ;; (use-package auctex
-  ;  :ensure t
-  ;  :config
-  ;  (setq TeX-auto-save t)
-  ;  (setq TeX-parse-self t)
-  ;  (setq-default TeX-master nil))
+  (setq TeX-auto-save t)
+  (setq TeX-parse-self t)
+  (setq-default TeX-master nil)   ;; better for multi-file document structure i.e. documents with \include
 
   (add-hook 'LaTeX-mode-hook 'visual-line-mode)
   (add-hook 'LaTeX-mode-hook 'flyspell-mode)
@@ -162,6 +194,19 @@ Just like my old init.el, but in CHAD-org mode
   ;; *.tex —> *.dvi -> *.ps -> *.pdf
   (setq-default TeX-PDF-from-DVI "Dvips")
   #+END_SRC
+** AucTeX Configuration
+   Mostly stuff for math mode
+   #+BEGIN_SRC emacs-lisp
+   (add-hook 'plain-TeX-mode-hook
+     (lambda () (set (make-variable-buffer-local 'TeX-electric-math)
+     (cons "$" "$"))))
+
+
+   (add-hook 'LaTeX-mode-hook
+     (lambda () (set (make-variable-buffer-local 'TeX-electric-math)
+     (cons "\\(" "\\)"))))
+   #+END_SRC
+
 * BiBTeX
   #+BEGIN_SRC emacs-lisp
   (use-package company-bibtex
@@ -207,7 +252,6 @@ Just like my old init.el, but in CHAD-org mode
 ** Haskell
    #+BEGIN_SRC emacs-lisp
    (setq haskell-process-log t)
-   (add-hook 'haskell-mode-hook 'haskell-indent-mode)
    (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
    #+END_SRC
 * Version Control
