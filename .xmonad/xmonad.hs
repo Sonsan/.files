@@ -74,43 +74,44 @@ myGSConfig = defaultGSConfig {
   -- ,gs_font = "" ++ myFont ++ ""
 }
 
+
 {-- KEY BINDINGS --}
 -- Key-codes can be found in: '/usr/include/X11/keysymdef.h'
 myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
-  [((mod4Mask .|. shiftMask, xK_Return), spawn $ XMonad.terminal conf)
-  ,((mod4Mask .|. shiftMask, xK_g), gridselectWorkspace myGSConfig W.view)
+  [((mod4Mask .|. shiftMask, xK_Return)        ,spawn $ XMonad.terminal conf)
+  ,((mod4Mask .|. shiftMask, xK_g)             ,gridselectWorkspace myGSConfig W.view)
 
   -- Basics
-  ,((mod4Mask .|. shiftMask, xK_c), kill)
-  ,((mod4Mask .|. controlMask, xK_r), spawn "xmonad --recompile && xmonad --restart")
-  ,((mod4Mask .|. controlMask, xK_f), setLayout $ XMonad.layoutHook conf)     -- Reset Layout
+  ,((mod4Mask .|. shiftMask, xK_c)             ,kill) -- Close current window
+  ,((mod4Mask .|. controlMask, xK_r)           ,spawn "xmonad --recompile && xmonad --restart")
+  ,((mod4Mask .|. controlMask, xK_f)           ,setLayout $ XMonad.layoutHook conf)     -- Reset Layout
 
-  -- This is a comment
-  ,((mod4Mask, xK_l), spawn "xscreensaver-command -l")
-  ,((mod4Mask, xK_u), spawn "$HOME/xmonad-update.sh")
-  ,((0, xK_Print), spawn "scrot")
+  -- MISC
+  ,((mod4Mask, xK_l)                           ,spawn "xscreensaver-command -l")
+  ,((0, xK_Print)                              ,spawn "scrot '%Y-%m-%d_$wx$h.png' -e 'mv $f ~/Pictures/Screenshots/'")
 
   -- Application Launcher
-  ,((mod4Mask, xK_space), spawn "rofi -show drun -display-drun 🐧")
+  ,((mod4Mask, xK_space)                       ,spawn "rofi -show drun -display-drun 🐧")
+  ,((mod4Mask .|. shiftMask, xK_space)         ,spawn "rofi -modi file-browser -show file-browser -display-file-browser 🐧 -file-browser-disable-status")
 
   -- Window manipulation
-  ,((mod4Mask, xK_Up), windows W.swapUp)
-  ,((mod4Mask, xK_f), sendMessage $ JumpToLayout "Full")
-  ,((mod4Mask, xK_s), sendMessage $ JumpToLayout "Tall")
-  ,((mod4Mask .|. controlMask, xK_d), withFocused $ windows . W.sink)         -- floating -> tiled
-  ,((mod4Mask .|. controlMask, xK_h), withFocused (keysMoveWindow (-30, 0)))  -- Move window left
-  ,((mod4Mask .|. controlMask, xK_l), withFocused (keysMoveWindow (30, 0)))   -- Move window right
-  ,((mod4Mask .|. controlMask, xK_k), withFocused (keysMoveWindow (0, -30)))  -- Move window up
-  ,((mod4Mask .|. controlMask, xK_j), withFocused (keysMoveWindow (0, 30)))   -- Move window down
+  ,((mod4Mask, xK_Up)                          , windows W.swapUp)
+  ,((mod4Mask, xK_f)                           ,sendMessage $ JumpToLayout "Full")
+  ,((mod4Mask, xK_s)                           ,sendMessage $ JumpToLayout "Tall")
+  ,((mod4Mask .|. controlMask, xK_d)           ,withFocused $ windows . W.sink)         -- floating -> tiled
+  ,((mod4Mask .|. controlMask, xK_h)           ,withFocused (keysMoveWindow (-20, 0)))  -- Move window left
+  ,((mod4Mask .|. controlMask, xK_l)           ,withFocused (keysMoveWindow (20, 0)))   -- Move window right
+  ,((mod4Mask .|. controlMask, xK_k)           ,withFocused (keysMoveWindow (0, -20)))  -- Move window up
+  ,((mod4Mask .|. controlMask, xK_j)           ,withFocused (keysMoveWindow (0, 20)))   -- Move window down
 
-  ,((mod4Mask .|. shiftMask, xK_plus), sendMessage Expand)                    -- Expand Focused Area
-  ,((mod4Mask .|. shiftMask, xK_minus), sendMessage Shrink)                   -- Shrink Focused Area
-  ,((mod4Mask .|. controlMask, xK_plus), sendMessage MirrorExpand)
+  ,((mod4Mask .|. shiftMask, xK_plus)          ,sendMessage Expand)                    -- Expand Focused Area
+  ,((mod4Mask .|. shiftMask, xK_minus)         ,sendMessage Shrink)                   -- Shrink Focused Area
+  ,((mod4Mask .|. controlMask, xK_plus)        ,sendMessage MirrorExpand)
 
   -- MUSIC RELATED
-  ,((0, xK_Pause), spawn "mpc toggle")
-  ,((mod4Mask, xK_Page_Up), spawn "mpc prev")
-  ,((mod4Mask, xK_Page_Down), spawn "mpc next")
+  ,((0, xK_Pause)                              ,spawn "mpc toggle")
+  ,((mod4Mask, xK_Page_Up)                     ,spawn "mpc prev")
+  ,((mod4Mask, xK_Page_Down)                   ,spawn "mpc next")
   ]
   ++
   [((m .|. mod4Mask, k), windows $ f i)    -- Move to workspaces

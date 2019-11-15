@@ -14,96 +14,96 @@ Config {
 		 Run StdinReader
 
 		,Run Cpu [ "--template" , "<ipat><total>%"
-                    , "--Low"      , "55"      -- units: %
-                    , "--High"     , "77"      -- units: %
-                    , "--low"      , "#00ff00"
-                    , "--normal"   , "#e68a00"
-                    , "--high"     , "#cc0000"
-                    , "--ppad"              , "3"
-                    , "--width"             , "3"
-                    , "--maxtwidth"         , "4"
-                    , "--"
-                    , "--load-icon-pattern" , "<icon=cpu/cpu_%%.xpm/>"
-                   ] 10
+                     ,"--Low"               ,"55"      -- units: %
+                     ,"--High"              ,"77"      -- units: %
+                     ,"--low"               ,"#00ff00"
+                     ,"--normal"            ,"#e68a00"
+                     ,"--high"              ,"#cc0000"
+                     ,"--ppad"              ,"3"
+                     ,"--width"             ,"3"
+                     ,"--maxtwidth"         ,"4"
+                     ,"--"
+                     ,"--load-icon-pattern" , "<icon=cpu/cpu_%%.xpm/>"
+                     ] 10
 
 		,Run Memory [ "--template" , "<usedipat><usedratio>%"
-                    , "--Low"      , "55"      -- units: %
-                    , "--High"     , "77"      -- units: %
-                    , "--low"      , "#00ff00"
-                    , "--normal"   , "#e68a00"
-                    , "--high"     , "#cc0000"
-                    , "--ppad"      , "3"
-                    , "--width"     , "3"
-                    , "--maxtwidth" , "4"
-                    , "--"
-                    , "--used-icon-pattern" , "<icon=ram/ram_%%.xpm/>"
-                    ] 10
+                     ,"--Low"               ,"55"      -- units: %
+                     ,"--High"     	    ,"77"      -- units: %
+                     ,"--low"      	    ,"#00ff00"
+                     ,"--normal"   	    ,"#e68a00"
+                     ,"--high"     	    ,"#cc0000"
+                     ,"--ppad"      	    ,"3"
+                     ,"--width"             ,"3"
+                     ,"--maxtwidth"         ,"4"
+                     ,"--"
+                     ,"--used-icon-pattern" ,"<icon=ram/ram_%%.xpm/>"
+                     ] 10
 
 		,Run DynNetwork [ "--template" , "<txipat><rxipat>"
-                        , "--Low"      , "10000"   -- units: B/s
-                        , "--High"     , "100000"  -- units: B/s
-                        , "--low"      , "#b5bd68"
-                        , "--normal"   , "#de935f"
-                        , "--high"     , "#a54242"
-                        , "--maxtwidth" , "0"
-                        , "--"
-                          , "--rx-icon-pattern" , "<icon=network/rx/network_rx_%%.xpm/>"
-                          , "--tx-icon-pattern" , "<icon=network/tx/network_tx_%%.xpm/>"
-                        ] 10
+                     ,"--Low"             ,"10000"   -- units: B/s
+                     ,"--High"            ,"100000"  -- units: B/s
+                     ,"--low"             ,"#b5bd68"
+                     ,"--normal"          ,"#de935f"
+                     ,"--high"            ,"#a54242"
+                     ,"--maxtwidth"       ,"0"
+                     ,"--"
+                     ,"--rx-icon-pattern" ,"<icon=network/rx/network_rx_%%.xpm/>"
+                     ,"--tx-icon-pattern" ,"<icon=network/tx/network_tx_%%.xpm/>"
+                     ] 10
 
 		,Run MultiCoreTemp [ "--template" , "<maxipat><max>°C"
-                           , "--Low"      , "64"      -- units: °C
-                           , "--High"     , "73"      -- units: °C
-                           , "--low"      , "#00ff00"
-                           , "--normal"   , "#e68a00"
-                           , "--high"     , "#cc0000"
-                           , "--ppad"      , "3"
-                           , "--width"     , "3"
-                           , "--maxtwidth" , "5"
-                           , "--"
-                             , "--max-icon-pattern" , "<icon=temperature/temperature_%%.xpm/>"
-                             , "--mintemp" , "20"
-                             , "--maxtemp" , "100"
-                           ] 50
-
-		 ,Run Battery [ "--template"  , "<leftipat> <acstatus>"
-                     , "--Low"       , "36"      -- units: %
-                     , "--High"      , "71"      -- units: %
-                     , "--low"       , "#00ff00"
-                     , "--normal"    , "#e68a00"
-                     , "--high"      , "#cc0000"
-                     , "--maxtwidth" , "10"
-                     , "--"
-		     , "--on-icon-pattern"   , "<icon=battery/on/battery_on_%%.xpm/>"
-                     , "--off-icon-pattern"  , "<icon=battery/off/battery_off_%%.xpm/>"
-                     , "--idle-icon-pattern" , "<icon=battery/idle/battery_idle_%%.xpm/>"
-                     , "-o" , "<left><fc=#c5c8c6>%</fc> <timeleft>" -- discharging status
-                     , "-O" , "<left><fc=#c5c8c6>% <timeleft></fc>" -- plugged in status
-                     , "-i" , "<fc=#707880>IDLE</fc>"               -- charged status
+                     ,"--Low"              ,"64"      -- units: °C
+                     ,"--High"             ,"73"      -- units: °C
+                     ,"--low"              ,"#00ff00"
+                     ,"--normal"           ,"#e68a00"
+                     ,"--high"             ,"#cc0000"
+                     ,"--ppad"             ,"3"
+                     ,"--width"            ,"3"
+                     ,"--maxtwidth"        ,"5"
+                     ,"--"
+                     ,"--max-icon-pattern" ,"<icon=temperature/temperature_%%.xpm/>"
+                     ,"--mintemp"          ,"20"
+                     ,"--maxtemp"          ,"100"
                      ] 50
 
-		 ,Run WeatherX "EDDF" [("", "<icon=weather/weather_mostly_cloudy.xpm/>")
-		      	     , ("clear"                   , "<icon=weather/weather_sunny.xpm/>")
-                             , ("mostly clear"            , "<icon=weather/weather_mostly_sunny.xpm/>")
-                             , ("sunny"                   , "<icon=weather/weather_sunny.xpm/>")
-                             , ("mostly sunny"            , "<icon=weather/weather_mostly_sunny.xpm/>")
-                             , ("partly sunny"            , "<icon=weather/weather_mostly_cloudy.xpm/>")
-                             , ("cloudy"                  , "<icon=weather/weather_cloudy.xpm/>")
-                             , ("mostly cloudy"           , "<icon=weather/weather_mostly_cloudy.xpm/>")
-                             , ("partly cloudy"           , "<icon=weather/weather_mostly_sunny.xpm/>")
-                             , ("fair"                    , "<icon=weather/weather_sunny.xpm/>")
-                             , ("overcast"                , "<icon=weather/weather_cloudy.xpm/>")
-                             , ("considerable cloudiness" , "<icon=weather/weather_cloudy.xpm/>")
-                             ] [ "--template", "<skyConditionS><tempC>°C"
-                               , "--Low"      , "10"      -- units: %
-                               , "--High"     , "20"      -- units: %
-                               , "--low"      , "#66ffff"
-                               , "--normal"   , "#ffff00"
-                               , "--high"     , "#e60000"
-                               , "--ppad"      , "3"
-                               , "--width"     , "3"
-                              , "--maxtwidth" , "18"
-                               ] 36000
+		 ,Run Battery [ "--template"  , "<leftipat> <acstatus>"
+                     ,"--Low"               ,"36"      -- units: %
+                     ,"--High"              ,"71"      -- units: %
+                     ,"--low"               ,"#cc0000"
+                     ,"--normal"            ,"#e68a00"
+                     ,"--high"              ,"#00ff00"
+                     ,"--maxtwidth"         ,"10"
+                     ,"--"
+		     ,"--on-icon-pattern"   ,"<icon=battery/on/battery_on_%%.xpm/>"
+                     ,"--off-icon-pattern"  ,"<icon=battery/off/battery_off_%%.xpm/>"
+                     ,"--idle-icon-pattern" ,"<icon=battery/idle/battery_idle_%%.xpm/>"
+                     ,"-o"                  ,"<left><fc=#c5c8c6>%</fc> <timeleft>" -- discharging status
+                     ,"-O"                  ,"<left><fc=#c5c8c6>% <timeleft></fc>" -- plugged in status
+                     ,"-i"                  ,"<fc=#707880>IDLE</fc>"               -- charged status
+                     ] 50
+
+		 ,Run WeatherX "EDDF" [(""               ,"?")
+		     ,("clear"                   ,"<icon=weather/weather_sunny.xpm/>")
+                     ,("mostly clear"            ,"<icon=weather/weather_mostly_sunny.xpm/>")
+                     ,("sunny"                   ,"<icon=weather/weather_sunny.xpm/>")
+                     ,("mostly sunny"            ,"<icon=weather/weather_mostly_sunny.xpm/>")
+                     ,("partly sunny"            ,"<icon=weather/weather_mostly_cloudy.xpm/>")
+                     ,("cloudy"                  ,"<icon=weather/weather_cloudy.xpm/>")
+                     ,("mostly cloudy"           ,"<icon=weather/weather_mostly_cloudy.xpm/>")
+                     ,("partly cloudy"           ,"<icon=weather/weather_mostly_sunny.xpm/>")
+                     ,("fair"                    ,"<icon=weather/weather_sunny.xpm/>")
+                     ,("overcast"                ,"<icon=weather/weather_cloudy.xpm/>")
+                     ,("considerable cloudiness" ,"<icon=weather/weather_cloudy.xpm/>")
+                     ] ["--template"  ,"<skyConditionS><tempC>°C"
+                       ,"--Low"       ,"10"      -- units: %
+                       ,"--High"      ,"20"      -- units: %
+                       ,"--low"       ,"#66ffff"
+                       ,"--normal"    ,"#ffff00"
+                       ,"--high"      ,"#e60000"
+                       ,"--ppad"      ,"3"
+                       ,"--width"     ,"3"
+                       ,"--maxtwidth" ,"18"
+                     ] 36000
 
 		 ,Run Date "%a %d/%m/%y <icon=seperators/seperator.xpm/> %T" "date" 10
 		 ,Run Com "uname" ["-s", "-r"] "test" 36000				--this is an example
