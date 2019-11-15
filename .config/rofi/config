@@ -1,13 +1,17 @@
-rofi.combi-modi: window,run,drun,ssh
-rofi.font: Cascadia Code Bold 10
-rofi.modi: combi,drun
+rofi.combi-modi: window,drun
+rofi.modi: combi
+
+
+rofi.theme: Pop-Dark
+rofi.font: hack 13
 rofi.show-icons: true
-rofi.icon-theme: Papirus-Dark
-rofi.lines: 3
-rofi.eh: 1
-rofi.line-margin: 0
-rofi.bw: 0
-rofi.dpi: 96
-rofi.seperator-style: none
-rofi.auto-select: false
-rofi.color-enabled: true
+rofi.icon-theme: Adiwa
+
+rofi.drun-display-format: ↪{name}↩
+rofi.seperator-style: solid
+
+rofi.width: 30
+rofi.lines: 5
+rofi.location: 3
+rofi.yoffset: 10
+rofi.xoffset: -10

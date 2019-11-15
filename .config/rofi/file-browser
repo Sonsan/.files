@@ -1,0 +1,14 @@
+icon-theme "Papirus-Dark"
+
+cmd        "xdg-open"
+oc-cmd     "evince;icon:evince"
+oc-cmd     "gimp;icon:gimp"
+
+file-browser-dir "/home/nils/"
+file-browser-path-sep "/"
+file-browser-up-text "yeet"
+
+depth      1
+
+# use-mode-keys
+open-parent-as-self
