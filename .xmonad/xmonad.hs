@@ -5,6 +5,8 @@ import XMonad hiding( (|||) )
 -- ACTIONS
 import XMonad.Actions.FloatKeys
 import XMonad.Actions.GridSelect
+import XMonad.Actions.Minimize
+import XMonad.Actions.Submap
 
 -- UTIL
 import XMonad.Util.EZConfig
@@ -82,36 +84,57 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   ,((mod4Mask .|. shiftMask, xK_g)             ,gridselectWorkspace myGSConfig W.view)
 
   -- Basics
-  ,((mod4Mask .|. shiftMask, xK_c)             ,kill) -- Close current window
-  ,((mod4Mask .|. controlMask, xK_r)           ,spawn "xmonad --recompile && xmonad --restart")
-  ,((mod4Mask .|. controlMask, xK_f)           ,setLayout $ XMonad.layoutHook conf)     -- Reset Layout
+  ,((mod4Mask, xK_space)                       ,sendMessage NextLayout)                           -- next tiling style
+  ,((mod4Mask, xK_Tab)                         ,windows W.focusDown)                              -- go to next window
+  ,((mod4Mask .|. shiftMask, xK_c)             ,kill)                                             -- Close current window
+  ,((mod4Mask .|. shiftMask, xK_Tab)           ,windows W.focusUp)                                -- go to prev window
+  ,((mod4Mask .|. controlMask, xK_f)           ,setLayout $ XMonad.layoutHook conf)               -- Reset Layout
 
   -- MISC
+  ,((mod4Mask .|. controlMask, xK_r)           ,spawn "xmonad --recompile && xmonad --restart")   -- Recompile & Restart Xmonad
   ,((mod4Mask, xK_l)                           ,spawn "xscreensaver-command -l")
   ,((0, xK_Print)                              ,spawn "scrot '%Y-%m-%d_$wx$h.png' -e 'mv $f ~/Pictures/Screenshots/'")
 
   -- Application Launcher
   ,((mod4Mask, xK_space)                       ,spawn "rofi -show drun -display-drun 🐧")
   ,((mod4Mask .|. shiftMask, xK_space)         ,spawn "rofi -modi file-browser -show file-browser -display-file-browser 🐧 -file-browser-disable-status")
+  ,((mod4Mask .|. controlMask, xK_space)       ,spawn "rofi -modi file-browser -show file-browser -display-file-browser 🐧 -file-browser-disable-status -file-browser-dir '/home/nils/Documents/University'")
 
   -- Window manipulation
-  ,((mod4Mask, xK_Up)                          , windows W.swapUp)
+  ,((mod4Mask, xK_Up)                          ,windows W.swapUp)
   ,((mod4Mask, xK_f)                           ,sendMessage $ JumpToLayout "Full")
   ,((mod4Mask, xK_s)                           ,sendMessage $ JumpToLayout "Tall")
-  ,((mod4Mask .|. controlMask, xK_d)           ,withFocused $ windows . W.sink)         -- floating -> tiled
-  ,((mod4Mask .|. controlMask, xK_h)           ,withFocused (keysMoveWindow (-20, 0)))  -- Move window left
-  ,((mod4Mask .|. controlMask, xK_l)           ,withFocused (keysMoveWindow (20, 0)))   -- Move window right
-  ,((mod4Mask .|. controlMask, xK_k)           ,withFocused (keysMoveWindow (0, -20)))  -- Move window up
-  ,((mod4Mask .|. controlMask, xK_j)           ,withFocused (keysMoveWindow (0, 20)))   -- Move window down
+  ,((mod4Mask .|. controlMask, xK_d)           ,withFocused $ windows . W.sink)                      -- floating -> tiled
+  ,((mod4Mask .|. controlMask, xK_h)           ,withFocused (keysMoveWindow (-20, 0)))               -- Move window left
+  ,((mod4Mask .|. controlMask, xK_l)           ,withFocused (keysMoveWindow (20, 0)))                -- Move window right
+  ,((mod4Mask .|. controlMask, xK_k)           ,withFocused (keysMoveWindow (0, -20)))               -- Move window up
+  ,((mod4Mask .|. controlMask, xK_j)           ,withFocused (keysMoveWindow (0, 20)))                -- Move window down
 
-  ,((mod4Mask .|. shiftMask, xK_plus)          ,sendMessage Expand)                    -- Expand Focused Area
-  ,((mod4Mask .|. shiftMask, xK_minus)         ,sendMessage Shrink)                   -- Shrink Focused Area
-  ,((mod4Mask .|. controlMask, xK_plus)        ,sendMessage MirrorExpand)
+  ,((mod4Mask .|. shiftMask, xK_plus)          ,sendMessage Expand)                                  -- Expand Focused Area
+  ,((mod4Mask .|. shiftMask, xK_minus)         ,sendMessage Shrink)                                  -- Shrink Focused Area
+
+  ,((mod4Mask .|. controlMask, xK_plus)        ,withFocused (keysAbsResizeWindow (10, 10) (0, 1)))   -- make window bigger
+  ,((mod4Mask .|. controlMask, xK_minus)       ,withFocused (keysAbsResizeWindow (-10, -10) (1, 0))) -- make window smaller
+  ,((mod4Mask .|. shiftMask, xK_r)             ,withFocused (keysMoveWindowTo (1280, 0) (1, 0)))     -- move window to top right
+  ,((mod4Mask .|. shiftMask, xK_l)             ,withFocused (keysMoveWindowTo (0, 0) (0, 0)))
+
+  ,((mod4Mask .|. controlMask, xK_m)           ,withFocused minimizeWindow)                          -- minimize window
+  ,((mod4Mask .|. shiftMask,   xK_m)           ,withFocused maximizeWindow)                          -- maximize window
+
+  -- Scratchpads
+  ,((mod4Mask .|. shiftMask, xK_s), submap . M.fromList $ [
+        ((0, xK_t) ,namedScratchpadAction myScratchpads "htop")
+       ,((0, xK_p) ,namedScratchpadAction myScratchpads "gnuplot")
+       ,((0, xK_u) ,namedScratchpadAction myScratchpads "units")
+  ])
 
   -- MUSIC RELATED
   ,((0, xK_Pause)                              ,spawn "mpc toggle")
   ,((mod4Mask, xK_Page_Up)                     ,spawn "mpc prev")
   ,((mod4Mask, xK_Page_Down)                   ,spawn "mpc next")
+  --,((0, xF86XK_AudioMute)                      ,spawn "amixer -q set Master toggle")
+  --,((0, xF86XK_AudioLowerVolume)               ,spwan "amixer -q set Master 5%-")
+  --,((0, xF86XK_AudioRaiseVolume)               ,spawn "amixer -q set Master 5%+")
   ]
   ++
   [((m .|. mod4Mask, k), windows $ f i)    -- Move to workspaces
@@ -137,21 +160,25 @@ myManageHooks = composeAll [
   ,className =? "Zathura"                --> doCenterFloat
   ,className =? "Gnuplot"                --> doCenterFloat
 
-  -- Steam
+  -- Games
   ,className =? "Steam"                  --> doFloat
-  ,className =? "Friends List"           --> doFloat
-  ,className =? "Steam News"             --> doFloat
-  ,className =? "Settings"               --> doFloat
 
   -- MISC
   ,resource  =? "music"                  --> doShift "7:MUSIC"
-  --isFullscreen                          --> (doF W.focusDown <+> doFullFloat)
+  ,namedScratchpadManageHook myScratchpads
   ]
 
 
 {-- WORKSPACES --}
 myWS = ["1:WWW", "2:UEB", "3:TeX", "4:PDF", "5:MAIL", "6:MISC", "7:MUSIC", "8:GAMES"]
 
+
+{-- SCRATCHPADS --}
+myScratchpads = [
+    NS "htop"      "termite -e htop"    (title =? "htop")    defaultFloating
+   ,NS "gnuplot"   "termite -e gnuplot" (title =? "gnuplot") defaultFloating
+   ,NS "units"     "termite -e units"   (title =? "units")   defaultFloating
+  ]
 
 {-- DEFINITIONS --}
 tall = Tall 1 (3/100) (1/2)
