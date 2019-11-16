@@ -9,6 +9,9 @@ rofi.icon-theme: Adiwa
 
 rofi.drun-display-format: ↪{name}↩
 rofi.seperator-style: solid
+rofi.display-drun:  🐧
+
+rofi.display-file-browser: 🐧
 
 rofi.width: 30
 rofi.lines: 5
