@@ -1,13 +1,14 @@
 -- ~/.xmobarrc
 
 Config {
-        font = "xft:SourceCodePro-9"
-	-- font = "xft:Sauce Code Pro:size=10"
-	--font = "xft:terminus-9"
-	,bgColor = "#000000"
-	,fgColor = "#ffffff"
-	,position = Bottom
-	,iconRoot = "/home/nils/.local/share/icons/"
+        --font            = "xft:SourceCodePro-9"
+	 font             = "xft:SauceCodePro Nerd Font:size=8:antialias=true:hinting=true"
+        ,additionalFonts  = [ "xft:NotoEmoji:pixelsize=9:antialias=true" ]
+	--font            = "xft:terminus-9"
+	,bgColor          = "#000000"
+	,fgColor          = "#ffffff"
+	,position         = Bottom
+	,iconRoot         = "/home/nils/.local/share/icons/"
 
 	-- commands from: https://archives.haskell.org/projects.haskell.org/xmobar/#system-monitor-plugins
 	,commands = [
@@ -104,11 +105,12 @@ Config {
                        ,"--width"     ,"3"
                        ,"--maxtwidth" ,"18"
                      ] 36000
+                 --,Run Mail [("inbox")]
 
-		 ,Run Date "%a %d/%m/%y <icon=seperators/seperator.xpm/> %T" "date" 10
+		 ,Run Date "<fn=1></fn>%a %d/%m/%y <icon=seperators/seperator.xpm/> <fn=1>🕓</fn>%T" "date" 10
 		 ,Run Com "uname" ["-s", "-r"] "test" 36000				--this is an example
 	]
-	,sepChar = "%"
+	,sepChar  = "%"
 	,alignSep = "}{"
 	,template = "%StdinReader%}{%battery% <icon=seperators/seperator.xpm/> %cpu% <icon=seperators/seperator.xpm/> %multicoretemp% <icon=seperators/seperator.xpm/> %memory% <icon=seperators/seperator.xpm/> %dynnetwork%  <icon=seperators/seperator.xpm/> %EDDF% <icon=seperators/seperator.xpm/> %date%"
 }

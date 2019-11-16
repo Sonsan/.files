@@ -96,9 +96,9 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   ,((0, xK_Print)                              ,spawn "scrot '%Y-%m-%d_$wx$h.png' -e 'mv $f ~/Pictures/Screenshots/'")
 
   -- Application Launcher
-  ,((mod4Mask, xK_space)                       ,spawn "rofi -show drun -display-drun 🐧")
-  ,((mod4Mask .|. shiftMask, xK_space)         ,spawn "rofi -modi file-browser -show file-browser -display-file-browser 🐧 -file-browser-disable-status")
-  ,((mod4Mask .|. controlMask, xK_space)       ,spawn "rofi -modi file-browser -show file-browser -display-file-browser 🐧 -file-browser-disable-status -file-browser-dir '/home/nils/Documents/University'")
+  ,((mod4Mask, xK_space)                       ,spawn "rofi -show drun")
+  ,((mod4Mask .|. shiftMask, xK_space)         ,spawn "rofi -modi file-browser -show file-browser -file-browser-disable-status")
+  ,((mod4Mask .|. controlMask, xK_space)       ,spawn "rofi -modi file-browser -show file-browser -file-browser-disable-status -file-browser-dir '/home/nils/Documents/University'")
 
   -- Window manipulation
   ,((mod4Mask, xK_Up)                          ,windows W.swapUp)
@@ -126,6 +126,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
         ((0, xK_t) ,namedScratchpadAction myScratchpads "htop")
        ,((0, xK_p) ,namedScratchpadAction myScratchpads "gnuplot")
        ,((0, xK_u) ,namedScratchpadAction myScratchpads "units")
+       ,((0, xK_m) ,namedScratchpadAction myScratchpads "neomutt")
   ])
 
   -- MUSIC RELATED
@@ -163,6 +164,10 @@ myManageHooks = composeAll [
   -- Games
   ,className =? "Steam"                  --> doFloat
 
+  -- Chat
+  ,className =? "Telegram Desktop"       --> doCenterFloat
+  ,className =? "Media Viewer"           --> doCenterFloat
+
   -- MISC
   ,resource  =? "music"                  --> doShift "7:MUSIC"
   ,namedScratchpadManageHook myScratchpads
@@ -178,6 +183,7 @@ myScratchpads = [
     NS "htop"      "termite -e htop"    (title =? "htop")    defaultFloating
    ,NS "gnuplot"   "termite -e gnuplot" (title =? "gnuplot") defaultFloating
    ,NS "units"     "termite -e units"   (title =? "units")   defaultFloating
+   ,NS "neomutt"   "termite -e neomutt" (title =? "neomutt") defaultFloating
   ]
 
 {-- DEFINITIONS --}
