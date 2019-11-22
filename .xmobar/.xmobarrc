@@ -107,7 +107,7 @@ Config {
                      ] 36000
                  --,Run Mail [("inbox")]
 
-		 ,Run Date "<fn=1></fn>%a %d/%m/%y <icon=seperators/seperator.xpm/> <fn=1>🕓</fn>%T" "date" 10
+		 ,Run Date "<fn=1></fn>%a %d/%m/%y <icon=seperators/seperator.xpm/> <fn=1></fn>%T" "date" 10
 		 ,Run Com "uname" ["-s", "-r"] "test" 36000				--this is an example
 	]
 	,sepChar  = "%"
