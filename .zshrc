@@ -5,7 +5,7 @@ export PATH=$HOME/Documents/University/TeX/goethe.sty:$PATH
 export ZSH="/home/nils/.oh-my-zsh"
 
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="cloud"
+ZSH_THEME="smt"
 
 # Case sensitive search
 CASE_SENSITIVE="false"

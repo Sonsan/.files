@@ -1,0 +1,13 @@
+emacs
+firefox
+rofi
+lightdm
+git
+compton
+htop
+telegram-desktop
+neomutt
+alsa-utils
+aspell
+aspell-en
+aspell-de
