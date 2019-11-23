@@ -36,40 +36,53 @@ import Control.Monad (forM_, join)
 import qualified Data.Map as M
 import qualified XMonad.StackSet as W
 
+
+
+{-- Config --}
+myConfig = defaultConfig {
+   terminal              = myTerminal
+   ,modMask              = myModmask
+   ,borderWidth          = myBW
+   ,workspaces           = myWS
+   ,keys                 = myKeys
+   ,mouseBindings        = myMouse
+   ,focusedBorderColor   = myFBC
+   ,manageHook           = myManageHooks
+   ,startupHook          = myStartupHook
+   ,layoutHook           = tall ||| Mirror tall ||| Full
+   }
+
+main = xmonad =<< statusBar ("xmobar "++myXmobarrc) myPP toggleStrutsKey myConfig
+
+
+{-- Definitions --}
+tall = Tall 1 (3/100) (1/2)
+
+myTerminal   = "termite"
+myModmask    = mod4Mask  -- mod4 = win-key ; mod1 = alt-key
+myBW         = 2
+myFBC        = "orange"
+myFont       = "SourceCodePro-12"
+
+-- commands
+myScreensaver      = "/usr/bin/xscreensaver-command -l"
+myApplicationMenu  = "rofi -show drun"
+myFilebrowser      = "rofi -modi file-browser -show file-browser -file-browser-disable-status -file-browser-show-hidden"
+myUniFiles         = "rofi -modi file-browser -show file-browser -file-browser-disable-status -file-browser-dir '/home/nils/Documents/University'"
+
+
 {-
 myStartupHook = do
   spawn "$HOME/.config/polybar/launch.sh"  -- Launch Polybar
 -}
-
 myStartupHook = return()
-
--- Some Colors
-orange = "ffcc00"
-black  = "000000"
-white  = "ffffff"
-blue   = "0033cc"
-red    = "ff0000"
-
--- dark colors
-dblue  = "000066"
-
-
-myTerminal = "termite"
-myModmask = mod4Mask  -- win-key
-myBW = 2
-myFBC = "orange"
-myFont = "SourceCodePro-12"
 
 
 {-- XMOBAR --}
     -- hide xmobar with mod+b. keycodes
 toggleStrutsKey XConfig {XMonad.modMask = modMask} = (modMask, xK_b)
-myXmobarrc = "~/.xmonad/xmobarrc"
+myXmobarrc = "/home/nils/.xmonad/xmobarrc"
 myPP = xmobarPP {ppCurrent = xmobarColor "#ff0000" "" . wrap "{" "}"}
-
-
-{-- USEFUL STUFF --}
-myScreensaver = "/usr/bin/xscreensaver-command -l"
 
 
 {-- Grid Select --}
@@ -79,6 +92,10 @@ myGSConfig = defaultGSConfig {
    ,gs_cellpadding = 10
   -- ,gs_font = "" ++ myFont ++ ""
 }
+
+
+{-- WORKSPACES --}
+myWS = ["1:WWW", "2:UeB", "3:TeX", "4:PDF", "5:MAIL", "6:MISC", "7:MUSIC", "8:GAMES"]
 
 
 {-- KEY BINDINGS --}
@@ -95,58 +112,55 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   ,((mod4Mask .|. controlMask, xK_f)           ,setLayout $ XMonad.layoutHook conf)               -- Reset Layout
 
   -- MISC
-  ,((mod4Mask .|. controlMask, xK_r)           ,spawn "xmonad --recompile && xmonad --restart")   -- Recompile & Restart Xmonad
-  ,((mod4Mask, xK_l)                           ,spawn "xscreensaver-command -l")
-  ,((0, xK_Print)                              ,spawn "scrot '%Y-%m-%d_$wx$h.png' -e 'mv $f ~/Pictures/Screenshots/'")
+  ,((mod4Mask .|. controlMask, xK_r    )   ,spawn "xmonad --recompile && xmonad --restart")   -- Recompile & Restart Xmonad
+  ,((mod4Mask, xK_l                    )   ,spawn myScreensaver)
+  ,((0, xK_Print                       )   ,spawn "scrot '%Y-%m-%d_$wx$h.png' -e 'mv $f ~/Pictures/Screenshots/'")
 
-  -- Application Launcher
-  ,((mod4Mask, xK_space)                       ,spawn "rofi -show drun")
-  ,((mod4Mask .|. shiftMask, xK_space)         ,spawn "rofi -modi file-browser -show file-browser -file-browser-disable-status -file-browser-show-hidden")
-  ,((mod4Mask .|. controlMask, xK_space)       ,spawn "rofi -modi file-browser -show file-browser -file-browser-disable-status -file-browser-dir '/home/nils/Documents/University'")
+  -- Launchers
+  ,((mod4Mask,                 xK_space)   ,spawn myApplicationMenu)
+  ,((mod4Mask .|. shiftMask,   xK_space)   ,spawn myFilebrowser)
+  ,((mod4Mask .|. controlMask, xK_space)   ,spawn myUniFiles)
 
   -- Window manipulation
-  ,((mod4Mask, xK_Up)                          ,windows W.swapUp)
-  ,((mod4Mask, xK_f)                           ,sendMessage $ JumpToLayout "Full")
-  ,((mod4Mask, xK_s)                           ,sendMessage $ JumpToLayout "Tall")
-  ,((mod4Mask .|. controlMask, xK_d)           ,withFocused $ windows . W.sink)                      -- floating -> tiled
-  ,((mod4Mask .|. controlMask, xK_h)           ,withFocused (keysMoveWindow (-20, 0)))               -- Move window left
-  ,((mod4Mask .|. controlMask, xK_l)           ,withFocused (keysMoveWindow (20, 0)))                -- Move window right
-  ,((mod4Mask .|. controlMask, xK_k)           ,withFocused (keysMoveWindow (0, -20)))               -- Move window up
-  ,((mod4Mask .|. controlMask, xK_j)           ,withFocused (keysMoveWindow (0, 20)))                -- Move window down
+  ,((mod4Mask,                 xK_Up   )   ,windows W.swapUp)
+  ,((mod4Mask,                 xK_f    )   ,sendMessage $ JumpToLayout "Full")
+  ,((mod4Mask,                 xK_s    )   ,sendMessage $ JumpToLayout "Tall")
+  ,((mod4Mask .|. controlMask, xK_d    )   ,withFocused $ windows . W.sink)                      -- floating -> tiled
+  ,((mod4Mask .|. controlMask, xK_h    )   ,withFocused (keysMoveWindow (-20, 0)))               -- Move window left
+  ,((mod4Mask .|. controlMask, xK_l    )   ,withFocused (keysMoveWindow (20, 0)))                -- Move window right
+  ,((mod4Mask .|. controlMask, xK_k    )   ,withFocused (keysMoveWindow (0, -20)))               -- Move window up
+  ,((mod4Mask .|. controlMask, xK_j    )   ,withFocused (keysMoveWindow (0, 20)))                -- Move window down
 
-  ,((mod4Mask .|. shiftMask, xK_plus)          ,sendMessage Expand)                                  -- Expand Focused Area
-  ,((mod4Mask .|. shiftMask, xK_minus)         ,sendMessage Shrink)                                  -- Shrink Focused Area
+  ,((mod4Mask .|. shiftMask,   xK_plus )   ,sendMessage Expand)                                  -- Expand Focused Area
+  ,((mod4Mask .|. shiftMask,   xK_minus)   ,sendMessage Shrink)                                  -- Shrink Focused Area
 
   -- Window Size
-  ,((mod4Mask .|. controlMask, xK_plus)        ,withFocused (keysAbsResizeWindow (10, 10) (0, 1)))   -- bigger (all sides)
-  ,((mod4Mask .|. controlMask, xK_minus)       ,withFocused (keysAbsResizeWindow (-10, -10) (1, 0))) -- smaller (all sides)
-  ,((mod4Mask .|. mod1Mask, xK_l)              ,withFocused (keysAbsResizeWindow (10, 0) (1, 0)))    -- bigger (right side)
-  ,((mod4Mask .|. mod1Mask, xK_j)              ,withFocused (keysAbsResizeWindow (0, 10) (1, 0)))    -- bigger (down)
+  ,((mod4Mask .|. controlMask, xK_plus )   ,withFocused (keysAbsResizeWindow (10, 10) (0, 1)))   -- bigger (all sides)
+  ,((mod4Mask .|. controlMask, xK_minus)   ,withFocused (keysAbsResizeWindow (-10, -10) (1, 0))) -- smaller (all sides)
+  ,((mod4Mask .|. mod1Mask,    xK_l    )   ,withFocused (keysAbsResizeWindow (10, 0) (1, 0)))    -- bigger (right side)
+  ,((mod4Mask .|. mod1Mask,    xK_j    )   ,withFocused (keysAbsResizeWindow (0, 10) (1, 0)))    -- bigger (down)
 
 
-  ,((mod4Mask .|. shiftMask, xK_r)             ,withFocused (keysMoveWindowTo (1280, 0) (1, 0)))     -- move window to top right
-  ,((mod4Mask .|. shiftMask, xK_l)             ,withFocused (keysMoveWindowTo (0, 0) (0, 0)))
+  ,((mod4Mask .|. shiftMask,   xK_r    )   ,withFocused (keysMoveWindowTo (1280, 0) (1, 0)))     -- move window to top right
+  ,((mod4Mask .|. shiftMask,   xK_l    )   ,withFocused (keysMoveWindowTo (0, 0) (0, 0)))
 
-  ,((mod4Mask .|. controlMask, xK_m)           ,withFocused minimizeWindow)                          -- minimize window
-  ,((mod4Mask .|. shiftMask,   xK_m)           ,withFocused maximizeWindow)                          -- maximize window
+  ,((mod4Mask .|. controlMask, xK_m    )   ,withFocused minimizeWindow)                          -- minimize window
+  ,((mod4Mask .|. shiftMask,   xK_m    )   ,withFocused maximizeWindow)                          -- maximize window
 
   -- Scratchpads
   ,((mod4Mask .|. shiftMask, xK_s), submap . M.fromList $ [
-        ((0, xK_t)      ,namedScratchpadAction myScratchpads "htop")
-       ,((0, xK_p)      ,namedScratchpadAction myScratchpads "gnuplot")
-       ,((0, xK_u)      ,namedScratchpadAction myScratchpads "units")
-       ,((0, xK_m)      ,namedScratchpadAction myScratchpads "neomutt")
-       ,((0, xK_a)      ,namedScratchpadAction myScratchpads "alsamixer")
-       ,((0, xK_Return) ,namedScratchpadAction myScratchpads "terminal")
+        ((0, xK_t     )   ,namedScratchpadAction myScratchpads "htop"     )
+       ,((0, xK_p     )   ,namedScratchpadAction myScratchpads "gnuplot"  )
+       ,((0, xK_u     )   ,namedScratchpadAction myScratchpads "units"    )
+       ,((0, xK_m     )   ,namedScratchpadAction myScratchpads "neomutt"  )
+       ,((0, xK_a     )   ,namedScratchpadAction myScratchpads "alsamixer")
+       ,((0, xK_Return)   ,namedScratchpadAction myScratchpads "terminal" )
   ])
 
   -- MUSIC RELATED
-  ,((0, xK_Pause)                              ,spawn "mpc toggle")
-  ,((mod4Mask, xK_Page_Up)                     ,spawn "mpc prev")
-  ,((mod4Mask, xK_Page_Down)                   ,spawn "mpc next")
-  --,((0, xF86xk_AudioMute)                      ,spawn "amixer -q set Master toggle")
-  --,((0, xF86xk_AudioLowerVolume)               ,spwan "amixer -q set Master 5%-")
-  --,((0, xF86xk_AudioRaiseVolume)               ,spawn "amixer -q set Master 5%+")
+  ,((0, xK_Pause           )   ,spawn "mpc toggle")
+  ,((mod4Mask, xK_Page_Up  )   ,spawn "mpc prev"  )
+  ,((mod4Mask, xK_Page_Down)   ,spawn "mpc next"  )
   ]
   ++
   [((m .|. mod4Mask, k), windows $ f i)    -- Move to workspaces
@@ -164,12 +178,12 @@ myMouse (XConfig {XMonad.modMask = modMask}) = M.fromList $
 
 {-- SCRATCHPADS --}
 myScratchpads = [
-    NS  "htop"       "termite -e htop"       (title =? "htop")        defaultFloating
-   ,NS  "gnuplot"    "termite -e gnuplot"    (title =? "gnuplot")     defaultFloating
-   ,NS  "units"      "termite -e units"      (title =? "units")       defaultFloating
-   ,NS  "neomutt"    "termite -e neomutt"    (title =? "neomutt")     defaultFloating
-   ,NS  "alsamixer"  "termite -e alsamixer"  (title =? "alsamixer")   defaultFloating
-   ,NS  "terminal"    spawnTerminal          (title =? "scratchpad")  termSettings
+    NS  "htop"       (myTerminal++" -e htop"     )  (title =? "htop"      )   defaultFloating
+   ,NS  "gnuplot"    (myTerminal++" -e gnuplot"  )  (title =? "gnuplot"   )   defaultFloating
+   ,NS  "units"      (myTerminal++" -e units"    )  (title =? "units"     )   defaultFloating
+   ,NS  "neomutt"    (myTerminal++" -e neomutt"  )  (title =? "neomutt"   )   defaultFloating
+   ,NS  "alsamixer"  (myTerminal++" -e alsamixer")  (title =? "alsamixer" )   defaultFloating
+   ,NS  "terminal"   (spawnTerminal              )  (title =? "scratchpad")   termSettings
   ] where
   spawnTerminal = myTerminal ++ " -t 'scratchpad' -c '/home/nils/.config/termite/scratch_config'"
   termSettings = customFloating $ W.RationalRect l t w h
@@ -209,30 +223,3 @@ myManageHooks = composeAll [
   ,resource  =? "music"                  --> doShift "7:MUSIC"
   ,namedScratchpadManageHook myScratchpads
   ]
-
-
-{-- WORKSPACES --}
-myWS = ["1:WWW", "2:UeB", "3:TeX", "4:PDF", "5:MAIL", "6:MISC", "7:MUSIC", "8:GAMES"]
-
-
-{-- DEFINITIONS --}
-tall = Tall 1 (3/100) (1/2)
-
-
-{-- NOTIFICATIONS --}
--- TODO
-
-myConfig = defaultConfig {
-   terminal                       = myTerminal
-   ,modMask                       = myModmask
-   ,borderWidth                   = myBW
-   ,workspaces                    = myWS
-   ,keys                          = myKeys
-   ,mouseBindings                 = myMouse
-   ,focusedBorderColor            = myFBC
-   ,manageHook                    = myManageHooks
-   ,startupHook                   = myStartupHook
-   ,layoutHook                    = tall ||| Mirror tall ||| Full
-   }
-
-main = xmonad =<< statusBar "xmobar" myPP toggleStrutsKey myConfig
