@@ -1,9 +1,7 @@
 setxkbmap -layout de
 
-~/.fehbg & 
+feh --bg-scale ${WALLPAPER}
 
-# sxhkd &
-termite & 
 compton -b
-exec xmonad
-# exec bspwm
+
+exec ${WM}
