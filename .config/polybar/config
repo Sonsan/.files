@@ -31,12 +31,13 @@ alert = #bd2c40
 [bar/bottom]
 ;monitor = ${env:MONITOR:HDMI-1}
 width = 100%
-height = 23
+height = 20
 radius = 6.0
 fixed-center = true
 bottom = true
 
-background = ${colors.background}
+;background = ${colors.background}
+background = #000000
 foreground = ${colors.foreground}
 
 line-size = 3
@@ -51,18 +52,18 @@ padding-right = 2
 module-margin-left = 1
 module-margin-right = 2
 
-font-0 = Hack:size=10;3
-font-1 = "Font Awesome 5 Free:style=Solid:pixelsize=12;3"
-font-2 = "Font Awesome 5 Free:style=Regular:pixelsize=16;3"
-font-3 = "Font Awesome 5 Free:style=Regular:pixelsize=16;3"
-font-4 = "Font Awesome 5 Brands:pixelsize=16;3"
-font-5 = Hack:size=9;3
+font-0 = Hack:size=9;3
+font-1 = "Font Awesome 5 Free:style=Solid:pixelsize=10;3"
+font-2 = "Font Awesome 5 Free:style=Regular:pixelsize=13;3"
+font-3 = "Font Awesome 5 Free:style=Regular:pixelsize=13;3"
+font-4 = "Font Awesome 5 Brands:pixelsize=13;3"
+font-5 = Hack:size=8;3
 
 
 ;modules-left = alsa pulseaudio mpd
 modules-left = mpd
 modules-center = i3
-modules-right = memory cpu battery temperature date powermenu
+modules-right = memory cpu battery temperature weather date powermenu
 
 tray-position = right
 tray-padding = 1
@@ -75,9 +76,22 @@ wm-restack = i3
 cursor-click = pointer
 cursor-scroll = ns-resize
 
+
+[bar/top]
+inherit = bar/bottom
+bottom = false
+
+
 [module/xwindow]
 type = internal/xwindow
 label = %title:0:30:...%
+
+
+[module/weather]
+type = custom/script
+exec = ~/.local/bin/statusbar/weather
+interval = 1200
+label-font = 3
 
 
 [module/i3]

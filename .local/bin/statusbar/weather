@@ -1,0 +1,45 @@
+#!/usr/bin/env sh
+# Author: Nils
+
+# REQUIRES jq
+DATA_FILE=$HOME/.local/share/weatherdata
+
+
+ICON_DEFAULT=""
+ICON_DRIZZLE=""
+ICON_STORM=""
+ICON_SUNNY=""
+ICON_CLOUDY=""
+ICON_CLOUDED_SUNNY=""
+ICON_PATCHY=""
+ICON_SNOW=""
+
+get_icon() {
+    case $1 in
+        "Light Rain"*) icon=$ICON_DRIZZLE;;
+        "Overcast") icon=$ICON_CLOUDY;;
+        "Partly cloudy") icon=$ICON_CLOUDED_SUNNY;;
+        "Patchy"*) icon=$ICON_PATCHY;;
+        *"Snow") icon=$ICON_SNOW;;
+        "Sunny") icon=$ICON_SUNNY;;
+        *) icon=$ICON_DEFAULT;
+    esac
+    echo $icon
+}
+
+get_data() {
+    # Curl weather data into file, only if connected to the internet
+    ping -q -c 1 1.1.1.1 > /dev/null || exit 1
+    curl -s "wttr.in/${LOCATION}?format=j1" > "$HOME/.local/share/weatherdata" || exit 1;
+}
+
+parse_data() {
+    # Get the important data from the response
+    PERCEIVED_TEMPC=$(jq ".current_condition[0].FeelsLikeC" $DATA_FILE | tr -d '"')
+    ACTUAL_TEMP=$(jq ".current_condition[0].temp_C" $DATA_FILE | tr -d '"')
+    WEATHER=$(jq ".current_condition[0].weatherDesc[0].value" $DATA_FILE | tr -d '"')
+
+    echo "$(get_icon "$WEATHER")" "$ACTUAL_TEMP°C"
+}
+
+get_data && parse_data
