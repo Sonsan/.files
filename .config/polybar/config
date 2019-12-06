@@ -45,7 +45,7 @@ line-color = #f00
 border-size = 0
 border-color = #00000000
 
-padding-left = 0
+padding-left = 2
 padding-right = 2
 
 module-margin-left = 1
@@ -85,17 +85,14 @@ type = internal/i3
 format = <label-state> <label-mode>
 index-sort = true
 
-
 pin-workspaces = true
 strip-wsnumbers = true
-
 
 label-mode-padding = 1
 label-mode-foreground = #000
 label-mode-background = ${colors.primary}
 label-mode-font = 4
 
-; focused = Active workspace on focused monitor
 label-focused-foreground = #518610
 label-focused-padding = 1
 label-focused-font = 4
@@ -115,18 +112,19 @@ label-separator = |
 [module/mpd]
 type = internal/mpd
 interval = 1
-format-online = <icon-prev> - <toggle> - <icon-next> : <label-time> <bar-progress> <label-song>
+format-online = <toggle> : <label-time> <label-song>
 
 icon-prev = 
 icon-stop = 
 icon-play = 
 icon-pause = 
+label-toggle-font = "Hack:size=6;3"
 icon-next = 
 
 label-song-maxlen = 25
 label-song-ellipsis = true
 
-label-time = %elapsed% / %total%
+label-time = [%elapsed% / %total%]
 label-time-font = 6
 
 bar-progress-width = 10
@@ -251,6 +249,7 @@ animation-discharging-2 = 
 animation-discharging-foreground = #832040
 animation-discharging-framerate = 750
 
+
 [module/temperature]
 type = internal/temperature
 thermal-zone = 0
@@ -266,7 +265,10 @@ label-warn-foreground = ${colors.secondary}
 ramp-0 = 
 ramp-1 = 
 ramp-2 = 
-ramp-foreground = #CC5500
+ramp-0-foreground = #832040
+ramp-1-foreground = #CC5500
+ramp-2-foreground = #317811
+
 
 [module/powermenu]
 type = custom/menu
@@ -275,7 +277,7 @@ expand-right = true
 
 format-spacing = 1
 
-label-open = 
+label-open = 
 label-open-foreground = ${colors.secondary}
 label-close =  cancel
 label-close-foreground = ${colors.secondary}
@@ -290,10 +292,10 @@ menu-0-1-exec = menu-open-2
 menu-1-0 = cancel
 menu-1-0-exec = menu-open-0
 menu-1-1 = reboot
-menu-1-1-exec = sudo reboot
+menu-1-1-exec = reboot
 
 menu-2-0 = power off
-menu-2-0-exec = sudo poweroff
+menu-2-0-exec = poweroff
 menu-2-1 = cancel
 menu-2-1-exec = menu-open-0
 
