@@ -8,7 +8,6 @@ export EDITOR="emacs"
 export BROWSER="qutebrowser"
 export VIEWER="zathura"
 
-
 # Files
 export BIB="$HOME/Documents/University/LaTeX/uni.bib"
 export WALLPAPER=~/Pictures/Wallpapers/Touhou_Christmas.png
@@ -16,3 +15,6 @@ export WALLPAPER=~/Pictures/Wallpapers/Touhou_Christmas.png
 # Window Manager
 export WM="i3"
 export STATUSBAR="polybar"
+
+# MISC
+export LOCATION="Berlin"
