@@ -76,13 +76,13 @@ Just like my old init.el, but in CHAD-LIKE-org mode
 * Editing
 ** Multiple Cursors
 	 #+BEGIN_SRC emacs-lisp
-	 (use-package multiple-cursors
-	   :ensure t
-		 :config
-		 (global-set-key (kbd "C->") 'mc/mark-next-like-this)
-		 (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
-		 (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
-		 )
+   (use-package multiple-cursors
+     :ensure t
+     :config
+     (global-set-key (kbd "C->") 'mc/mark-next-like-this)
+     (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+     (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
+   )
 	 #+END_SRC
 ** Movement
 *** Windows
@@ -268,9 +268,8 @@ Just like my old init.el, but in CHAD-LIKE-org mode
    #+END_SRC
 ** Haskell
    #+BEGIN_SRC emacs-lisp
-	 (use-package haskell-mode
-	   :ensure t)
-
+   (use-package haskell-mode
+     :ensure t)
    (setq haskell-process-log t)
    (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
    #+END_SRC
