@@ -1,9 +1,0 @@
-[Desktop Entry]
-Type=Application
-Name=Movie Monad
-GenericName=Video Player
-Categories=AudioVideo;Audio;Video;Player;
-Comment=Play Videos
-Icon=com.lettier.movie-monad
-Terminal=false
-Exec=/home/randy/.local/bin/movie-monad-0.0.7.0-x86_64.AppImage
