@@ -1,28 +1,33 @@
 #!/usr/bin/env sh
 # Author: Nils
 
-# REQUIRES jq
+# This script requests weather data from 'wrrt.in'
+# and outputs the needed Data
+# REQUIREMENTS: jq
+
 DATA_FILE=$HOME/.local/share/weatherdata
 
-
 ICON_DEFAULT=""
-ICON_DRIZZLE=""
-ICON_STORM=""
-ICON_SUNNY=""
-ICON_CLOUDY=""
-ICON_CLOUDED_SUNNY=""
+ICON_RAIN=""
+ICON_CLOUDY="%{F#6e7f80}%{F-}"
 ICON_PATCHY=""
 ICON_SNOW=""
 
+
 get_icon() {
+    # Assigns the right icon to the current weather.
+    # TODO: I should do this nicer
+    time=$(date +"%H")
+    PREFIX=$( if [ $time -gt 5 -a $time -lt 18 ]; then echo "";\
+              else echo ""; fi )
     case $1 in
-        "Light Rain"*) icon=$ICON_DRIZZLE;;
-        "Overcast") icon=$ICON_CLOUDY;;
-        "Partly cloudy") icon=$ICON_CLOUDED_SUNNY;;
-        "Patchy"*) icon=$ICON_PATCHY;;
-        *"Snow") icon=$ICON_SNOW;;
-        "Sunny") icon=$ICON_SUNNY;;
-        *) icon=$ICON_DEFAULT;
+        "Light Rain")    icon=$ICON_RAIN;;
+        "Light Drizzle") icon=$ICON_RAIN;;
+        "Overcast")      icon=$ICON_CLOUDY;;
+        "Partly cloudy") icon=$ICON_CLOUDY;;
+        "Patchy")        icon=$ICON_PATCHY;;
+        "Snow")          icon=$ICON_SNOW;;
+        *)               icon=$PREFIX;
     esac
     echo $icon
 }
@@ -30,15 +35,15 @@ get_icon() {
 get_data() {
     # Curl weather data into file, only if connected to the internet
     ping -q -c 1 1.1.1.1 > /dev/null || exit 1
-    curl -s "wttr.in/${LOCATION}?format=j1" > "$HOME/.local/share/weatherdata" || exit 1;
+    curl -s "wttr.in/${LOCATION}?format=j1" > \
+         "$HOME/.local/share/weatherdata" || exit 1;
 }
 
 parse_data() {
-    # Get the important data from the response
-    PERCEIVED_TEMPC=$(jq ".current_condition[0].FeelsLikeC" $DATA_FILE | tr -d '"')
+    # Get the important data from the response, cutting away the quotes
     ACTUAL_TEMP=$(jq ".current_condition[0].temp_C" $DATA_FILE | tr -d '"')
-    WEATHER=$(jq ".current_condition[0].weatherDesc[0].value" $DATA_FILE | tr -d '"')
-
+    WEATHER=$(jq ".current_condition[0].weatherDesc[0].value"\
+                 $DATA_FILE | tr -d '"')
     echo "$(get_icon "$WEATHER")" "$ACTUAL_TEMP°C"
 }
 

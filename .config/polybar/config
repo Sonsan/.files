@@ -1,14 +1,5 @@
 ;==========================================================
 ;
-;
-;   ██████╗  ██████╗ ██╗  ██╗   ██╗██████╗  █████╗ ██████╗
-;   ██╔══██╗██╔═══██╗██║  ╚██╗ ██╔╝██╔══██╗██╔══██╗██╔══██╗
-;   ██████╔╝██║   ██║██║   ╚████╔╝ ██████╔╝███████║██████╔╝
-;   ██╔═══╝ ██║   ██║██║    ╚██╔╝  ██╔══██╗██╔══██║██╔══██╗
-;   ██║     ╚██████╔╝███████╗██║   ██████╔╝██║  ██║██║  ██║
-;   ╚═╝      ╚═════╝ ╚══════╝╚═╝   ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝
-;
-;
 ;   To learn more about how to configure Polybar
 ;   go to https://github.com/polybar/polybar
 ;
@@ -32,16 +23,12 @@ alert = #bd2c40
 ;monitor = ${env:MONITOR:HDMI-1}
 width = 100%
 height = 20
-radius = 6.0
+radius = 0
 fixed-center = true
 bottom = true
 
-;background = ${colors.background}
 background = #000000
 foreground = ${colors.foreground}
-
-line-size = 3
-line-color = #f00
 
 border-size = 0
 border-color = #00000000
@@ -59,19 +46,14 @@ font-3 = "Font Awesome 5 Free:style=Regular:pixelsize=13;3"
 font-4 = "Font Awesome 5 Brands:pixelsize=13;3"
 font-5 = Hack:size=8;3
 
-
-;modules-left = alsa pulseaudio mpd
-modules-left = mpd
+modules-left = alsa music-menu mpd
 modules-center = i3
-modules-right = memory cpu battery temperature weather date powermenu
+modules-right = temperature backlight weather battery date
 
 tray-position = right
 tray-padding = 1
-;tray-background = #0063ff
 
 wm-restack = i3
-
-;override-redirect = true
 
 cursor-click = pointer
 cursor-scroll = ns-resize
@@ -90,104 +72,60 @@ label = %title:0:30:...%
 [module/weather]
 type = custom/script
 exec = ~/.local/bin/statusbar/weather
-interval = 1200
+interval = 600
 label-font = 3
 
 
-[module/i3]
-type = internal/i3
-format = <label-state> <label-mode>
-index-sort = true
+[module/music-menu]
+; Will probably put this in a script, as this would
+; allow me to change the color of buttons when pressed
+type=custom/menu
+format-spacing = 2
+label-open = 
 
-pin-workspaces = true
-strip-wsnumbers = true
-
-label-mode-padding = 1
-label-mode-foreground = #000
-label-mode-background = ${colors.primary}
-label-mode-font = 4
-
-label-focused-foreground = #518610
-label-focused-padding = 1
-label-focused-font = 4
-
-label-unfocused-padding = 1
-label-unfocused-font = 4
-
-label-visible-padding = 1
-label-visible-font = 4
-
-label-urgent-padding = 1
-label-urgent-font = 4
-
-label-separator = |
-
+menu-0-0 = " "
+menu-0-0-exec = mpc prev
+menu-0-1 = "  "
+menu-0-1-exec = mpc toggle
+menu-0-2 = "  "
+menu-0-2-exec = mpc next
+menu-0-3 = "   "
+menu-0-3-exec = mpc random
+menu-0-4 = " "
+menu-0-4-exec = mpc repeat
 
 [module/mpd]
 type = internal/mpd
 interval = 1
-format-online = <toggle> : <label-time> <label-song>
+format-online = <label-time> <label-song>
 
-icon-prev = 
-icon-stop = 
-icon-play = 
-icon-pause = 
-label-toggle-font = "Hack:size=6;3"
-icon-next = 
-
-label-song-maxlen = 25
+label-song-maxlen = 30
 label-song-ellipsis = true
 
 label-time = [%elapsed% / %total%]
 label-time-font = 6
+label-time-foreground = #666666
 
-bar-progress-width = 10
-bar-progress-indicator = |
-bar-progress-fill = ─
-bar-progress-empty = ─
-
-[module/xbacklight]
-type = internal/xbacklight
-
-format = <label> <bar>
-label = BL
-
-bar-width = 10
-bar-indicator = |
-bar-indicator-foreground = #fff
-bar-indicator-font = 2
-bar-fill = ─
-bar-fill-font = 2
-bar-fill-foreground = #9f78e1
-bar-empty = ─
-bar-empty-font = 2
-bar-empty-foreground = ${colors.foreground-alt}
-
-[module/backlight-acpi]
-inherit = module/xbacklight
-type = internal/backlight
-card = intel_backlight
 
 [module/cpu]
 type = internal/cpu
 interval = 2
 format-prefix = " "
 format-prefix-foreground = #2d44a4
-;format-underline = #f90000
 label = %percentage:2%%
+
 
 [module/memory]
 type = internal/memory
 interval = 2
 format-prefix = " "
 format-prefix-foreground = #1d881d
-;format-underline = #4bffdc
 label = %percentage_used%%
 
 
 [module/date]
 type = internal/date
-interval = 5
+interval = 1
 
 date =
 date-alt = " %Y-%m-%d"
@@ -196,37 +134,21 @@ time = %H:%M
 time-alt = %H:%M:%S
 
 format-prefix = 
-format-prefix-foreground = #4D4238
+format-prefix-foreground = #26725d
 
 label = %date% %time%
+
 
 [module/alsa]
 type = internal/alsa
 
-format-volume = <label-volume> <bar-volume>
-label-volume = VOL
+format-volume = <label-volume>
+label-volume =  %percentage%%
 label-volume-foreground = ${root.foreground}
 
-format-muted-prefix = " "
-format-muted-foreground = ${colors.foreground-alt}
-label-muted = sound muted
+label-muted = 
+label-muted-foreground = #fd0204
 
-bar-volume-width = 10
-bar-volume-foreground-0 = #55aa55
-bar-volume-foreground-1 = #55aa55
-bar-volume-foreground-2 = #55aa55
-bar-volume-foreground-3 = #55aa55
-bar-volume-foreground-4 = #55aa55
-bar-volume-foreground-5 = #f5a70a
-bar-volume-foreground-6 = #ff5555
-bar-volume-gradient = false
-bar-volume-indicator = |
-bar-volume-indicator-font = 2
-bar-volume-fill = ─
-bar-volume-fill-font = 2
-bar-volume-empty = ─
-bar-volume-empty-font = 2
-bar-volume-empty-foreground = ${colors.foreground-alt}
 
 [module/battery]
 type = internal/battery
@@ -235,8 +157,6 @@ adapter = AC
 full-at = 98
 
 format-charging = <animation-charging> <label-charging>
-;format-charging-underline = #ffb52a
-
 format-discharging = <animation-discharging> <label-discharging>
 
 format-full-prefix = ""
@@ -276,42 +196,54 @@ label = %temperature-c%
 label-warn = %temperature-c%
 label-warn-foreground = ${colors.secondary}
 
-ramp-0 = 
+ramp-2 = 
 ramp-1 = 
-ramp-2 = 
-ramp-0-foreground = #832040
+ramp-0 = 
+ramp-2-foreground = #832040
 ramp-1-foreground = #CC5500
-ramp-2-foreground = #317811
+ramp-0-foreground = #317811
 
 
-[module/powermenu]
-type = custom/menu
+[module/backlight]
+type = internal/xbacklight
+enable-scroll = false
+label = %percentage%%
 
-expand-right = true
+; Only applies if <bar> is used
+bar-width = 10
+bar-indicator = |
+bar-fill = ─
+bar-empty = ─
 
-format-spacing = 1
 
-label-open = 
-label-open-foreground = ${colors.secondary}
-label-close =  cancel
-label-close-foreground = ${colors.secondary}
+[module/i3]
+type = internal/i3
+format = <label-state> <label-mode>
+index-sort = true
+
+pin-workspaces = true
+strip-wsnumbers = true
+
+label-mode-padding = 1
+label-mode-foreground = #000
+label-mode-background = ${colors.primary}
+label-mode-font = 4
+
+label-focused-foreground = #518610
+label-focused-padding = 1
+label-focused-font = 4
+
+label-unfocused-padding = 1
+label-unfocused-font = 4
+
+label-visible-padding = 1
+label-visible-font = 4
+
+label-urgent-padding = 1
+label-urgent-font = 4
+
 label-separator = |
-label-separator-foreground = ${colors.foreground-alt}
 
-menu-0-0 = reboot
-menu-0-0-exec = menu-open-1
-menu-0-1 = power off
-menu-0-1-exec = menu-open-2
-
-menu-1-0 = cancel
-menu-1-0-exec = menu-open-0
-menu-1-1 = reboot
-menu-1-1-exec = reboot
-
-menu-2-0 = power off
-menu-2-0-exec = poweroff
-menu-2-1 = cancel
-menu-2-1-exec = menu-open-0
 
 [settings]
 screenchange-reload = true
