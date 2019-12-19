@@ -1,7 +1,8 @@
 setxkbmap -layout de
 
-feh --bg-scale ${WALLPAPER}
+feh --bg-scale ${WALLPAPER_1}
 
-compton -b
+dunst &         # nofification manager
+picom -b      # compositor
 
 exec ${WM}

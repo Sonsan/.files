@@ -10,8 +10,7 @@
 ## alternative location to config file which defines that while launching
 ## ncmpcpp.
 ##
-#
-#ncmpcpp_directory = ~/.ncmpcpp
+ncmpcpp_directory = ~/.config/ncmpcpp
 #
 ##
 ## Directory for storing downloaded lyrics. It defaults to ~/.lyrics since other
@@ -67,10 +66,8 @@ visualizer_output_name = "Visualizer feed"
 ## experience synchronization problems, set it to lower value.  Keep in mind
 ## that sane values start with >=10.
 visualizer_sync_interval = "30"
-visualizer_type = "wave"
+visualizer_type = "ellipse"
 visualizer_look = "●▮"
-
-
 
 
 
@@ -82,7 +79,7 @@ visualizer_look = "●▮"
 ##
 #visualizer_type = wave
 #
-#visualizer_look = 
+#visualizer_look =
 #
 #visualizer_color = blue, cyan, green, yellow, magenta, red
 #
