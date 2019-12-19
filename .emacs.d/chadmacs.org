@@ -7,7 +7,7 @@ Some useful basic settings
 (tool-bar-mode 0)
 (menu-bar-mode 0)
 (setq visible-bell t)
-(setq inhibit-startup-screen t)
+(setq inhibit-startup-screen t)  ;; only chumps like this
 (setq initial-scratch-message nil)
 (define-key menu-bar-tools-menu [games] nil)  ;; Disable games
 (column-number-mode t)
@@ -29,36 +29,13 @@ Use UTF-8, because who doesnt like emojis 😂 😂 😂 😂
 (set-selection-coding-system 'utf-8)
 (prefer-coding-system 'utf-8)
 #+END_SRC
-** Buffer
-*** Line Numbers
-#+BEGIN_SRC emacs-lisp
-(when (version<= "26.0.50" emacs-version)
-  (global-display-line-numbers-mode))
-#+END_SRC
-*** Font
-#+BEGIN_SRC emacs-lisp
-(set-default-font "Source Code Pro")
-#+END_SRC
-*** Transparency
-Allows me to toggle the Buffer's transparency
-#+BEGIN_SRC emacs-lisp
-(defun transparency (value)
-  "Sets the transparency of the frame window. 0=transparent/100=opaque"
-  (interactive "nTransparency Value 0 - 100 opaque:")
-  (set-frame-parameter (selected-frame) 'alpha value))
-  (global-set-key (kbd "C-c C-t") 'transparency)
-#+END_SRC
-** Search / Copy / Paste
-#+BEGIN_SRC emacs-lisp
-(setq-default case-fold-search nil)
-(setq mouse-yank-at-point t)
-#+END_SRC
 ** Startup
 Open the following files
 #+BEGIN_SRC emacs-lisp
 (find-file "~/.emacs.d/chadmacs.org")
 #+END_SRC
 * Package Installation
+** Package Archive
 #+BEGIN_SRC emacs-lisp
 (require 'package)
 (setq package-enable-at-startup nil)
@@ -72,7 +49,7 @@ Open the following files
   (package-refresh-contents)
   (package-install 'use-package))
 #+END_SRC
-* Editing
+* Editing.
 ** Multiple Cursors
 #+BEGIN_SRC emacs-lisp
 (use-package multiple-cursors
@@ -147,19 +124,150 @@ Line-/Wordtransposing but with better keybindings.
 #+BEGIN_SRC emacs-lisp
 (use-package avy
   :ensure t
-  :bind
-  ("M-s" . avy-goto-char))
+  :bind ("M-s" . avy-goto-char))
+#+END_SRC
+*** Scrolling
+This makes scrolling nicer.
+#+BEGIN_SRC emacs-lisp
+(setq scroll-conservatively 100)
+#+END_SRC
+*** Which-Key
+Shows possible completions for Keyboard-Commands
+#+BEGIN_SRC emacs-lisp
+(use-package which-key
+  :ensure t
+  :config
+    (which-key-mode))
 #+END_SRC
 ** Marking
+After marking a word/words, =C-c q= will mark the next occurence
+of the marked word/words and place multiple cursors on the position.
 #+BEGIN_SRC emacs-lisp
-(use-package expand-region
+(use-package mark-multiple
   :ensure t
-  :bind (("C-=" . er/expand-region))
+  :bind
+    ("C-c n q" . 'mark-next-like-this)
+    ("C-c r q" . 'mark-all-like-this-in-region)
+    ("C-c a q" . 'mark-all-like-this))
+#+END_SRC
+** Search / Copy / Paste
+#+BEGIN_SRC emacs-lisp
+(setq-default case-fold-search nil)
+(setq mouse-yank-at-point t)
+#+END_SRC
+*** Swiper
+Makes searching for entire words much easier.
+#+BEGIN_SRC emacs-lisp
+(use-package swiper
+  :ensure t
+  :bind ("C-s" . 'swiper))
+#+END_SRC
+** Snippets
+#+BEGIN_SRC emacs-lisp
+(use-package yasnippet
+  :ensure t
   :config
-  (pending-delete-mode t))
+    (use-package yasnippet-snippets
+      :ensure t)
+    (yas-reload-all))
+(add-hook 'prog-mode-hook 'yas-minor-mode)
+(add-hook 'LaTeX-mode-hook 'yas-minor-mode)
+#+END_SRC
+
+** Other Useful Functions
+*** Delete the entire line
+Normaly I would have to =C-a= followed by =M-k= to delete the entire line.
+#+BEGIN_SRC emacs-lisp
+(global-set-key (kbd "C-c l k") 'kill-whole-line)
+#+END_SRC
+*** Delete the entire word
+#+BEGIN_SRC emacs-lisp
+(defun nils-kill-word()
+  (interactive)
+  (backward-word)
+  (kill-word 1))
+(global-set-key (kbd "C-c w k") 'nils-kill-word)
+#+END_SRC
+*** CamelCase as seperate words
+The fact that emacs sees a camel case word as one word doesn't
+play well with the delete word function. This changes things.
+#+BEGIN_SRC emacs-lisp
+(global-subword-mode 1)
+#+END_SRC
+*** Matching Brackets
+Writes closing brackets for me
+#+BEGIN_SRC emacs-lisp
+(setq electric-pair-pairs '(
+  (?\( . ?\))
+  (?\[ . ?\])
+  ))
+(electric-pair-mode t)
+#+END_SRC
+*** Ido-Mode
+A prettier version of =find-file=
+#+BEGIN_SRC emacs-lisp
+(setq ido-enable-flex-matching nil)
+(setq ido-create-new-buffer 'always)
+(setq ido-everywhere t)
+(ido-mode 1)
+#+END_SRC
+Makes the minibuffer vertical.
+#+BEGIN_SRC emacs-lisp
+(use-package ido-vertical-mode
+  :ensure t
+  :init (ido-vertical-mode 1))
+(setq ido-vertica-define-keys 'C-n-and-C-p-only)
+#+END_SRC
+*** Smex
+Just like =ido-vertical-mode= but for =M-x=
+#+BEGIN_SRC emacs-lisp
+(use-package smex
+  :ensure t
+  :init (smex-initialize)
+  :bind ("M-x" . smex))
 #+END_SRC
 
 * Visual
+** Theme
+*** Color Theme
+#+BEGIN_SRC emacs-lisp
+(use-package zerodark-theme
+  :ensure t
+  :init (load-theme 'zerodark t))
+#+END_SRC
+*** Status bar
+#+BEGIN_SRC emacs-lisp
+(use-package doom-modeline
+      :ensure t
+      :hook (after-init . doom-modeline-mode)
+      :config
+        (setq doom-modeline-height 15)
+        (setq doom-modeline-major-mode-icon t))
+#+END_SRC
+** Buffer
+*** Line Numbers
+#+BEGIN_SRC emacs-lisp
+(when (version<= "26.0.50" emacs-version)
+  (global-display-line-numbers-mode))
+#+END_SRC
+*** Font
+#+BEGIN_SRC emacs-lisp
+(set-default-font "Source Code Pro")
+#+END_SRC
+*** Transparency
+Allows me to toggle the Buffer's transparency
+#+BEGIN_SRC emacs-lisp
+(defun transparency (value)
+  "Sets the transparency of the frame window. 0=transparent/100=opaque"
+  (interactive "nTransparency Value 0 - 100 opaque:")
+  (set-frame-parameter (selected-frame) 'alpha value))
+  (global-set-key (kbd "C-c C-t") 'transparency)
+#+END_SRC
+*** Better Buffer List
+#+BEGIN_SRC emacs-lisp
+(global-set-key (kbd "C-x C-b") 'ibuffer)
+#+END_SRC
+
 ** Parentheses
 #+BEGIN_SRC emacs-lisp
 (use-package rainbow-delimiters
@@ -170,7 +278,7 @@ Line-/Wordtransposing but with better keybindings.
 #+BEGIN_SRC emacs-lisp
 (use-package rainbow-mode
   :ensure t
-  :init (rainbow-mode t))
+  :hook ('prog-mode . 'rainbow-mode) ('conf-mode . 'rainbow-mode))
 #+END_SRC
 ** Indentation
 #+BEGIN_SRC emacs-lisp
@@ -184,11 +292,117 @@ Open a pretty dashboard with recent projects
 (use-package dashboard
 :ensure t
 :config
- (dashboard-setup-startup-hook)
- (setq dashboard-startup-banner "~/.emacs.d/img/Asuka_small.png")
- (setq dashboard-items '((recents  . 7) (projects . 2)))
- (setq dashboard-banner-logo-title ""))
+  (dashboard-setup-startup-hook)
+  (setq dashboard-startup-banner "~/.emacs.d/img/Asuka_small.png")
+  (setq dashboard-items '((recents  . 7) (projects . 2)))
+  (setq dashboard-banner-logo-title " Asuka  ")
+  (setq dashboard-set-file-icons t))
 #+END_SRC
+* Programming
+** Code Completion
+#+BEGIN_SRC emacs-lisp
+(use-package company
+  :ensure t
+  :config
+    (setq company-idle-delay 0)
+    (setq company-minimum-prefix-length 3))
+
+(with-eval-after-load 'company
+  (define-key company-active-map (kbd "M-n") nil)
+  (define-key company-active-map (kbd "M-p") nil)
+  (define-key company-active-map (kbd "C-n") #'company-select-next)
+  (define-key company-active-map (kbd "C-p") #'company-select-previous)
+  (define-key company-active-map (kbd "SPC") #'company-abort))
+#+END_SRC
+** Project Management
+#+BEGIN_SRC emacs-lisp
+(use-package projectile
+  :ensure t
+  :config
+  (projectile-mode t)
+  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map))
+#+END_SRC
+
+** C/C++
+#+BEGIN_SRC emacs-lisp
+(use-package flycheck-clang-analyzer
+  :ensure t
+  :config
+  (with-eval-after-load 'flycheck
+    (require 'flycheck-clang-analyzer)
+     (flycheck-clang-analyzer-setup)))
+
+(with-eval-after-load 'company
+  (add-hook 'c++-mode-hook 'company-mode)
+  (add-hook 'c-mode-hook 'company-mode))
+
+(use-package company-c-headers
+  :ensure t)
+
+(use-package company-irony
+  :ensure t
+  :config
+  (setq company-backends '((company-c-headers
+                            company-dabbrev-code
+                            company-irony))))
+
+(use-package irony
+  :ensure t
+  :config
+  (add-hook 'c++-mode-hook 'irony-mode)
+  (add-hook 'c-mode-hook 'irony-mode)
+  (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options))
+
+#+END_SRC
+** Haskell
+#+BEGIN_SRC emacs-lisp
+(use-package haskell-mode
+  :ensure t)
+(setq haskell-process-log t)
+(add-hook 'haskell-mode-hook 'interactive-haskell-mode)
+#+END_SRC
+** Python
+#+BEGIN_SRC emacs-lisp
+(add-hook 'python-mode-hook 'flycheck-mode)
+
+(with-eval-after-load 'company
+    (add-hook 'python-mode-hook 'company-mode))
+
+(use-package company-jedi
+  :ensure t
+  :config
+    (require 'company)
+    (add-to-list 'company-backends 'company-jedi))
+
+(defun python-mode-company-init ()
+  (setq-local company-backends '((company-jedi
+                                  company-etags
+                                  company-dabbrev-code))))
+
+(use-package company-jedi
+  :ensure t
+  :config
+    (require 'company)
+    (add-hook 'python-mode-hook 'python-mode-company-init))
+#+END_SRC
+** Shell
+#+BEGIN_SRC emacs-lisp
+(add-hook 'shell-mode-hook 'flycheck-mode)
+(add-hook 'shell-mode-hook 'company-mode)
+
+(defun shell-mode-company-init ()
+  (setq-local company-backends '((company-shell
+                                  company-shell-env
+                                  company-etags
+                                  company-dabbrev-code))))
+
+(use-package company-shell
+  :ensure t
+  :config
+    (require 'company)
+    (add-hook 'shell-mode-hook 'shell-mode-company-init))
+#+END_SRC
+
 * LaTeX
 ** Basics
 #+BEGIN_SRC emacs-lisp
@@ -236,45 +450,11 @@ https://github.com/tmalsburg/helm-bibtex
     (lambda (fpath)
       (call-process "zathura" nil 0 nil fpath)))
   #+END_SRC
-* Programming
-** Code Completion
-#+BEGIN_SRC emacs-lisp
-(use-package company
-  :ensure t
-  :config
-  (add-hook 'after-init-hook 'global-company-mode)
-  (use-package company-bibtex
-    :ensure t))
-#+END_SRC
-** Project Management
-#+BEGIN_SRC emacs-lisp
-(use-package projectile
-  :ensure t
-  :config
-  (projectile-mode t)
-  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map))
-#+END_SRC
-
-** C/C++
-#+BEGIN_SRC emacs-lisp
-(add-hook 'c-mode-hook
-  (lambda ()
-    (add-to-list 'ac-sources 'ac-source-c-headers)
-    (add-to-list 'ac-sources 'ac-source-c-header-symbols t)))
-#+END_SRC
-** Haskell
-#+BEGIN_SRC emacs-lisp
-(use-package haskell-mode
-  :ensure t)
-(setq haskell-process-log t)
-(add-hook 'haskell-mode-hook 'interactive-haskell-mode)
-#+END_SRC
 * Version Control
 #+BEGIN_SRC emacs-lisp
 (use-package magit
   :ensure t
-  :config
-  (global-set-key (kbd "C-x g") 'magit-status))
+  :config (global-set-key (kbd "C-x g") 'magit-status))
 #+END_SRC
 * Org-Mode
 #+BEGIN_SRC emacs-lisp
@@ -285,8 +465,7 @@ https://github.com/tmalsburg/helm-bibtex
 ;; org bullets
 (use-package org-bullets
   :ensure t
-  :config
-  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+  :config (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
 
  ;; My own todo states :3
  (setq org-todo-keywords
@@ -299,3 +478,6 @@ https://github.com/tmalsburg/helm-bibtex
 
 (add-hook 'org-mode-hook 'tex-org-mode-hook)
 #+END_SRC
+
+
+dsajdklds dkjs
