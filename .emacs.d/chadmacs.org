@@ -1,4 +1,6 @@
 Just like my old init.el, but in CHAD-LIKE-org mode
+#+ATTR_HTML: :style margin-left: auto; margin-right: auto;
+[[./img/screen.png]]
 
 * Basics
 ** MISC
