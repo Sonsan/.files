@@ -13,11 +13,11 @@ export WALLPAPER_DIR=~/Pictures/Wallpapers
 
 # Files
 export BIB=~/Documents/University/LaTeX/uni.bib
-export WALLPAPER_1=$WALLPAPER_DIR/Landscapes/Real/
+export WALLPAPER_1=$WALLPAPER_DIR/Cityscapes/Real/Rainy_Suburb.jpg
 export WALLPAPER_2=$WALLPAPER_DIR/Landscapes/Real/Snowy_Forest_Road_daytime2.jpg
 
 # Window Manager
-export WM="i3"
+export WM="dwm"
 export STATUSBAR="polybar"
 
 # MISC
