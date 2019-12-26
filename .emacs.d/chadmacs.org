@@ -16,7 +16,6 @@ Some useful basic settings
 (fset 'yes-or-no-p 'y-or-n-p)                                  ;; y/n instead of yes/no
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 (blink-cursor-mode 0)  ;; the blinking makes me anxious
-(add-hook 'after-init-hook 'global-whitespace-mode)  ;; diplay whitespaces
 (setq require-final-newline t)   ;; file always ends with newline
 (global-auto-revert-mode t)   ;; reload changed files
 #+END_SRC
