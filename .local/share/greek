@@ -1,48 +1,53 @@
-Α capital Alpha; U+0391
-Β capital Beta; U+0392
-Γ capital Gamma; U+0393
-Δ capital Delta; U+0394
-Ε capital Epsilon; U+0395
-Ζ capital Zeta; U+0396
-Η capital Eta; U+0397
-Θ capital Theta; U+0398
-Ι capital Iota; U+0399
-Κ capital Kappa; U+039A
-Λ capital Lambda; U+039B
-Μ capital Mu; U+039C
-Ν capital Nu; U+039D
-Ξ capital Xi; U+039E
-Ο capital Omicron; U+039F
-Π capital Pi; U+03A0
-Ρ capital Rho; U+03A1
-Σ capital Sigma; U+03A3
-Τ capital Tau; U+03A4
-Υ capital Upsilon; U+03A5
-Φ capital Phi; U+03A6
-Χ capital Chi; U+03A7
-Ψ capital Psi; U+03A8
-Ω capital Omega; U+03A9
-α small Alpha; U+03B1
-β small Beta; U+03B2
-γ small Gamma; U+03B3
-δ small Delta; U+03B4
-ε small Epsilon; U+03B5
-ζ small Zeta; U+03B6
-η small Eta; U+03B7
-θ small Theta; U+03B8
-ι small Iota; U+03B9
-κ small Kappa; U+03BA
-λ small Lambda; U+03BB
-μ small Mu; U+03BC
-ν small Nu; U+03BD
-ξ small Xi; U+03BE
-ο small Omicron; U+03BF
-π small Pi; U+03C0
-ρ small Rho; U+03C1
-σ small Sigma; U+03C3
-τ small Tau; U+03C4
-υ small Upsilon; U+03C5
-φ small Phi; U+03C6
-χ small Chi; U+03C7
-ψ small Psi; U+03C8
-ω small Omega; U+03C9
+# Capital Letters
+Α Alpha; U+0391
+Β Beta; U+0392
+Γ Gamma; U+0393
+Δ Delta; U+0394
+Ε Epsilon; U+0395
+Ζ Zeta; U+0396
+Η Eta; U+0397
+Θ Theta; U+0398
+Ι Iota; U+0399
+Κ Kappa; U+039A
+Λ Lambda; U+039B
+Μ Mu; U+039C
+Ν Nu; U+039D
+Ξ Xi; U+039E
+Ο Omicron; U+039F
+Π Pi; U+03A0
+Ρ Rho; U+03A1
+Σ Sigma; U+03A3
+Τ Tau; U+03A4
+Υ Upsilon; U+03A5
+Φ Phi; U+03A6
+Χ Chi; U+03A7
+Ψ Psi; U+03A8
+Ω Omega; U+03A9
+#
+# Small Letters
+α Alpha; U+03B1
+β Beta; U+03B2
+γ Gamma; U+03B3
+δ Delta; U+03B4
+ε Epsilon; U+03B5
+ζ Zeta; U+03B6
+η Eta; U+03B7
+θ Theta; U+03B8
+ι Iota; U+03B9
+κ Kappa; U+03BA
+λ Lambda; U+03BB
+μ Mu; U+03BC
+ν Nu; U+03BD
+ξ Xi; U+03BE
+ο Omicron; U+03BF
+π Pi; U+03C0
+ρ Rho; U+03C1
+σ Sigma; U+03C3
+τ Tau; U+03C4
+υ Upsilon; U+03C5
+φ Phi; U+03C6
+χ Chi; U+03C7
+ψ Psi; U+03C8
+ω Omega; U+03C9
+#
+# Var Versions
