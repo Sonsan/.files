@@ -1,3 +1,51 @@
+# MATH SYMBOLS
+## Arithmetic Operators
+± Plus Minus; U+00B1
+∓ Minus Plus; U+2213
+≠ Unequal; U+2260
+≈ Almost Equal; U+2248
+≃ Asymptotical Equal; U+2243
+÷ Divide; U+00F7
+∙ Dot; U+2219
+× Cross; U+00D7
+∫ Integral; U+222B
+∬ Double Integral; U+222C
+∭ Triple Integral; U+222D
+∮ Contour Integral; U+222E
+∯ Surface Integral; U+222F
+∰ Volume Integral; U+2230
+## Logic Operators
+∀ For All; U+2200
+∃ Exists; U+2203
+∄ Does not Exits; U+2204
+∈ Element Of; U+2208
+∉ Not Element Of; U+2209
+∅ Empty Set; U+2205
+∧ And; U+2227
+∨ Or; U+2228
+∩ Intersection; U+2229
+∪ Union; U+222A
+⊂ Subset; U+2282
+⊃ Superset; U+2283
+⊄ Not Subset; U+2284
+⊅ Not Superset; U+2285
+⊆ Subset; U+2286
+⊇ Superset; U+2287
+⊈ Not Subset Nor Equal; U+2288
+⊉ Not Superset Nor Equal; U+2289
+⊊ Not Equal Subset; U+228A
+⊋ Not Equal Superset; U+228B
+⊥ Orthogonal; U+22A5
+## MISC
+∞ Infinity; U+221E
+# -----------------------------------------------------
+# Calligraphic Letters
+ℚ Rational; N/A
+ℝ Real; N/A
+ℤ Integers; N/A
+ℕ Natural Numbers; N/A
+#------------------------------------------------------
+# GREEK LETTERS
 # Capital Letters
 Α Alpha; U+0391
 Β Beta; U+0392
@@ -24,7 +72,7 @@
 Ψ Psi; U+03A8
 Ω Omega; U+03A9
 #
-# Small Letters
+## Small Letters
 α Alpha; U+03B1
 β Beta; U+03B2
 γ Gamma; U+03B3

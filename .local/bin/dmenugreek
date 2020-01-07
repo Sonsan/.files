@@ -7,7 +7,7 @@
 xclip -h >/dev/null || exit
 
 # Font is from Firefox / Noto Fonts
-chosen=$(grep -v "#" ~/.local/share/greek | dmenu -i -l 10 -fn Noto-Serif-12)
+chosen=$(grep -v "#" ~/.local/share/math | dmenu -i -l 10 -fn Noto-Serif-12)
 
 [ "$chosen" != "" ] || exit
 
