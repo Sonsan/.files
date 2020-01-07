@@ -21,4 +21,4 @@ export WM="dwm"
 export STATUSBAR="polybar"
 
 # MISC
-export LOCATION="Floersheim"
+export LOCATION="Frankfurt"
