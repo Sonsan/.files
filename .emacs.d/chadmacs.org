@@ -267,6 +267,14 @@ Allows me to toggle the Buffer's transparency
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 #+END_SRC
 
+*** Always close current Buffer
+#+BEGIN_SRC emacs-lisp
+(defun kill-current-buffer ()
+  "Kills the current buffer."
+  (interactive)
+  (kill-buffer (current-buffer)))
+(global-set-key (kbd "C-x k") 'kill-current-buffer)
+#+END_SRC
 ** Parentheses
 #+BEGIN_SRC emacs-lisp
 (use-package rainbow-delimiters

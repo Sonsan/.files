@@ -1,20 +1,2 @@
-rofi.combi-modi: window,drun
-rofi.modi: combi
+rofi.theme: /home/nils/.local/share/rofi/themes/Paper.rasi
 
-
-rofi.theme: Pop-Dark
-rofi.font: hack 13
-rofi.show-icons: true
-rofi.icon-theme: Adiwa
-
-rofi.drun-display-format: ↪{name}↩
-rofi.seperator-style: solid
-rofi.display-drun:  🐧
-
-rofi.display-file-browser: 🐧
-
-rofi.width: 30
-rofi.lines: 5
-rofi.location: 3
-rofi.yoffset: 10
-rofi.xoffset: -10
