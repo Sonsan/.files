@@ -48,7 +48,8 @@ font-5 = Hack:size=8;3
 
 modules-left = alsa music-menu mpd
 modules-center = i3
-modules-right = temperature backlight weather battery date
+modules-right = temperature backlight battery arch date
+;modules-right = temperature backlight weather battery date
 
 tray-position = right
 tray-padding = 1
@@ -121,6 +122,19 @@ interval = 2
 format-prefix = " "
 format-prefix-foreground = #1d881d
 label = %percentage_used%%
+
+
+[module/arch]
+type = custom/script
+format-prefix = " "
+format-prefix-foreground = #F1C124
+label = "%output% "
+format-background =
+format-foreground =
+click-left = st -e sudo pacman -Syuu
+click-right = ~/scripts/pacman-dmenu
+exec = ~/.local/bin/statusbar/updates_arch
+interval = 600
 
 
 [module/date]
