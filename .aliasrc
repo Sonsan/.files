@@ -1,0 +1,14 @@
+#!/usr/bin/env sh
+
+# Basics
+alias mutt='neomutt'
+alias hc='history -c'
+alias screen='scrot ~/Pictures/Screenshots/$(date +%H:%M:%S).png'
+
+# Directorys
+alias uni=cd ~/Documents/University
+
+# youtube-dl
+alias yt-video='youtube-dl -f bestvideo -o "%(title)s.%(ext)s" -4'
+alias yt-song='youtube-dl -x --audio-format mp3'
+alias yt-audio='youtube-dl -f bestaudio -o "%(title)s.%(ext)s" -4'

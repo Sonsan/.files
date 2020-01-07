@@ -17,8 +17,8 @@ export WALLPAPER_1=$WALLPAPER_DIR/Cityscapes/Real/Rainy_Suburb.jpg
 export WALLPAPER_2=$WALLPAPER_DIR/Landscapes/Real/Snowy_Forest_Road_daytime2.jpg
 
 # Window Manager
-export WM="dwm"
+export WM="i3"
 export STATUSBAR="polybar"
 
 # MISC
-export LOCATION="Floersheim"
+export LOCATION="Frankfurt"
