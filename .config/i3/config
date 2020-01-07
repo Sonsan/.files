@@ -2,6 +2,7 @@
 
 set $mod Mod4
 set $alt Mod1
+set $ctr Ctrl
 
 font pango:Hack 14
 
@@ -20,8 +21,9 @@ floating_modifier $mod
 # kill focused window
 bindsym $mod+Shift+c kill
 
-bindsym $mod+$alt+l exec --no-startup-id "i3lock --fuzzy --once\
-        --radius=1337 -l"
+bindsym $ctr+$alt+l exec --no-startup-id clearine
+#bindsym $mod+$alt+l exec --no-startup-id "i3lock --fuzzy --once\
+#        --radius=1337 -l"
 
 # change focus
 bindsym $mod+j focus left
@@ -137,8 +139,7 @@ bindsym $mod+Shift+s gaps inner current minus 5
 bindsym $mod+d exec --no-startup-id dmenu_run
 bindsym $mod+Shift+d exec --no-startup-id rofi -modi file-browser\
         -show file-browser -file-browser-disable-status\
-        -file-browser-dir '/home/nils/Documents/University'\
-        -file-browser-only-files
+        -file-browser-dir '/home/nils/Documents/University'
 
 # Terminal
 bindsym $mod+Shift+Return exec --no-startup-id st
