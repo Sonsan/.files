@@ -18,6 +18,8 @@ Some useful basic settings
 (blink-cursor-mode 0)  ;; the blinking makes me anxious
 (setq require-final-newline t)   ;; file always ends with newline
 (global-auto-revert-mode t)   ;; reload changed files
+(global-unset-key (kbd "<XF86Forward>"))  ;; key above my right-arrow key
+(global-unset-key (kbd "<XF86Back>"))     ;; key below my left-"-
 #+END_SRC
 ** Encoding
 Use UTF-8, because who doesnt like emojis 😂 😂 😂 😂
@@ -275,6 +277,12 @@ Allows me to toggle the Buffer's transparency
   (kill-buffer (current-buffer)))
 (global-set-key (kbd "C-x k") 'kill-current-buffer)
 #+END_SRC
+*** Beacon Mode
+#+BEGIN_SRC emacs-lisp
+(use-package beacon
+  :ensure t
+  :config (beacon-mode 1))
+#+END_SRC
 ** Parentheses
 #+BEGIN_SRC emacs-lisp
 (use-package rainbow-delimiters
@@ -297,13 +305,21 @@ Allows me to toggle the Buffer's transparency
 Open a pretty dashboard with recent projects
 #+BEGIN_SRC emacs-lisp
 (use-package dashboard
-:ensure t
-:config
+  :ensure t
+  :config
   (dashboard-setup-startup-hook)
   (setq dashboard-startup-banner "~/.emacs.d/img/Asuka_small.png")
   (setq dashboard-items '((recents  . 7) (projects . 2)))
   (setq dashboard-banner-logo-title " Asuka  ")
   (setq dashboard-set-file-icons t))
+#+END_SRC
+** File Tree
+#+BEGIN_SRC emacs-lisp
+(use-package neotree
+  :ensure t
+  :config
+  (global-set-key (kbd "<f6>") 'neotree-toggle)
+  (setq neo-theme (if (display-graphic-p) 'icons 'arrow)))
 #+END_SRC
 * Programming
 ** Code Completion
@@ -318,8 +334,7 @@ Open a pretty dashboard with recent projects
   (define-key company-active-map (kbd "M-n") nil)
   (define-key company-active-map (kbd "M-p") nil)
   (define-key company-active-map (kbd "C-n") #'company-select-next)
-  (define-key company-active-map (kbd "C-p") #'company-select-previous)
-  (define-key company-active-map (kbd "SPC") #'company-abort))
+  (define-key company-active-map (kbd "C-p") #'company-select-previous))
 #+END_SRC
 ** Project Management
 #+BEGIN_SRC emacs-lisp
@@ -360,37 +375,6 @@ Open a pretty dashboard with recent projects
   (add-hook 'c-mode-hook 'irony-mode)
   (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options))
 
-#+END_SRC
-** Haskell
-#+BEGIN_SRC emacs-lisp
-(use-package haskell-mode
-  :ensure t)
-(setq haskell-process-log t)
-(add-hook 'haskell-mode-hook 'interactive-haskell-mode)
-#+END_SRC
-** Python
-#+BEGIN_SRC emacs-lisp
-(add-hook 'python-mode-hook 'flycheck-mode)
-
-(with-eval-after-load 'company
-    (add-hook 'python-mode-hook 'company-mode))
-
-(use-package company-jedi
-  :ensure t
-  :config
-    (require 'company)
-    (add-to-list 'company-backends 'company-jedi))
-
-(defun python-mode-company-init ()
-  (setq-local company-backends '((company-jedi
-                                  company-etags
-                                  company-dabbrev-code))))
-
-(use-package company-jedi
-  :ensure t
-  :config
-    (require 'company)
-    (add-hook 'python-mode-hook 'python-mode-company-init))
 #+END_SRC
 ** Shell
 #+BEGIN_SRC emacs-lisp
