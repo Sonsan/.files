@@ -22,8 +22,8 @@ floating_modifier $mod
 bindsym $mod+Shift+c kill
 
 bindsym $ctr+$alt+l exec --no-startup-id clearine
-#bindsym $mod+$alt+l exec --no-startup-id "i3lock --fuzzy --once\
-#        --radius=1337 -l"
+bindsym $mod+$ctr+l exec --no-startup-id "i3lock --fuzzy --once\
+        --no-unlock-indicator --radius=1337 -l"
 
 # change focus
 bindsym $mod+j focus left
