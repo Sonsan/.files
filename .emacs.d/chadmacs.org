@@ -168,11 +168,13 @@ Makes searching for entire words much easier.
 (use-package yasnippet
   :ensure t
   :config
-    (use-package yasnippet-snippets
-      :ensure t)
-    (yas-reload-all))
-(add-hook 'prog-mode-hook 'yas-minor-mode)
-(add-hook 'LaTeX-mode-hook 'yas-minor-mode)
+  (setq yas-verbosity 1)
+  (setq yas-wrap-around-region t)
+  (yas-reload-all)
+  (yas-global-mode))
+
+(use-package yasnippet-snippets
+  :ensure t)
 #+END_SRC
 
 ** Other Useful Functions
@@ -321,6 +323,12 @@ Open a pretty dashboard with recent projects
   (global-set-key (kbd "<f6>") 'neotree-toggle)
   (setq neo-theme (if (display-graphic-p) 'icons 'arrow)))
 #+END_SRC
+** Syntax check
+#+BEGIN_SRC emacs-lisp
+(use-package flycheck
+  :ensure t
+  :init (global-flycheck-mode))
+#+END_SRC
 * Programming
 ** Code Completion
 #+BEGIN_SRC emacs-lisp
@@ -335,6 +343,15 @@ Open a pretty dashboard with recent projects
   (define-key company-active-map (kbd "M-p") nil)
   (define-key company-active-map (kbd "C-n") #'company-select-next)
   (define-key company-active-map (kbd "C-p") #'company-select-previous))
+
+(use-package irony
+  :ensure t
+  :config
+  (add-hook 'c++-mode-hook 'irony-mode)
+  (add-hook 'c-mode-hook 'irony-mode)
+  (setq-default irony-cdb-compilation-databases '(irony-cdb-libclang
+    irony-cdb-clang-complete))
+  (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options))
 #+END_SRC
 ** Project Management
 #+BEGIN_SRC emacs-lisp
@@ -367,18 +384,9 @@ Open a pretty dashboard with recent projects
   (setq company-backends '((company-c-headers
                             company-dabbrev-code
                             company-irony))))
-
-(use-package irony
-  :ensure t
-  :config
-  (add-hook 'c++-mode-hook 'irony-mode)
-  (add-hook 'c-mode-hook 'irony-mode)
-  (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options))
-
 #+END_SRC
 ** Shell
 #+BEGIN_SRC emacs-lisp
-(add-hook 'shell-mode-hook 'flycheck-mode)
 (add-hook 'shell-mode-hook 'company-mode)
 
 (defun shell-mode-company-init ()
@@ -406,7 +414,7 @@ Open a pretty dashboard with recent projects
 (add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
 
 ;; *.tex —> *.dvi -> *.ps -> *.pdf
-(setq-default TeX-PDF-from-DVI "Dvips")
+;(setq-default TeX-PDF-from-DVI "Dvips")
 #+END_SRC
 ** AucTeX Configuration
 Mostly stuff for math mode
@@ -420,6 +428,24 @@ Mostly stuff for math mode
   (cons "\\(" "\\)"))))
 #+END_SRC
 
+** Completion
+*** General
+#+BEGIN_SRC emacs-lisp
+(use-package company-auctex
+  :ensure t
+  :init (company-auctex-init)
+  :config
+  (add-to-list 'company-backends 'company-auctex-enviroments)
+  (add-to-list 'company-backends 'company-auctex-macros)
+  (add-to-list 'company-backends 'company-auctex-lables))
+#+END_SRC
+*** Math
+Math mode completion for latex
+#+BEGIN_SRC emacs-lisp
+(use-package company-math
+  :ensure t
+  :config (add-to-list 'company-backends 'company-math-symbols-unicode))
+#+END_SRC
 * BiBTeX
 Configuration examples can be found in
 https://github.com/tmalsburg/helm-bibtex
@@ -441,6 +467,20 @@ https://github.com/tmalsburg/helm-bibtex
     (lambda (fpath)
       (call-process "zathura" nil 0 nil fpath)))
   #+END_SRC
+* PDF
+#+BEGIN_SRC emacs-lisp
+(use-package pdf-tools
+  :ensure t
+  :config
+  ;; initialise
+  (pdf-tools-install)
+  ;; open pdfs scaled to fit page
+  (setq-default pdf-view-display-size 'fit-page)
+  ;; automatically annotate highlights
+  (setq pdf-annot-activate-created-annotations t)
+  ;; use normal isearch
+  (define-key pdf-view-mode-map (kbd "C-s") 'isearch-forward))
+#+END_SRC
 * Version Control
 #+BEGIN_SRC emacs-lisp
 (use-package magit
@@ -469,6 +509,3 @@ https://github.com/tmalsburg/helm-bibtex
 
 (add-hook 'org-mode-hook 'tex-org-mode-hook)
 #+END_SRC
-
-
-dsajdklds dkjs
