@@ -478,8 +478,6 @@ https://github.com/tmalsburg/helm-bibtex
 (use-package pdf-tools
   :ensure t
   :config
-  ;; initialise
-  (pdf-tools-install)
   ;; open pdfs scaled to fit page
   (setq-default pdf-view-display-size 'fit-page)
   ;; automatically annotate highlights
