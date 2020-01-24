@@ -52,12 +52,12 @@ bindsym $mod+a focus parent
 #+--------------------+#
 
 # Workspace Names
-set $ws1 "1:"
-set $ws2 "2:"
-set $ws3 "3:"
-set $ws4 "4:"
-set $ws5 "5:"
-set $ws6 "6:"
+set $ws1 "1:"
+set $ws2 "2:"
+set $ws3 "3:"
+set $ws4 "4:"
+set $ws5 "5:"
+set $ws6 "6:"
 
 # switch to workspace
 bindsym $mod+1 workspace number $ws1
@@ -118,7 +118,7 @@ bindsym XF86AudioMute exec --no-startup-id "amixer sset Master,0 toggle"
 #+--------------------+#
 # Gaps                 #
 #+--------------------+#
-gaps inner 15
+gaps inner 50
 gaps outer 0
 bindsym $mod+Shift+t gaps inner current set 10; gaps outer current set 2
 bindsym $mod+s gaps inner current plus 5
@@ -191,3 +191,10 @@ for_window [class="Thunar"] move absolute position center
 for_window [class="Zathura"] floating enable
 for_window [class="Zathura"] move absolute position center
 for_window [class="Steam"] floating enable
+
+# MISC
+for_window [class="alsamixer"] floating enable border pixel 1
+for_window [class="Nitrogen"] floating enable sticky enable border normal
+
+# Automatically switch to workspace with urgent window
+for_window [urgent=latest] focus
