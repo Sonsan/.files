@@ -1,22 +1,25 @@
-autoload -U colors && colors
-PS1="%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[magenta]%}%~%{$fg[red]%}]%{$reset_color%}$%b "
+export PATH=$HOME/bin:/usr/local/bin:$PATH
 
-HISTFILE=~/.histfile
-HISTSIZE=1000
-SAVEHIST=1000
+# Path to your oh-my-zsh installation.
+export ZSH="/home/nils/.oh-my-zsh"
 
-export PATH=$HOME/Documents/University/TeX/goethe.sty:$PATH
+# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
+ZSH_THEME="robbyrussell"
 
-autoload -U compinit
-zstyle ':completion:*' menu select
-zmodload zsh/complist
-compinit
+ENABLE_CORRECTION="false"  # i'm using thefuck
 
-# Include hidden files in autocomplete:
-_comp_options+=(globdots)
+# Uncomment the following line to display red dots whilst waiting for completion.
+COMPLETION_WAITING_DOTS="true"
 
-source ~/.profile
-source ~/.aliasrc
+# Makes repository check faster
+DISABLE_UNTRACKED_FILES_DIRTY="true"
 
-source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null
-source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh 2>/dev/null
+# HIST_STAMPS="mm/dd/yyyy"
+
+plugins=(colored-man-pages docker zsh-autosuggestions zsh-syntax-highlighting)
+source $ZSH/oh-my-zsh.sh
+
+
+# User configuration
+eval $(thefuck --alias)
+source $HOME/.aliasrc
