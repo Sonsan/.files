@@ -231,18 +231,19 @@ Just like =ido-vertical-mode= but for =M-x=
 #+END_SRC
 
 ** Undo
+Probably will use undo-tree in the future.
 #+BEGIN_SRC emacs-lisp
-(use-package undo-tree
-  :ensure t
-  :init (global-undo-tree-mode))
+;;(use-package undo-tree
+;;  :ensure t
+;;  :init (global-undo-tree-mode))
 #+END_SRC
 * Visual
 ** Theme
 *** Color Theme
 #+BEGIN_SRC emacs-lisp
-(use-package zerodark-theme
+(use-package material-theme
   :ensure t
-  :init (load-theme 'zerodark t))
+  :init (load-theme 'material t))
 #+END_SRC
 *** Status bar
 #+BEGIN_SRC emacs-lisp
@@ -286,6 +287,8 @@ Allows me to toggle the Buffer's transparency
 (global-set-key (kbd "C-x k") 'kill-current-buffer)
 #+END_SRC
 *** Beacon Mode
+Highlights the cursor-position (line) for a short time when opening
+or switching to a buffer.
 #+BEGIN_SRC emacs-lisp
 (use-package beacon
   :ensure t
@@ -304,10 +307,24 @@ Allows me to toggle the Buffer's transparency
   :hook ('prog-mode . 'rainbow-mode) ('conf-mode . 'rainbow-mode))
 #+END_SRC
 ** Indentation
+Basic indentation settings
 #+BEGIN_SRC emacs-lisp
 (setq-default indent-tabs-mode nil)
 (setq tab-width 2)
 (define-key global-map (kbd "RET") 'newline-and-indent)
+#+END_SRC
+Highlight indent Guides
+#+BEGIN_SRC emacs-lisp
+(use-package highlight-indent-guides
+  :ensure t
+  :config
+  ;; Display indent levels using |
+  (setq highlight-indent-guides-method 'character)
+  ;; Highlight the current indentation bar
+  (setq highlight-indent-guides-responsive 'top)
+  ;; No delay until highlighting the current level of indentation
+  (setq highlight-indent-guides-delay 0)
+  (add-hook 'prog-mode-hook 'highlight-indent-guides-mode))
 #+END_SRC
 ** Dashboard
 Open a pretty dashboard with recent projects
@@ -334,6 +351,17 @@ Open a pretty dashboard with recent projects
 (use-package flycheck
   :ensure t
   :init (global-flycheck-mode))
+#+END_SRC
+** Spell check
+#+BEGIN_SRC emacs-lisp
+(defun fd-switch-dictionary()
+      (interactive)
+      (let* ((dic ispell-current-dictionary)
+    	 (change (if (string= dic "deutsch8") "english" "deutsch8")))
+        (ispell-change-dictionary change)
+        (message "Dictionary switched from %s to %s" dic change)
+        ))
+(global-set-key (kbd "<f8>")   'fd-switch-dictionary)
 #+END_SRC
 * Programming
 ** Code Completion

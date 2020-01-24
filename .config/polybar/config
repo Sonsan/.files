@@ -34,21 +34,19 @@ border-size = 0
 border-color = #00000000
 
 padding-left = 1
-padding-right = 1
+padding-right = 0
 
-module-margin-left = 1
-module-margin-right = 2
+module-margin-left = 0
+module-margin-right = 1
 
-font-0 = Hack:size=9;3
-font-1 = "Font Awesome 5 Free:style=Solid:pixelsize=10;3"
-font-2 = "Font Awesome 5 Free:style=Regular:pixelsize=13;3"
-font-3 = "Font Awesome 5 Free:style=Regular:pixelsize=13;3"
-font-4 = "Font Awesome 5 Brands:pixelsize=13;3"
-font-5 = Hack:size=8;3
+font-0 = "Source Code Pro:size=10"
+font-1 = "Font Awesome 5 Free:style=Regular:pixelsize=12;3"
+font-2 = "Font Awesome 5 Free:style=Solid:pixelsize=12;3"
+font-3 = "Font Awesome 5 Brands:pixelsize=13;3"
 
 modules-left = alsa music-menu mpd
 modules-center = i3
-modules-right = temperature battery arch date
+modules-right = temperature battery arch date wireless-network
 ;modules-right = temperature backlight weather battery date
 
 tray-position = right
@@ -84,7 +82,7 @@ type=custom/menu
 format-spacing = 2
 label-open = 
 
-menu-0-0 = " "
+menu-0-0 = " "
 menu-0-0-exec = mpc prev
 menu-0-1 = "  "
 menu-0-1-exec = mpc toggle
@@ -126,7 +124,7 @@ label = %percentage_used%%
 
 [module/arch]
 type = custom/script
-format-prefix = " "
+format-prefix = " "
 format-prefix-foreground = #F1C124
 label = "%output% "
 format-background =
@@ -147,8 +145,8 @@ date-alt = " %Y-%m-%d"
 time = %H:%M
 time-alt = %H:%M:%S
 
-format-prefix = 
-format-prefix-foreground = #26725d
+format-prefix = 
+format-prefix-foreground =  #c8c8c8
 
 label = %date% %time%
 
@@ -156,13 +154,18 @@ label = %date% %time%
 [module/alsa]
 type = internal/alsa
 
-format-volume = <label-volume>
-label-volume =  %percentage%%
+format-volume = <ramp-volume> <label-volume>
+label-volume = %percentage%%
 label-volume-foreground = ${root.foreground}
 
 label-muted = 
 label-muted-foreground = #fd0204
 
+ramp-volume-0 = 
+ramp-volume-1 = 
+
+ramp-headphones-0 = 
+ramp-headphones-1 = 
 
 [module/battery]
 type = internal/battery
@@ -173,7 +176,7 @@ full-at = 98
 format-charging = <animation-charging> <label-charging>
 format-discharging = <animation-discharging> <label-discharging>
 
-format-full-prefix = ""
+format-full-prefix = ""
 format-full-prefix-foreground = #529800
 
 ramp-capacity-0 = a
@@ -212,10 +215,33 @@ label-warn-foreground = ${colors.secondary}
 
 ramp-2 = 
 ramp-1 = 
-ramp-0 = 
+ramp-0 = 
 ramp-2-foreground = #832040
 ramp-1-foreground = #CC5500
 ramp-0-foreground = #317811
+
+
+[module/wired-network]
+type = internal/network
+interface = enp0s25
+
+[module/wireless-network]
+type = internal/network
+interface = wls1
+interval = 1
+
+
+format-connected = <ramp-signal>
+label-connected = %essid% %downspeed:9%
+
+format-disconnected = <label-disconnected>
+label-disconnected = not connected
+label-disconnected-foreground = #66ffffff
+
+ramp-signal-0 = %{T5}爛%{T-}
+ramp-signal-1 = %{T5}嵐%{T-}
+ramp-signal-2 = %{T5}襤%{T-}
+ramp-signal-3 = %{T5}蠟%{T-}
 
 
 [module/backlight]
