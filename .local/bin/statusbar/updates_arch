@@ -1,11 +1,15 @@
 #!/usr/bin/env sh
 
+case $BLOCK_BUTTON in
+	1) setsid "$TERMINAL" -e sudo pacman -Syuu & ;;
+esac
+
 if ! updates=$(checkupdates 2> /dev/null | wc -l ); then
     updates=0
 fi
 
 if [ "$updates" -gt 0 ]; then
-    echo "$updates "
+    echo "[$updates]"
 else
-    echo "0 "
+    echo "[0]"
 fi

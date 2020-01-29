@@ -6,7 +6,7 @@
 # Must have xclip installed to even show menu.
 xclip -h >/dev/null || exit
 
-chosen=$(grep -v "#" ~/.local/share/emoji | dmenu -i -l 10 -fn Monospace-12)
+chosen=$(grep -v "#" ~/.local/share/emoji | dmenu -i -l 8 -fn Monospace-15)
 
 [ "$chosen" != "" ] || exit
 
