@@ -17,3 +17,4 @@ rofi.lines: 5
 rofi.location: 3
 rofi.yoffset: 10
 rofi.xoffset: -10
+

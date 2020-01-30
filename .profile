@@ -2,9 +2,8 @@
 export PATH="$(du $HOME/.local/bin/ | cut -f2 | tr '\n' ':')$PATH"
 
 # Programs
-export TERMINAL_EMULATOR="st"
-export TERMINAL="${TERMINAL_EMULATOR} -e"
-export EDITOR="emacs"
+export TERMINAL="st"
+export EDITOR="vim"
 export BROWSER="firefox"
 export VIEWER="zathura"
 
@@ -18,8 +17,7 @@ export WALLPAPER_2=$WALLPAPER_DIR/Landscapes/Real/Snowy_Forest_Road_daytime2.jpg
 
 # Window Manager
 export WM="i3"
-export STATUSBAR="polybar"
+export STATUSBAR="i3blocks"
 
 # MISC
 export LOCATION="Frankfurt"
-
