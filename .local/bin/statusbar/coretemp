@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+data=$(sensors)
+temp=$(echo "$data" | awk 'NR==3' | awk '/[0-9]/ {print $3+0}')
+printf "$temp°C\\n"

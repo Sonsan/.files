@@ -1,19 +1,18 @@
-command=~/.local/bin/statusbar/$BLOCK_NAME
-markup=pango
-
 # Global properties
 separator=true
 separator_block_width=15
+command=~/.local/bin/statusbar/$BLOCK_NAME
+markup=pango
 
 [updates_arch]
 label=📦
-interval=once
+interval=1800
 signal=8
 
-[greetings]
-color=#f5af19
-command=echo "eHello, $USER!"
-interval=onc
+[mailbox]
+label=📬
+interval=180
+signal=12
 
 [volume]
 interval=once
@@ -24,10 +23,19 @@ label=🎼
 interval=10
 signal=11
 
+[disk]
+interval=60
+command=disk /home 🏠
+
+[coretemp]
+label=🌡️
+interval=30
+
 [battery]
 command=battery BAT0
 interval=5
 
 [time]
+label= 
 command=date '+%H:%M:%S'
 interval=1
