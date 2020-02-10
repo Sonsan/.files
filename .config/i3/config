@@ -93,13 +93,12 @@ exec --no-startup-id "xautolock -time 5 -locker 'betterlockscreen -l dim'"
 exec --no-startup-id blueman-applet
 exec --no-startup-id nm-applet
 
-bindsym XF86AudioRaiseVolume exec --no-startup-id "amixer -q\
-        sset Master,0 1+ unmute; pkill -SIGRTMIN+10 i3blocks"
-bindsym XF86AudioLowerVolume exec --no-startup-id "amixer -q\
-        sset Master,0 1- unmute; pkill -SIGRTMIN+10 i3blocks"
-bindsym XF86AudioMute exec --no-startup-id "amixer sset \
-        Master,0 toggle; pkill -SIGRTMIN+10 i3blocks"
+bindsym XF86AudioRaiseVolume exec --no-startup-id "pamixer -u -i 1; pkill -SIGRTMIN+10 i3blocks"
+bindsym XF86AudioLowerVolume exec --no-startup-id "pamixer -u -d 1; pkill -SIGRTMIN+10 i3blocks"
+bindsym XF86AudioMute exec --no-startup-id "pamixer -t; pkill -SIGRTMIN+10 i3blocks"
 
+bindsym $mod+plus exec --no-startup-id "pamixer -u -i 1 && pkill -SIGRTMIN+10 i3blocks"
+bindsym $mod+0 exec --no-startup-id "pamixer -t; pkill -SIGRTMIN+10 i3blocks"
 
 #+--------------------+#
 # Gaps                 #
@@ -143,7 +142,7 @@ bindsym $mod+r mode "resize"
 # Statusbar            #
 #+--------------------+#
 bar {
-    font pango:mono 8
+    font pango:mono 10
     status_command i3blocks
     position bottom
     mode dock
@@ -202,7 +201,8 @@ for_window [class="Steam"] floating enable
 for_window [class="Nitrogen"] floating enable sticky enable border normal
 for_window [class="Blueman"] floating enable sticky enable resize set 150 450
 for_window [Title="alsamixer"] floating enable resize set 800 600
-for_window [Title="ncmpcpp"] floating enable
+for_window [Title="ncmpcpp"] floating enable resize set 1000 700
+
 
 # Automatically switch to workspace with urgent window
 for_window [urgent=latest] focus
