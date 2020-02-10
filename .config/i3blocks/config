@@ -4,6 +4,10 @@ separator_block_width=15
 command=~/.local/bin/statusbar/$BLOCK_NAME
 markup=pango
 
+[netspeed]
+interval=5
+
+command=netspeed enp2s0
 [updates_arch]
 label=📦
 interval=1800
@@ -32,10 +36,10 @@ label=🌡️
 interval=30
 
 [battery]
-command=battery BAT0
 interval=5
+command=battery BAT0
 
 [time]
-label= 
+label=
 command=date '+%H:%M:%S'
 interval=1

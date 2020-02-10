@@ -1,0 +1,20 @@
+#!/usr/bin/env sh
+# Author: Nils Sterz
+timestamp_tmp=~/.cache/.netspeed_timestamp_tmp
+upload_tmp=~/.cache/.netspeed_upload_tmp
+download_tmp=~/.cache/.netspeed_download_tmp
+
+timestamp=$(date +%s)
+upload=$(cat "/sys/class/net/$1/statistics/tx_bytes")
+download=$(cat "/sys/class/net/$1/statistics/rx_bytes")
+
+# calculate the upload- and download-rates
+time_diff=$(expr $timestamp - $(cat $timestamp_tmp))
+upload_rate=$(expr $(expr $upload - $(cat $upload_tmp)) / $time_diff)
+download_rate=$(expr $(expr $download - $(cat $download_tmp)) / $time_diff)
+
+echo $timestamp > $timestamp_tmp
+echo $upload > $upload_tmp
+echo $download > $download_tmp
+
+printf "📥%skiB/s 📤%skiB/s\\n" "$(expr $download_rate / 1024)" "$(expr $upload_rate / 1024)"
