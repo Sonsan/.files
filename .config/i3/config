@@ -13,10 +13,10 @@ floating_modifier $mod
 bindsym $mod+Shift+c kill
 
 # change focus
-bindsym $mod+j focus left
-bindsym $mod+k focus down
-bindsym $mod+l focus up
-bindsym $mod+odiaeresis focus right
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
 
 # move focused window
 bindsym $mod+Shift+h move left
@@ -89,7 +89,7 @@ bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the\
 #+--------------------+#
 # Startup              #
 #+--------------------+#
-exec --no-startup-id xautolock -time 20 -locker "i3lock --fuzzy --once --radius=1337" -detectsleep
+exec --no-startup-id "xautolock -time 5 -locker 'betterlockscreen -l dim'"
 exec --no-startup-id blueman-applet
 exec --no-startup-id nm-applet
 
@@ -164,8 +164,7 @@ bindsym $mod+Shift+d exec --no-startup-id rofi -modi file-browser\
 bindsym $mod+Shift+Return exec --no-startup-id $TERMINAL
 
 # Screensaver
-bindsym $mod+$ctr+l exec --no-startup-id "i3lock --fuzzy --once\
-        --radius=1337 -l"
+bindsym $mod+$ctr+l exec --no-startup-id $LOCK
 
 bindsym Print exec --no-startup-id scrot
 
