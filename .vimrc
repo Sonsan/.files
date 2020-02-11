@@ -13,6 +13,7 @@ Plug 'junegunn/fzf.vim'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
 Plug 'terryma/vim-multiple-cursors'
+Plug 'junegunn/vim-easy-align'
 
 " Visual (Editor)
 Plug 'vim-airline/vim-airline'
@@ -20,20 +21,21 @@ Plug 'junegunn/goyo.vim'
 Plug 'Yggdroot/indentLine'
 
 " Visual (Syntax)
-Plug 'morhetz/gruvbox'
 Plug 'PotatoesMaster/i3-vim-syntax'
 Plug 'junegunn/rainbow_parentheses.vim'
 Plug 'neovimhaskell/haskell-vim'
 
-" Auto Complete
-Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install() }}
+" Themes
+Plug 'morhetz/gruvbox'
+Plug 'dikiaap/minimalist'
+Plug 'romainl/Apprentice'
+
 call plug#end()
 
 
 "+-------------------------+"
 "+         Basics          +"
 "+-------------------------+"
-syntax on
 filetype indent plugin on
 set backspace=indent,eol,start
 set encoding=utf-8
@@ -58,24 +60,20 @@ autocmd BufWritePre * %s/\s\+$//e
 set nohlsearch
 set clipboard=unnamedplus
 
-" Keep Cursor on the same column
-set nostartofline
-
 "+-------------------------+"
 "+        🌈 Theme 🌈      +"
 "+-------------------------+"
+syntax on
 set background=dark
 if has('termguicolors')
 	let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
 	let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 	set termguicolors
 endif
-colorscheme gruvbox  " Does not work for haskell
+colorscheme minimalist
 
 " Editing
-"" 'Distraction free' mode
 map <leader>f :Goyo \| set linebreak<CR>
-
 autocmd FileType tex,python,haskell RainbowParentheses
 
 "+-------------------------+"
@@ -115,7 +113,7 @@ map <leader><Tab> :Files<CR>
 "        Statusbar          "
 "+-------------------------+"
 let g:airline_powerline_fonts = 1
-let g:airline_theme='gruvbox'
+let g:airline_theme='minimalist'
 
 "+-------------------------+"
 "  Indentation / Alignment  "
@@ -151,7 +149,6 @@ map <C-l> <C-w>l
 nnoremap S :%s//g<Left><Left>
 " Tab & shift tab in normal mode
 nnoremap <S-Tab> <<
-nnoremap <Tab> >>
 " for insert mode
 inoremap <S-Tab> <C-d>
 " Line movement
