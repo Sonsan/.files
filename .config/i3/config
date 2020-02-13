@@ -149,13 +149,14 @@ bindsym $mod+Shift+d exec --no-startup-id rofi -modi file-browser\
         -show file-browser -file-browser-disable-status\
         -file-browser-dir '/home/nils/Documents/University'
 
-# Terminal
 bindsym $mod+Shift+Return exec --no-startup-id $TERMINAL
-
-# Screensaver
 bindsym $mod+$ctr+l exec --no-startup-id $LOCK
-
 bindsym Print exec --no-startup-id scrot
+bindsym $mod+u exec --no-startup-id dmenuemoji
+bindsym $mod+m exec --no-startup-id dmenumath
+bindsym $mod+b exec --no-startup-id $TERMINAL -e nnn
+bindsym $mod+w exec --no-startup-id firefox
+bindsym $mod+v exec --no-startup-id $TERMINAL -e $EDITOR
 
 #+--------------------+#
 # Scratchpads          #

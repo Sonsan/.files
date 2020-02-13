@@ -28,7 +28,6 @@ Plug 'neovimhaskell/haskell-vim'
 " Themes
 Plug 'morhetz/gruvbox'
 Plug 'dikiaap/minimalist'
-Plug 'romainl/Apprentice'
 
 call plug#end()
 
@@ -59,6 +58,11 @@ autocmd BufWritePre * %s/\s\+$//e
 
 set nohlsearch
 set clipboard=unnamedplus
+
+noremap <Up> <Nop>
+noremap <Down> <Nop>
+noremap <Left> <Nop>
+noremap <Right> <Nop>
 
 "+-------------------------+"
 "+        🌈 Theme 🌈      +"
