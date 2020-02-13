@@ -20,6 +20,11 @@ plugins=(colored-man-pages docker zsh-autosuggestions zsh-syntax-highlighting)
 source $ZSH/oh-my-zsh.sh
 
 
+# fzf stuff
+export FZF_DEFAULT_COMMAND='find -L'
+
 # User configuration
 eval $(thefuck --alias)
 source $HOME/.aliasrc
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

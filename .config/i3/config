@@ -97,8 +97,6 @@ bindsym XF86AudioRaiseVolume exec --no-startup-id "pamixer -u -i 1; pkill -SIGRT
 bindsym XF86AudioLowerVolume exec --no-startup-id "pamixer -u -d 1; pkill -SIGRTMIN+10 i3blocks"
 bindsym XF86AudioMute exec --no-startup-id "pamixer -t; pkill -SIGRTMIN+10 i3blocks"
 
-bindsym $mod+plus exec --no-startup-id "pamixer -u -i 1 && pkill -SIGRTMIN+10 i3blocks"
-bindsym $mod+0 exec --no-startup-id "pamixer -t; pkill -SIGRTMIN+10 i3blocks"
 
 #+--------------------+#
 # Gaps                 #
@@ -124,25 +122,17 @@ for_window [class="^.*"] border pixel 2
 focus_follows_mouse no
 
 # resize window (you can also use the mouse for that)
-mode "resize" {
-        bindsym Left resize shrink width 10 px or 10 ppt
-        bindsym Down resize grow height 10 px or 10 ppt
-        bindsym Up resize shrink height 10 px or 10 ppt
-        bindsym Right resize grow width 10 px or 10 ppt
-
-        # back to normal: Enter or Escape or $mod+r
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
-        bindsym $mod+r mode "default"
-}
-bindsym $mod+r mode "resize"
+bindsym $mod+Left resize shrink width 10 px or 10 ppt
+bindsym $mod+Down resize grow height 10 px or 10 ppt
+bindsym $mod+Up resize shrink height 10 px or 10 ppt
+bindsym $mod+Right resize grow width 10 px or 10 ppt
 
 
 #+--------------------+#
 # Statusbar            #
 #+--------------------+#
 bar {
-    font pango:mono 10
+    font pango:mono 8
     status_command i3blocks
     position bottom
     mode dock
@@ -201,7 +191,7 @@ for_window [class="Steam"] floating enable
 for_window [class="Nitrogen"] floating enable sticky enable border normal
 for_window [class="Blueman"] floating enable sticky enable resize set 150 450
 for_window [Title="alsamixer"] floating enable resize set 800 600
-for_window [Title="ncmpcpp"] floating enable resize set 1000 700
+for_window [Title="ncmpcpp"] floating enable resize set 900 600
 
 
 # Automatically switch to workspace with urgent window

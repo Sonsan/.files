@@ -1,0 +1,9 @@
+[Default Applications]
+application/x-bittorrent=torrent.desktop
+x-scheme-handlet/magnet=torrent.desktop
+application/pdf=pdf.desktop
+image/png=img.desktop
+image/jpeg=img.desktop
+image/gif=img.desktop
+text/plain=text.desktop
+text/x-tex=text.desktop

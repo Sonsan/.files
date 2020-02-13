@@ -6,8 +6,12 @@ markup=pango
 
 [netspeed]
 interval=5
+command=netspeed wls1
 
-command=netspeed enp2s0
+[torrent]
+interval=20
+signal=7
+
 [updates_arch]
 label=📦
 interval=1800
