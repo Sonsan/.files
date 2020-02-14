@@ -1,5 +1,11 @@
 #!/usr/bin/env sh
 
+# Colored output
+alias ls="ls -hN --color=auto --group-directories-first"
+alias grep="grep --color=auto"
+
+alias v="$EDITOR"
+
 # Basics
 alias mutt='neomutt'
 alias hc='history -c'
@@ -12,3 +18,4 @@ alias uni=cd ~/Documents/University
 alias yt-video='youtube-dl -f bestvideo -o "%(title)s.%(ext)s" -4'
 alias yt-song='youtube-dl -x --audio-format mp3'
 alias yt-audio='youtube-dl -f bestaudio -o "%(title)s.%(ext)s" -4'
+
