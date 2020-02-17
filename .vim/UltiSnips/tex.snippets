@@ -1,0 +1,199 @@
+global !p
+# Source: https://github.com/gillescastel/latex-snippets
+texMathZones = ['texMathZone'+x for x in ['A', 'AS', 'B', 'BS', 'C', 'CS', 'D', 'DS', 'E', 'ES', 'F', 'FS', 'G', 'GS', 'H', 'HS', 'I', 'IS', 'J', 'JS', 'K', 'KS', 'L', 'LS', 'DS', 'V', 'W', 'X', 'Y', 'Z']]
+texIgnoreMathZones = ['texMathText']
+texMathZoneIds = vim.eval('map('+str(texMathZones)+", 'hlID(v:val)')")
+texIgnoreMathZoneIds = vim.eval('map('+str(texIgnoreMathZones)+", 'hlID(v:val)')")
+ignore = texIgnoreMathZoneIds[0]
+def math():
+	synstackids = vim.eval("synstack(line('.'), col('.') - (col('.')>=2 ? 1 : 0))")
+	try:
+		first = next(i for i in reversed(synstackids) if i in texIgnoreMathZoneIds or i in texMathZoneIds)
+		return first != ignore
+	except StopIteration:
+		return False
+endglobal
+
+snippet template "Basic template" b
+\documentclass[a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+
+\usepackage{amsmath, amsssymb}
+\usepackage{import}
+
+\begin{document}
+	$0
+\end{document}
+endsnippet
+
+
+# Enviroments
+snippet beg "enviroment" bA
+\\begin{$1}
+	$0
+\\end{$1}
+endsnippet
+
+snippet table "Inserts Table Enviroment" b
+\begin{table}[$(1:htpb)]
+	\centering
+	\begin{tabular}{${5:c}}
+		$0${5/((?<=.)c|l|r)|./(?1: & )/g}
+	\end{tabular}
+	\caption{${2:caption}}
+\end{table}
+endsnippet
+
+snippet dm "display math" wA
+\[
+${1:${VISUAL}}
+\] $0
+endsnippet
+
+snippet ali "Align" bA
+\begin{align}
+	${1:${VISUAL}}
+\end{align}
+endsnippet
+
+snippet eq "Equation" bA
+\begin{equation*}
+	${1:${VISUAL}}
+\end{equation*}
+endsnippet
+
+snippet fig "Figure" b
+\begin{figure}[${1:htpb}]
+	\centering
+	${2:\includegraphics[width=0.8\textwidth]{$3}}
+	\caption{${4:$3}}
+	\lebel{fig:${5:${3/\W+/-/g}}}
+\end{figure}
+endsnippet
+
+# Math
+context "math()"
+snippet case "cases" wA
+\begin{cases}
+	$1
+\end{cases}
+endsnippet
+
+snippet => "Implication" Au
+\implies
+endsnippet
+
+context "math()"
+snippet // "Fraction" iA
+\\frac{$1}{$2}$0
+endsnippet
+
+snippet / "Fraction" i \\frac{$1}{$2}$0
+endsnippet
+
+snippet == "Equals" iA
+&= $1 \\\\
+endsnippet
+
+snippet	!= "not equal" iA
+\neq
+endsnippet
+
+context "math()"
+snippet () "\left( \right)" i
+\left( $1 \right) $0
+endsnippet
+
+context "math()"
+snippet [] "\left[ \right]" i
+\left[ $1 \right] $0
+endsnippet
+
+context "math()"
+snippet {} "\left\{ \right\}" i
+\left\\{ $1 \right\\} $0
+endsnippet
+
+context "math()"
+snippet inf "infinity" i
+\infty
+endsnippet
+
+context "math()"
+snippet sum "sum" w
+\sum_{${1:k}=${2:0}}^{${3:\infty}} $0
+endsnippet
+
+context "math()"
+snippet prod "product" w
+\prod_{${1:k}=${2:1}}^{${3:\infty}} $0
+endsnippet
+
+context "math()"
+snippet taylor "taylor series" w
+\sum_{${1:k}=${2:0}}^{${3:n}} \frac{f^{($1)(a)}}{$1!}(x-a)^$1
+endsnippet
+
+context "math()"
+snippet lim "limit" w
+\lim_{${1:n} \to ${2:\infty}}
+endsnippet
+
+context "math()"
+snippet limsup "limes superior" w
+\limsup_{${1:n} \to ${2: \infty}}
+endsnippet
+
+context "math()"
+snippet liminf "limes inferior" w
+\liminf_{${1:n} \to ${2: \infty}}
+endsnippet
+
+context "math()"
+snippet dx "dx" w
+\mathrm{d}x
+endsnippet
+
+context "math()"
+snippet ddx "d/dx" w
+\frac{\mathrm{d}}{\mathrm{d}x}
+endsnippet
+
+context "math()"
+snippet AA "forall" iA
+\forall
+endsnippet
+
+context "math()"
+snippet EE "exists" iA
+\exists
+endsnippet
+
+context "math()"
+snippet xx "times" iA
+\times
+endsnippet
+
+priority 100
+context "math()"
+snippet ** "cdot" iA
+\cdot
+endsnippet
+
+priority 100
+context "math()"
+snippet '(?<!\\)(sin|cos|arcot|cot|csc|ln|log|exp|star|perp)' "ln" rwA
+\\`!p snip.rv = match.group(1)`
+endsnippet
+
+context "math()"
+snippet '(?<!i)sts' "text subscript" irA
+_\text{$1} $0
+endsnippet
+
+context "math()"
+snippet tt "text" iA
+\text{$1}$0
+endsnippet

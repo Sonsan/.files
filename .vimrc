@@ -1,9 +1,9 @@
 let mapleader =" "
 if ! filereadable(expand('~/.vim/autoload/plug.vim'))
-	echo "Downloading junegunn/vim-plug to manage plugins..."
-	silent !mkdir -p ~/.vim/autoload/
-	silent !curl "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim" > ~/.vim/autoload/plug.vim
-	autocmd VimEnter * PlugInstall
+    echo "Downloading junegunn/vim-plug to manage plugins..."
+    silent !mkdir -p ~/.vim/autoload/
+    silent !curl "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim" > ~/.vim/autoload/plug.vim
+    autocmd VimEnter * PlugInstall
 endif
 
 call plug#begin('~/.vim/plugged')
@@ -12,11 +12,24 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all'  }
 Plug 'junegunn/fzf.vim'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
-Plug 'terryma/vim-multiple-cursors'
+" Plug 'terryma/vim-multiple-cursors'
 Plug 'junegunn/vim-easy-align'
+    xmap ga <Plug>(EasyAlign)
+    nmap ga <Plug>(EasyAlign)
+    let g:indentLine_char_list = ['|', '¦', '┆', '┊']
+    let g:indentLine_color_term = 239
+    let g:indentLine_color_gui = '#616161'
+
+Plug 'SirVer/ultisnips'
+    let g:UltiSnipsExpandTrigger="<tab>"
+    let g:UltiSnipsJumpForwardTrigger="<tab>"
+    let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 
 " Visual (Editor)
 Plug 'vim-airline/vim-airline'
+    let g:airline_powerline_fonts = 1
+    let g:airline_theme='minimalist'
+
 Plug 'junegunn/goyo.vim'
 Plug 'Yggdroot/indentLine'
 
@@ -61,10 +74,10 @@ autocmd BufWritePre * %s/\s\+$//e
 set nohlsearch
 set clipboard=unnamedplus
 
-noremap <Up> <Nop>
-noremap <Down> <Nop>
-noremap <Left> <Nop>
-noremap <Right> <Nop>
+map <Up> <Nop>
+map <Down> <Nop>
+map <Left> <Nop>
+map <Right> <Nop>
 
 "+-------------------------+"
 "+        🌈 Theme 🌈      +"
@@ -72,12 +85,11 @@ noremap <Right> <Nop>
 syntax on
 set background=dark
 if has('termguicolors')
-	let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-	let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-	set termguicolors
+    let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+    let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+    set termguicolors
 endif
 colorscheme minimalist
-" colorscheme dracula
 
 " Editing
 map <leader>f :Goyo \| set linebreak<CR>
@@ -86,7 +98,7 @@ autocmd FileType tex,python,haskell RainbowParentheses
 "+-------------------------+"
 "+  ⚠  Error Checking ⚠    +"
 "+-------------------------+"
-"" Spellchecking
+" Spellchecking
 map <leader>o :setlocal spell! spelllang=en_us<CR>
 
 "+-------------------------+"
@@ -117,21 +129,6 @@ autocmd  FileType fzf set noshowmode noruler nonu
 map <leader><Tab> :Files<CR>
 
 "+-------------------------+"
-"        Statusbar          "
-"+-------------------------+"
-let g:airline_powerline_fonts = 1
-let g:airline_theme='minimalist'
-
-"+-------------------------+"
-"  Indentation / Alignment  "
-"+-------------------------+"
-xmap ga <Plug>(EasyAlign)
-nmap ga <Plug>(EasyAlign)
-let g:indentLine_char_list = ['|', '¦', '┆', '┊']
-let g:indentLine_color_term = 239
-let g:indentLine_color_gui = '#616161'
-
-"+-------------------------+"
 "     🎹 Keybindings 🎹    +"
 "+-------------------------+"
 " Compiler
@@ -153,82 +150,12 @@ xnoremap <silent> <C-j> :move'>+<cr>gv
 xnoremap <silent> <C-h> <gv
 xnoremap <silent> <C-l> >gv
 
-"+-------------------------+"
-"+        LaTeX            +"
-"+-------------------------+"
 " STOP REPLACING LATEX STUFF WITH UNICODE DIRT
 let g:tex_conceal = ""
 xnoremap <C-b> di\textbf{}<ESC>P
 xnoremap <C-u> di\underline{}<ESC>P
 xnoremap <C-i> di\textit{}<ESC>P
 
-"+-------------------------+"
-"         Macros           +"
-"+-------------------------+"
-" Guide Navigation
-inoremap <C-n> <ESC>/(⌐■_■)<CR>"_c6l
-vnoremap <C-n> <ESC>/(⌐■_■)<CR>"_c6l
-map <C-n> <ESC>/(⌐■_■)<CR>"_c6l
-
-autocmd FileType tex inoremap ;m $$<ESC>T$i
-autocmd FileType tex inoremap ;M \(\)<ESC>T\i
-
-autocmd FileType tex inoremap ;ite \begin{itemize}<CR><CR>\end{itemize}<CR><CR><Esc>3kA\item<Space>
-autocmd FileType tex inoremap ;ni <CR>\item<Space>
-autocmd FileType tex inoremap ;pic \includegraphics[]{(⌐■_■)}<ESC>kf]i
-
-autocmd FileType tex inoremap ;ali \begin{align}<CR><CR>\end{align}<CR><CR><ESC>3kA
-autocmd FileType tex inoremap ;*ali \begin{align*}<CR><CR>\end{align*}<CR><CR><ESC>3kA
-autocmd FileType tex inoremap ;eq \begin{equation}<CR><CR>\end{equation}<CR><CR><ESC>3kA
-autocmd FileType tex inoremap ;*eq \begin{equation*}<CR><CR>\end{equation}<CR><CR><ESC>3kA
-autocmd FileType tex inoremap ;fig \begin{figure}[]<CR>(⌐■_■)<CR>\caption (⌐■_■)<CR>\end{figure}<CR><CR><ESC>5kf]i
-autocmd FileType tex inoremap ;tab \begin{table}{}<CR>(⌐■_■)<CR>\end{table}<CR><CR><ESC>3kA
-
-autocmd FileType tex inoremap ;theo \newtheorem{}{(⌐■_■)}<CR><ESC>kf}i
-autocmd FileType tex inoremap ;proof \begin{proof}<CR><CR>\end{proof}<CR><CR>(⌐■_■)<ESC>3kA
-
-autocmd FileType tex inoremap ;chap \chapter{}<CR>\label{(⌐■_■)}<CR>(⌐■_■)<ESC>2kf}i
-autocmd FileType tex inoremap ;sec \section{}<CR>\label{(⌐■_■)}<CR>(⌐■_■)<ESC>2kf}i
-autocmd FileType tex inoremap ;ssec \subsection{}<CR>\label{(⌐■_■)}<CR>(⌐■_■)<ESC>2kf}i
-autocmd FileType tex inoremap ;sssec \subsubsection{}<CR>\label{(⌐■_■)}<CR>(⌐■_■)<ESC>2kf}i
-autocmd FileType tex inoremap ;par \paragraph{}<CR>\label{(⌐■_■)}<CR>(⌐■_■)<ESC>2kf}i
-
-autocmd FileType tex inoremap ;pkg (⌐■_■)<ESC>/usepackage<CR>GNo\usepackage{}<CR><ESC>kf}i
-autocmd FileType tex inoremap ;com (⌐■_■)<ESC>/newcommand<CR>GNo\newcommand{}{(⌐■_■)}<CR><ESC>kf}i
-autocmd FileType tex inoremap ;inc \include{}<CR><ESC>kf}i
-
-autocmd FileType tex inoremap ;hs \hspace{cm}<CR><ESC>kf{wi
-autocmd FileType tex inoremap ;*hs \hspace*{cm}<CR><ESC>kf{wi
-autocmd FileType tex inoremap ;vs \vspace{cm}<CR><ESC>kf{wi
-autocmd FileType tex inoremap ;*vs \vspace*{cm}<CR><ESC>kf{wi
-
-autocmd FileType tex inoremap ;bf \textbf{}<Esc>T{i
-autocmd FileType tex inoremap ;ita \textit{}<Esc>T{i
-
-autocmd FileType tex inoremap ;ref \ref{}<ESC>T{i
-
-autocmd FileType tex inoremap ;bt \blindmathpaper
-autocmd FileType tex inoremap ;lip \lipsum
-
-autocmd FileType tex inoremap ;beg \begin{SUCHWOW}<CR><CR>\end{SUCHWOW}<CR><CR><ESC>:MultipleCursorsFind<Space>SUCHWOW<CR>c
-
-autocmd FileType tex inoremap @mat \begin{pmatrix}<CR><CR>\end{pmatrix}<CR><ESC>2kA
-autocmd FileType tex inoremap @det \begin{vmatrix}<CR><CR>\end{vmatrix}<CR><ESC>2kA
-
-autocmd FileType tex inoremap @lr( \left(\right)(⌐■_■)<ESC>2T(i
-autocmd FileType tex inoremap @lr[ \left[\right](⌐■_■)<ESC>T[i
-autocmd FileType tex inoremap @lr{ \left\{\right\}(⌐■_■)<ESC>T{i
-autocmd FileType tex inoremap @{ \{\}<ESC>T{i
-autocmd FileType tex inoremap @t \mathrm{}<ESC>T{i
-
-autocmd FileType tex inoremap @sum \sum_{}^{(⌐■_■)}(⌐■_■)<ESC>2T{i
-autocmd FileType tex inoremap @int \int_{}^{(⌐■_■)}(⌐■_■) \mathrm{d}(⌐■_■)<ESC>3T{i
-autocmd FileType tex inoremap @fr \frac{}{(⌐■_■)}<ESC>2T{i
-
-autocmd FileType tex inoremap @a \alpha
-autocmd FileType tex inoremap @p \phi
-autocmd FileType tex inoremap @e \epsilon
-autocmd FileType tex inoremap @d \delta
-autocmd FileType tex inoremap @vp \varphi
-autocmd FileType tex inoremap @ve \varepsilon
+" Snippets i've written using autocmd
+source ~/.vim/autocmdsnippets.vim
 
