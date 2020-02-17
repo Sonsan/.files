@@ -26,7 +26,7 @@ Plug 'junegunn/rainbow_parentheses.vim'
 Plug 'neovimhaskell/haskell-vim'
 
 " Themes
-Plug 'morhetz/gruvbox'
+Plug 'dracula/vim'
 Plug 'dikiaap/minimalist'
 
 call plug#end()
@@ -40,6 +40,8 @@ set backspace=indent,eol,start
 set encoding=utf-8
 set number relativenumber
 set splitbelow splitright
+set expandtab
+set shiftwidth=4
 set tabstop=4
 set timeoutlen=3000 " timeout for macros and leader key in ms
 
@@ -75,6 +77,7 @@ if has('termguicolors')
 	set termguicolors
 endif
 colorscheme minimalist
+" colorscheme dracula
 
 " Editing
 map <leader>f :Goyo \| set linebreak<CR>
@@ -129,26 +132,11 @@ let g:indentLine_color_term = 239
 let g:indentLine_color_gui = '#616161'
 
 "+-------------------------+"
-"+        Haskell          +"
-"+-------------------------+"
-let g:haskell_enable_quantification = 1   " to enable highlighting of `forall`
-let g:haskell_enable_recursivedo = 1      " to enable highlighting of `mdo` and `rec`
-let g:haskell_enable_arrowsyntax = 1      " to enable highlighting of `proc`
-let g:haskell_enable_pattern_synonyms = 1 " to enable highlighting of `pattern`
-let g:haskell_enable_typeroles = 1        " to enable highlighting of type roles
-let g:haskell_enable_static_pointers = 1  " to enable highlighting of `static`
-let g:haskell_backpack = 1                " to enable highlighting of backpack keywords
-
-"+-------------------------+"
 "     🎹 Keybindings 🎹    +"
 "+-------------------------+"
 " Compiler
-map <leader>c :w! \| !compiler <C-r>%<CR>
-" Better Split navigation
-map <C-h> <C-w>h
-map <C-j> <C-w>j
-map <C-k> <C-w>k
-map <C-l> <C-w>l
+map <leader>c :w! \| !compiler <C-r>%<CR><CR>
+map <leader>p :w! \| !opout <C-r>%<CR><CR>
 " Replace All
 nnoremap S :%s//g<Left><Left>
 " Tab & shift tab in normal mode
@@ -170,7 +158,9 @@ xnoremap <silent> <C-l> >gv
 "+-------------------------+"
 " STOP REPLACING LATEX STUFF WITH UNICODE DIRT
 let g:tex_conceal = ""
-
+xnoremap <C-b> di\textbf{}<ESC>P
+xnoremap <C-u> di\underline{}<ESC>P
+xnoremap <C-i> di\textit{}<ESC>P
 
 "+-------------------------+"
 "         Macros           +"
@@ -217,7 +207,7 @@ autocmd FileType tex inoremap ;ita \textit{}<Esc>T{i
 
 autocmd FileType tex inoremap ;ref \ref{}<ESC>T{i
 
-autocmd FileType tex inoremap ;bt \blindtext
+autocmd FileType tex inoremap ;bt \blindmathpaper
 autocmd FileType tex inoremap ;lip \lipsum
 
 autocmd FileType tex inoremap ;beg \begin{SUCHWOW}<CR><CR>\end{SUCHWOW}<CR><CR><ESC>:MultipleCursorsFind<Space>SUCHWOW<CR>c
@@ -229,6 +219,7 @@ autocmd FileType tex inoremap @lr( \left(\right)(⌐■_■)<ESC>2T(i
 autocmd FileType tex inoremap @lr[ \left[\right](⌐■_■)<ESC>T[i
 autocmd FileType tex inoremap @lr{ \left\{\right\}(⌐■_■)<ESC>T{i
 autocmd FileType tex inoremap @{ \{\}<ESC>T{i
+autocmd FileType tex inoremap @t \mathrm{}<ESC>T{i
 
 autocmd FileType tex inoremap @sum \sum_{}^{(⌐■_■)}(⌐■_■)<ESC>2T{i
 autocmd FileType tex inoremap @int \int_{}^{(⌐■_■)}(⌐■_■) \mathrm{d}(⌐■_■)<ESC>3T{i
