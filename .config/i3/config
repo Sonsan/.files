@@ -89,7 +89,7 @@ bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the\
 #+--------------------+#
 # Startup              #
 #+--------------------+#
-exec --no-startup-id "xautolock -time 5 -locker 'betterlockscreen -l dim'"
+exec --no-startup-id "xautolock -time 5 -locker 'betterlockscreen -l'"
 exec --no-startup-id blueman-applet
 exec --no-startup-id nm-applet
 
@@ -101,7 +101,7 @@ bindsym XF86AudioMute exec --no-startup-id "pamixer -t; pkill -SIGRTMIN+10 i3blo
 #+--------------------+#
 # Gaps                 #
 #+--------------------+#
-gaps inner 20
+gaps inner 10
 gaps outer 0
 bindsym $mod+Shift+t gaps inner current set 10; gaps outer current set 2
 bindsym $mod+s gaps inner current plus 5

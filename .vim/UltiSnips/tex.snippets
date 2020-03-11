@@ -14,14 +14,29 @@ def math():
 		return False
 endglobal
 
+
+# Explanation:
+# snippet $SNIPPETNAME "$DESCRIPTION" $OPTIONS
+#	`$STUFF`
+# endsnippet
+#
+# The $OPTIONS are:[(b, "only expand when at column 0"),
+#                   (i, "also expand when inside a word"),
+#					(w, "opposite of i"),
+#					(r, "snippet uses regular expression"),
+#					(t, "no tab-expansion"),
+#					(A, "snippet will expand automatically")]
+
+# Document Templates
 snippet template "Basic template" b
 \documentclass[a4paper]{article}
 
 \usepackage[utf8]{inputenc}
 \usepackage[ngerman]{babel}
 
-\usepackage{amsmath, amsssymb}
+\usepackage{amsmath, amssymb}
 \usepackage{import}
+\usepackage{graphicx}
 
 \begin{document}
 	$0
@@ -44,6 +59,15 @@ snippet table "Inserts Table Enviroment" b
 	\end{tabular}
 	\caption{${2:caption}}
 \end{table}
+endsnippet
+
+snippet mk "Math" wA
+$${1}$`!p
+if t[2] and t[2][0] not in [',', '.', '?', '-', ' ']:
+	snip.rv = ' '
+else:
+	snip.rv = ''
+`$2
 endsnippet
 
 snippet dm "display math" wA
@@ -69,8 +93,31 @@ snippet fig "Figure" b
 	\centering
 	${2:\includegraphics[width=0.8\textwidth]{$3}}
 	\caption{${4:$3}}
-	\lebel{fig:${5:${3/\W+/-/g}}}
+	\label{fig:${5:${3/\W+/-/g}}}
 \end{figure}
+endsnippet
+
+# MISC
+snippet tex "LaTeX" wA
+\LaTeX
+endsnippet
+
+snippet sec "section" b
+\section{$1}
+\label{sec:${2:$1}}
+$0
+endsnippet
+
+snippet ssec "subsection" b
+\subsection{$1}
+\label{subsec:${2:$1}}
+$0
+endsnippet
+
+snippet sssec "subsubsection" b
+\subsubsection{$1}
+\label{ssubsec:${2:$1}}
+$0
 endsnippet
 
 # Math
@@ -81,8 +128,14 @@ snippet case "cases" wA
 \end{cases}
 endsnippet
 
+context "math()"
 snippet => "Implication" Au
-\implies
+\implies $0
+endsnippet
+
+context "math()"
+snippet lra "Equivalent <=>" wA
+\Leftrightarrow $0
 endsnippet
 
 context "math()"
@@ -90,7 +143,29 @@ snippet // "Fraction" iA
 \\frac{$1}{$2}$0
 endsnippet
 
-snippet / "Fraction" i \\frac{$1}{$2}$0
+snippet / "Fraction" i
+\\frac{${VISUAL}}{$1}$0
+endsnippet
+
+context "math()"
+snippet '((\d+)|(\d*)(\\)?([A-Za-z]+)((\^|_)(\{\d+\}|\d))*)/' "symbol frac" wrA
+\\frac{`!p snip.rv = match.group(1)`}{$1}$0
+endsnippet
+
+priority 1000
+context "math()"
+snippet '^.*\)/' "() frac" wrA
+`!p
+stripped = match.string[:-1]
+depth = 0
+i = len(stripped) - 1
+while True:
+	if stripped[i] == ')': depth += 1
+	if stripped[i] == '(': depth -= 1
+	if depth == 0: break;
+	i-=1
+snip.rv = stripped[0:i] + "\\frac{" + stripped[i+1:-1] + "}"
+`{$1}$0
 endsnippet
 
 snippet == "Equals" iA
@@ -102,23 +177,18 @@ snippet	!= "not equal" iA
 endsnippet
 
 context "math()"
-snippet () "\left( \right)" i
+snippet () "\left( \right)" iw
 \left( $1 \right) $0
 endsnippet
 
 context "math()"
-snippet [] "\left[ \right]" i
+snippet [] "\left[ \right]" iw
 \left[ $1 \right] $0
 endsnippet
 
 context "math()"
-snippet {} "\left\{ \right\}" i
+snippet {} "\left\{ \right\}" iw
 \left\\{ $1 \right\\} $0
-endsnippet
-
-context "math()"
-snippet inf "infinity" i
-\infty
 endsnippet
 
 context "math()"
@@ -152,12 +222,12 @@ snippet liminf "limes inferior" w
 endsnippet
 
 context "math()"
-snippet dx "dx" w
+snippet dx "dx" wA
 \mathrm{d}x
 endsnippet
 
 context "math()"
-snippet ddx "d/dx" w
+snippet ddx "d/dx" wA
 \frac{\mathrm{d}}{\mathrm{d}x}
 endsnippet
 
@@ -194,6 +264,61 @@ _\text{$1} $0
 endsnippet
 
 context "math()"
+snippet sr "^2" iA
+^2
+endsnippet
+
+context "math()"
+snippet cb "^3" iA
+^3
+endsnippet
+
+context "math()"
+snippet td "superscript" iA
+^{$1}$0
+endsnippet
+
+context "math()"
+snippet ,, "comma space" iA
+,\: $0
+endsnippet
+
+context "math()"
+snippet nabl "nabla" iA
+\nabla $0
+endsnippet
+
+context "math()"
+snippet oo "infinity" iA
+\infty $0
+endsnippet
+
+context "math()"
+snippet '([A-Za-z])(\d)' "auto subscript" wrA
+`!p snip.rv = match.group(1)`_`!p snip.rv = match.group(2)`
+endsnippet
+
+context "math()"
+snippet '([A-Za-z])_(\d\d)' "auto subscript2" wrA
+`!p snip.rv = match.group(1)`_{`!p snip.rv = match.group(2)`}
+endsnippet
+
+context "math()"
 snippet tt "text" iA
-\text{$1}$0
+\text{ ${VISUAL} }$0
+endsnippet
+
+# Postfix Stuff
+priority 100
+snippet "([a-zA-Z])bar" "bar" riA
+\overline{`!p snip.rv=match.group(1)`}
+endsnippet
+
+priority 100
+snippet "([a-zA-Z])hat" "hat" riA
+\hat{`!p snip.rv=match.group(1)`}
+endsnippet
+
+snippet "(\\?\w+)(,\.|\.,)" "Vector Postfix" riA
+\vec{`!p snip.rv=match.group(1)`}
 endsnippet
