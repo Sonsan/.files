@@ -98,7 +98,7 @@ snippet fig "Figure" b
 endsnippet
 
 # MISC
-snippet tex "LaTeX" wA
+snippet tex "LaTeX" w
 \LaTeX
 endsnippet
 
@@ -108,13 +108,13 @@ snippet sec "section" b
 $0
 endsnippet
 
-snippet ssec "subsection" b
+snippet sub "subsection" b
 \subsection{$1}
 \label{subsec:${2:$1}}
 $0
 endsnippet
 
-snippet sssec "subsubsection" b
+snippet ssub "subsubsection" b
 \subsubsection{$1}
 \label{ssubsec:${2:$1}}
 $0
@@ -178,17 +178,17 @@ endsnippet
 
 context "math()"
 snippet () "\left( \right)" iw
-\left( $1 \right) $0
+\left( ${VISUAL} \right) $0
 endsnippet
 
 context "math()"
 snippet [] "\left[ \right]" iw
-\left[ $1 \right] $0
+\left[ ${VISUAL} \right] $0
 endsnippet
 
 context "math()"
 snippet {} "\left\{ \right\}" iw
-\left\\{ $1 \right\\} $0
+\left\\{ ${VISUAL} \right\\} $0
 endsnippet
 
 context "math()"
@@ -254,7 +254,7 @@ endsnippet
 
 priority 100
 context "math()"
-snippet '(?<!\\)(sin|cos|arcot|cot|csc|ln|log|exp|star|perp)' "ln" rwA
+snippet '(?<!\\)(sin|cos|tan|arcot|cot|csc|ln|log|exp|star|perp)' "ln" rwA
 \\`!p snip.rv = match.group(1)`
 endsnippet
 

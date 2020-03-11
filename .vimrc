@@ -1,4 +1,4 @@
-let mapleader =","
+let mapleader =" "
 if ! filereadable(expand('~/.vim/autoload/plug.vim'))
     echo "Downloading junegunn/vim-plug to manage plugins..."
     silent !mkdir -p ~/.vim/autoload/
@@ -14,7 +14,6 @@ Plug 'junegunn/fzf.vim'
     \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
     map <leader><Tab> :Files<CR>
 
-Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
 Plug 'junegunn/vim-easy-align'
     xmap ga <Plug>(EasyAlign)
@@ -31,6 +30,7 @@ Plug 'lervag/vimtex'
     let g:tex_conceal = ""
 
 " Visual (Editor)
+Plug 'ap/vim-css-color'
 Plug 'Yggdroot/indentLine'
     let g:indentLine_showFirstIndentLevel = 1
     let g:indentLine_char_list = ['|', '¦', '┆', '┊']
@@ -38,12 +38,11 @@ Plug 'Yggdroot/indentLine'
     let g:indentLine_color_gui = '#616161'
 
 " Visual (Syntax)
-Plug 'PotatoesMaster/i3-vim-syntax'
 Plug 'neovimhaskell/haskell-vim'
 
 " Themes
-Plug 'dracula/vim'
 Plug 'dikiaap/minimalist'
+Plug 'jpo/vim-railscasts-theme'
 
 call plug#end()
 
@@ -57,45 +56,43 @@ set shiftwidth=4
 set tabstop=4
 set ignorecase
 set timeoutlen=3000 " timeout for macros and leader key in ms
+set rulerformat=%60(%=%m\ %#Identifier#%t\ %#Label#%#Normal#\ %l:%c\%)
 
-"" Disable Auto-Comment
+" Disable Auto-Comment
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 
-"" Delete Trailing white spaces
+" Delete Trailing white spaces
 autocmd BufWritePre * %s/\s\+$//e
 
-"+-------------------------+"
-"+        🌈 Theme 🌈      +"
-"+-------------------------+"
 syntax on
+" st uses ; instead of : as seperator
 if has('termguicolors')
     let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
     let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
     set termguicolors
 endif
+colorscheme industry
 
-"+-------------------------+"
-"     🎹 Keybindings 🎹    +"
-"+-------------------------+"
 " Temporarily unmapped arrow keys in all modes (except insert)
 map <Up> <Nop>
 map <Down> <Nop>
 map <Left> <Nop>
 map <Right> <Nop>
 " Spellchecking
-map <leader>o :setlocal spell! spelllang=en_us<CR>
-" Compiler & View Document(er)
+map <leader>o :setlocal spell! spelllang=en_us<CR><CR>
+" Compiler & View Document
 map <leader>c :w! \| !compiler <C-r>%<CR><CR>
 map <leader>p :w! \| !opout <C-r>%<CR><CR>
+" Window Movement
+map <leader>h <C-w>h
+map <leader>j <C-w>j
+map <leader>k <C-w>k
+map <leader>l <C-w>l
 " Line movement
 nnoremap <silent> <C-k> :move-2<cr>
 nnoremap <silent> <C-j> :move+<cr>
 nnoremap <silent> <C-h> <<
 nnoremap <silent> <C-l> >>
-xnoremap <silent> <C-k> :move-2<cr>gv
-xnoremap <silent> <C-j> :move'>+<cr>gv
-xnoremap <silent> <C-h> <gv
-xnoremap <silent> <C-l> >gv
 " LaTeX
 xnoremap <C-b> di\textbf{}<ESC>P
 xnoremap <C-u> di\underline{}<ESC>P

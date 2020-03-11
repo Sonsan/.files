@@ -1,0 +1,35 @@
+# Explanation:
+# snippet $SNIPPETNAME "$DESCRIPTION" $OPTIONS
+#	`$STUFF`
+# endsnippet
+#
+# The $OPTIONS are:[(b, "only expand when at column 0"),
+#                   (i, "also expand when inside a word"),
+#					(w, "opposite of i"),
+#					(r, "snippet uses regular expression"),
+#					(t, "no tab-expansion"),
+#					(A, "snippet will expand automatically")]
+
+
+snippet #! "#!/usr/bin/python3" bA
+#!/usr/bin/python3
+endsnippet
+
+snippet imp "#import" bA
+import ${1:ModuleName}
+endsnippet
+
+snippet docs "docstring" bA
+'''
+File:        ${1:`!p snip.rv = snip.fn`}
+Date:        `date +%d.%m.%y`
+Author:      ${2:`echo $NAME`}
+Matrikelnr.: $3
+Description: $4
+'''$0
+endsnippet
+
+snippet ifmain "if name == main" bA
+if __name__ == '__main__":
+	${1:main()}
+endsnippet
