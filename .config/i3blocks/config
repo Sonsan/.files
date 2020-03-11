@@ -44,6 +44,6 @@ interval=5
 command=battery BAT0
 
 [time]
-label=
+label=📅
 command=date '+%H:%M:%S'
 interval=1

@@ -1,15 +1,16 @@
 #!/usr/bin/env sh
 
 case $BLOCK_BUTTON in
-	1) setsid "$TERMINAL" -e sudo pacman -Syuu & ;;
+	1) setsid "$TERMINAL" -e sudo pacman -Syu & ;;
+    2) setsid checkupdates >/dev/null & ;;
 esac
 
 if ! updates=$(checkupdates 2> /dev/null | wc -l ); then
-    updates=0
+	updates=0
 fi
 
 if [ "$updates" -gt 0 ]; then
-    echo "[$updates]"
+	echo "$updates"
 else
-    echo ""
+	echo ""
 fi
