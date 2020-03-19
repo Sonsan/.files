@@ -6,7 +6,7 @@ markup=pango
 
 [netspeed]
 interval=5
-command=netspeed wls1
+command=netspeed enp2s0 5 # interface interval
 
 [torrent]
 interval=20
@@ -35,6 +35,14 @@ signal=11
 interval=60
 command=disk /home 🏠
 
+[disk]
+interval=60
+command=disk / 💻
+
+[memory]
+interval=30
+label=🧠
+
 [coretemp]
 label=🌡️
 interval=30
@@ -43,7 +51,6 @@ interval=30
 interval=5
 command=battery BAT0
 
-[time]
+[clock]
 label=📅
-command=date '+%H:%M:%S'
-interval=1
+interval=30
