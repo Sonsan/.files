@@ -1,5 +1,4 @@
 # Global properties
-separator=true
 separator_block_width=15
 command=~/.local/bin/statusbar/$BLOCK_NAME
 markup=pango
@@ -7,6 +6,9 @@ markup=pango
 [netspeed]
 interval=5
 command=netspeed enp2s0 5 # interface interval
+
+[corona]
+interval=once
 
 [torrent]
 interval=20
@@ -47,9 +49,9 @@ label=🧠
 label=🌡️
 interval=30
 
-[battery]
-interval=5
-command=battery BAT0
+# [battery]
+# interval=5
+# command=battery BAT0
 
 [clock]
 label=📅
