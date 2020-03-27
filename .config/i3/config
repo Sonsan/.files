@@ -157,6 +157,10 @@ bindsym $mod+m exec --no-startup-id dmenumath
 bindsym $mod+b exec --no-startup-id $TERMINAL -e nnn
 bindsym $mod+w exec --no-startup-id firefox
 bindsym $mod+v exec --no-startup-id $TERMINAL -e $EDITOR
+bindsym $mod+F3 exec --no-startup-id displayselect
+bindsym $mod+F8 exec --no-startup-id mailsync
+bindsym $mod+F9 exec --no-startup-id dmenumount
+bindsym $mod+F10 exec --no-startup-id dmenuumount
 
 #+--------------------+#
 # Scratchpads          #

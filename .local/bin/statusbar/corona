@@ -1,8 +1,8 @@
 #!/bin/sh
 case $BLOCK_BUTTON in
-    1) pgrep -x dunst >/dev/null &&  notify-send "$(echo | grep "World" ~/.cache/corona | head -1 | sed "s/\s*//g ; s/║//g ; s/│/;/g ; s/▲/🔺/g ; s/▼/🔻/g" | awk -F';' '{print "😷"$3 " ("$9")\n💀" $5 " ("$7"%)\n💮" $4 " ("$8"%)"}' | sed 's/\x1b\[[0-9;]*m//g')"
+    1) pgrep -x dunst >/dev/null &&  notify-send -t 5000 "$(echo | grep "World" ~/.cache/corona | tail -1 | sed "s/\s*//g ; s/║//g ; s/│/;/g ; s/▲/🔺/g ; s/▼/🔻/g" | awk -F';' '{print "😷"$8 " ("$4")\n💀" $5 " ("$6")\n💮" $7}' | sed 's/\x1b\[[0-9;]*m//g')"
 esac
 
 [ "$(stat -c %y ~/.cache/corona | cut -d' ' -f1)" != "$(date '+%Y-%m-%d')" ] && curl -s https://corona-stats.online > ~/.cache/corona
 
-grep "Germany" ~/.cache/corona | sed "s/\s*//g ; s/║//g ; s/│/;/g ; s/▲/🔺/g ; s/▼/🔻/g" | awk -F';' '{print "😷"$6 " ("$9") 💀" $5 " ("$7"%) 💮" $4 " ("$8"%)"}' | sed 's/\x1b\[[0-9;]*m//g'
+grep "Germany" ~/.cache/corona | sed "s/\s*//g ; s/║//g ; s/│/;/g ; s/▲/🔺/g ; s/▼/🔻/g" | awk -F';' '{print "😷"$8 " ("$4") 💀" $5 " ("$6") 💮" $7 }' | sed 's/\x1b\[[0-9;]*m//g'

@@ -24,10 +24,6 @@ label=📬
 interval=180
 signal=12
 
-[volume]
-interval=once
-signal=10
-
 [music]
 label=🎼
 interval=10
@@ -48,6 +44,10 @@ label=🧠
 [coretemp]
 label=🌡️
 interval=30
+
+[volume]
+interval=once
+signal=10
 
 # [battery]
 # interval=5
