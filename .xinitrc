@@ -9,10 +9,15 @@ export QT_IM_MODULE=xim
 
 xrdb -merge ~/.Xresources
 
-feh --bg-scale $WALLPAPER_1
+xwallpaper --center "$HOME/Pictures/Wallpaper/Space/Fictional/SpaceDog.jpg"
 picom -b      # compositor
 dunst &       # notification deamon
 nabi &        # Hangul switcher
-pactl load-module module-loopback &  # So I can hear line-in audio (Nintendo Switch)
+nm-applet &
+# pactl load-module module-loopback &  # So I can hear line-in audio (Nintendo Switch)
+
+while xsetroot -name "🔊 `pamixer --get-volume-human` | `date +"%m/%d %H:%M"`"; do
+    sleep 1
+done &
 
 exec $WM

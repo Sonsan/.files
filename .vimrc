@@ -1,4 +1,4 @@
-let mapleader =" "
+let mapleader = " "
 if ! filereadable(expand('~/.vim/autoload/plug.vim'))
     echo "Downloading junegunn/vim-plug to manage plugins..."
     silent !mkdir -p ~/.vim/autoload/
@@ -30,19 +30,20 @@ Plug 'lervag/vimtex'
     let g:tex_conceal = ""
 
 " Visual (Editor)
-Plug 'ap/vim-css-color'
+Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
+    let g:Hexokinase_refreshEvents = ['InsertLeave']
+    let g:Hexokinase_highlighters = ['backgroundfull']
+    let g:Hexokinase_optInPatterns = 'full_hex'
+
 Plug 'Yggdroot/indentLine'
     let g:indentLine_showFirstIndentLevel = 1
     let g:indentLine_char_list = ['|', '¦', '┆', '┊']
     let g:indentLine_color_term = 239
     let g:indentLine_color_gui = '#616161'
 
-" Visual (Syntax)
-Plug 'neovimhaskell/haskell-vim'
-
 " Themes
 Plug 'dikiaap/minimalist'
-Plug 'jpo/vim-railscasts-theme'
+Plug 'joshdick/onedark.vim'
 
 call plug#end()
 
@@ -56,7 +57,18 @@ set shiftwidth=4
 set tabstop=4
 set ignorecase
 set timeoutlen=3000 " timeout for macros and leader key in ms
-set rulerformat=%60(%=%m\ %#Identifier#%t\ %#Label#%#Normal#\ %l:%c\%)
+set viminfo+=n~/.vim/viminfo " change viminfo location
+
+" Statusline
+set laststatus=2
+set statusline =\ D:%{getcwd()}  " Working directory
+set statusline+=\ F:%f           " Current file
+set statusline+=\%m           " File's modification state
+set statusline+=%=
+set statusline+=%#CursorColumn#
+set statusline+=\ %r           " File's permissions
+set statusline+=\ T:%y           " File's language type
+set statusline+=\ L:%l/%L        " Current line vs lines number
 
 " Disable Auto-Comment
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
@@ -71,7 +83,7 @@ if has('termguicolors')
     let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
     set termguicolors
 endif
-colorscheme industry
+colorscheme onedark
 
 " Temporarily unmapped arrow keys in all modes (except insert)
 map <Up> <Nop>
