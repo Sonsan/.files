@@ -25,11 +25,13 @@ File:        ${1:`!p snip.rv = snip.fn`}
 Date:        `date +%d.%m.%y`
 Author:      ${2:`echo $NAME`}
 Matrikelnr.: $3
+e-mail:      sterz@stud.uni-frankfurt.de
 Description: $4
-'''$0
+'''
+$0
 endsnippet
 
 snippet ifmain "if name == main" bA
-if __name__ == '__main__":
+if __name__ == '__main__':
 	${1:main()}
 endsnippet
