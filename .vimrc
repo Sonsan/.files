@@ -35,11 +35,31 @@ Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
     let g:Hexokinase_highlighters = ['backgroundfull']
     let g:Hexokinase_optInPatterns = 'full_hex'
 
-Plug 'Yggdroot/indentLine'
-    let g:indentLine_showFirstIndentLevel = 1
-    let g:indentLine_char_list = ['|', '¦', '┆', '┊']
-    let g:indentLine_color_term = 239
-    let g:indentLine_color_gui = '#616161'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+    set updatetime=300
+    set nobackup
+    set nowritebackup
+
+    inoremap <silent><expr> <c-space> coc#refresh()
+
+    nmap <silent> gd <Plug>(coc-definition)
+    nmap <silent> gi <Plug>(coc-implementation)
+    nmap <silent> gr <Plug>(coc-references)
+
+    " Use `[g` and `]g` to navigate diagnostics
+    nmap <silent> [g <Plug>(coc-diagnostic-prev)
+    nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+    nmap <leader>rn <Plug>(coc-rename)
+
+    nnoremap <silent> K :call <SID>show_documentation()<CR>
+    function! s:show_documentation()
+        if (index(['vim','help'], &filetype) >= 0)
+            execute 'h '.expand('<cword>')
+        else
+            call CocAction('doHover')
+        endif
+    endfunction
 
 " Themes
 Plug 'dikiaap/minimalist'
@@ -52,23 +72,14 @@ set backspace=indent,eol,start
 set encoding=utf-8
 set number relativenumber
 set splitbelow splitright
-set expandtab
-set shiftwidth=4
 set tabstop=4
+set shiftwidth=4
 set ignorecase
 set timeoutlen=3000 " timeout for macros and leader key in ms
 set viminfo+=n~/.vim/viminfo " change viminfo location
 
 " Statusline
-set laststatus=2
-set statusline =\ D:%{getcwd()}  " Working directory
-set statusline+=\ F:%f           " Current file
-set statusline+=\%m           " File's modification state
-set statusline+=%=
-set statusline+=%#CursorColumn#
-set statusline+=\ %r           " File's permissions
-set statusline+=\ T:%y           " File's language type
-set statusline+=\ L:%l/%L        " Current line vs lines number
+source ~/.vim/statusline.vim
 
 " Disable Auto-Comment
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
@@ -85,11 +96,6 @@ if has('termguicolors')
 endif
 colorscheme onedark
 
-" Temporarily unmapped arrow keys in all modes (except insert)
-map <Up> <Nop>
-map <Down> <Nop>
-map <Left> <Nop>
-map <Right> <Nop>
 " Spellchecking
 map <leader>o :setlocal spell! spelllang=en_us<CR><CR>
 " Compiler & View Document
