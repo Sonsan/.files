@@ -1,0 +1,5 @@
+#!/bin/sh
+
+while xsetroot -name "`torrent` | `netspeed enp2s0 1` | 🔊 `pamixer --get-volume-human` | `date +"%m/%d %H:%M"`"; do
+    sleep 1
+done &

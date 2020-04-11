@@ -1,0 +1,15 @@
+#!/bin/sh
+chosen="placeholder"
+
+while [ ! -z "$chosen" ]; do
+	DIRs=$( ls -a1p | grep -P '^\w[^\$/]+/$' | awk -vRS="\n" -vORS="\t" '1')
+	DOTDs=$( ls -a1p | grep -P '^\.[^\$/]+/$' | awk -vRS="\n" -vORS="\t" '1')
+	FILEs=$( ls -a1p | grep -P '^\w[^\$/]+$' | awk -vRS="\n" -vORS=" \t" '1')
+	DOTFs=$( ls -a1p | grep -P '^\.[^\$/]+$' | awk -vRS="\n" -vORS=" \t" '1')
+	chosen=`( ( echo -e "$DIRs$FILEs$DOTDs$DOTFs" | awk -vRS="\t" -vORS="\n" '1' ) | dmenu -i )`
+	case "$chosen" in
+		*.jpg*|*.png*|*.jpeg*|*.pdf*) xdg-open $chosen ;;
+		*.c*|*.py*|*.cpp*|*.h*|*.txt*) $TERMINAL -n "termfloat" -e $EDITOR $chosen ;;
+		*) cd "$chosen" ;;
+	esac
+done
