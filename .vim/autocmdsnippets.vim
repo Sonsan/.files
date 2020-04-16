@@ -32,7 +32,6 @@ autocmd FileType tex inoremap ;inc \include{}<CR><ESC>kf}i
 autocmd FileType tex inoremap ;hs \hspace{cm}<CR><ESC>kf{wi
 autocmd FileType tex inoremap ;*hs \hspace*{cm}<CR><ESC>kf{wi
 autocmd FileType tex inoremap ;vs \vspace{cm}<CR><ESC>kf{wi
-
 autocmd FileType tex inoremap ;*vs \vspace*{cm}<CR><ESC>kf{wi
 
 

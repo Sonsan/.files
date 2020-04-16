@@ -5,5 +5,9 @@ application/pdf=pdf.desktop
 image/png=img.desktop
 image/jpeg=img.desktop
 image/gif=img.desktop
+video/H264=vid.desktop
 text/plain=text.desktop
 text/x-tex=text.desktop
+video/mkv=vid.desktop
+video/mp4=vid.desktop
+
