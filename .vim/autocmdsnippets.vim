@@ -1,32 +1,35 @@
-inoremap <C-n> <ESC>/(⌐■_■)<CR>"_c6l
-vnoremap <C-n> <ESC>/(⌐■_■)<CR>"_c6l
-map <C-n> <ESC>/(⌐■_■)<CR>"_c6l
+inoremap <leader>n <ESC>/ಠ_ಠ<CR>"_c3l
+vnoremap <leader>n <ESC>/ಠ_ಠ<CR>"_c3l
+map <leader>n <ESC>/ಠ_ಠ<CR>"_c3l
 
 autocmd FileType tex inoremap ;m $$<ESC>T$i
 autocmd FileType tex inoremap ;M \(\)<ESC>T\i
 
 autocmd FileType tex inoremap ;ite \begin{itemize}<CR><CR>\end{itemize}<CR><CR><Esc>3kA\item<Space>
 autocmd FileType tex inoremap ;ni <CR>\item<Space>
-autocmd FileType tex inoremap ;pic \includegraphics[]{(⌐■_■)}<ESC>kf]i
+autocmd FileType tex inoremap ;pic \includegraphics[]{ಠ_ಠ}<ESC>kf]i
 
+autocmd FileType tex inoremap ;doc \begin{document}<CR><CR>\end{document}<CR><ESC>2kA
 autocmd FileType tex inoremap ;ali \begin{align}<CR><CR>\end{align}<CR><CR><ESC>3kA
 autocmd FileType tex inoremap ;*ali \begin{align*}<CR><CR>\end{align*}<CR><CR><ESC>3kA
 autocmd FileType tex inoremap ;eq \begin{equation}<CR><CR>\end{equation}<CR><CR><ESC>3kA
 autocmd FileType tex inoremap ;*eq \begin{equation*}<CR><CR>\end{equation}<CR><CR><ESC>3kA
-autocmd FileType tex inoremap ;fig \begin{figure}[]<CR>(⌐■_■)<CR>\caption (⌐■_■)<CR>\end{figure}<CR><CR><ESC>5kf]i
-autocmd FileType tex inoremap ;tab \begin{table}{}<CR>(⌐■_■)<CR>\end{table}<CR><CR><ESC>3kA
+autocmd FileType tex inoremap ;fig \begin{figure}[]<CR>ಠ_ಠ<CR>\caption ಠ_ಠ<CR>\end{figure}<CR><CR><ESC>5kf]i
+autocmd FileType tex inoremap ;tab \begin{table}{}<CR>ಠ_ಠ<CR>\end{table}<CR><CR><ESC>3kA
+autocmd FileType tex inoremap ;tpic \begin{tikzpicture}[scale=]<CR>ಠ_ಠ<CR>\end{tikzpicture}<CR><ESC>3kf=a
 
-autocmd FileType tex inoremap ;theo \newtheorem{}{(⌐■_■)}<CR><ESC>kf}i
-autocmd FileType tex inoremap ;proof \begin{proof}<CR><CR>\end{proof}<CR><CR>(⌐■_■)<ESC>3kA
+autocmd FileType tex inoremap ;theo \newtheorem{}{ಠ_ಠ}<CR><ESC>kf}i
+autocmd FileType tex inoremap ;proof \begin{proof}<CR><CR>\end{proof}<CR><CR>ಠ_ಠ<ESC>3kA
 
-autocmd FileType tex inoremap ;chap \chapter{}<CR>\label{(⌐■_■)}<CR>(⌐■_■)<ESC>2kf}i
-autocmd FileType tex inoremap ;sec \section{}<CR>\label{(⌐■_■)}<CR>(⌐■_■)<ESC>2kf}i
-autocmd FileType tex inoremap ;ssec \subsection{}<CR>\label{(⌐■_■)}<CR>(⌐■_■)<ESC>2kf}i
-autocmd FileType tex inoremap ;sssec \subsubsection{}<CR>\label{(⌐■_■)}<CR>(⌐■_■)<ESC>2kf}i
-autocmd FileType tex inoremap ;par \paragraph{}<CR>\label{(⌐■_■)}<CR>(⌐■_■)<ESC>2kf}i
+autocmd FileType tex inoremap ;chap \chapter{}<CR>\label{ಠ_ಠ}<CR>ಠ_ಠ<ESC>2kf}i
+autocmd FileType tex inoremap ;sec \section{}<CR>\label{ಠ_ಠ}<CR>ಠ_ಠ<ESC>2kf}i
+autocmd FileType tex inoremap ;ssec \subsection{}<CR>\label{ಠ_ಠ}<CR>ಠ_ಠ<ESC>2kf}i
+autocmd FileType tex inoremap ;sssec \subsubsection{}<CR>\label{ಠ_ಠ}<CR>ಠ_ಠ<ESC>2kf}i
+autocmd FileType tex inoremap ;par \paragraph{}<CR>\label{ಠ_ಠ}<CR>ಠ_ಠ<ESC>2kf}i
 
-autocmd FileType tex inoremap ;pkg (⌐■_■)<ESC>/usepackage<CR>GNo\usepackage{}<CR><ESC>kf}i
-autocmd FileType tex inoremap ;com (⌐■_■)<ESC>/newcommand<CR>GNo\newcommand{}{(⌐■_■)}<CR><ESC>kf}i
+autocmd FileType tex inoremap ;dc \documentclass[]{}<CR><ESC>kf}i
+autocmd FileType tex inoremap ;pkg ಠ_ಠ<ESC>/usepackage<CR>GNo\usepackage{}<CR><ESC>kf}i
+autocmd FileType tex inoremap ;com ಠ_ಠ<ESC>/newcommand<CR>GNo\newcommand{}{ಠ_ಠ}<CR><ESC>kf}i
 autocmd FileType tex inoremap ;inc \include{}<CR><ESC>kf}i
 
 autocmd FileType tex inoremap ;hs \hspace{cm}<CR><ESC>kf{wi
@@ -35,9 +38,9 @@ autocmd FileType tex inoremap ;vs \vspace{cm}<CR><ESC>kf{wi
 autocmd FileType tex inoremap ;*vs \vspace*{cm}<CR><ESC>kf{wi
 
 
-autocmd FileType tex inoremap @sum \sum_{}^{(⌐■_■)}(⌐■_■)<ESC>2T{i
-autocmd FileType tex inoremap @int \int_{}^{(⌐■_■)}(⌐■_■) \mathrm{d}(⌐■_■)<ESC>3T{i
-autocmd FileType tex inoremap @fr \frac{}{(⌐■_■)}<ESC>2T{i
+autocmd FileType tex inoremap @sum \sum_{}^{ಠ_ಠ}ಠ_ಠ<ESC>2T{i
+autocmd FileType tex inoremap @int \int_{}^{ಠ_ಠ}ಠ_ಠ \mathrm{d}ಠ_ಠ<ESC>3T{i
+autocmd FileType tex inoremap @fr \frac{}{ಠ_ಠ}<ESC>2T{i
 
 autocmd FileType tex inoremap @a \alpha
 autocmd FileType tex inoremap @p \phi
@@ -54,13 +57,11 @@ autocmd FileType tex inoremap ;ref \ref{}<ESC>T{i
 autocmd FileType tex inoremap ;bt \blindmathpaper
 autocmd FileType tex inoremap ;lip \lipsum
 
-autocmd FileType tex inoremap ;beg \begin{SUCHWOW}<CR><CR>\end{SUCHWOW}<CR><CR><ESC>:MultipleCursorsFind<Space>SUCHWOW<CR>c
-
 autocmd FileType tex inoremap @mat \begin{pmatrix}<CR><CR>\end{pmatrix}<CR><ESC>2kA
 autocmd FileType tex inoremap @det \begin{vmatrix}<CR><CR>\end{vmatrix}<CR><ESC>2kA
 
-autocmd FileType tex inoremap @lr( \left(\right)(⌐■_■)<ESC>2T(i
-autocmd FileType tex inoremap @lr[ \left[\right](⌐■_■)<ESC>T[i
-autocmd FileType tex inoremap @lr{ \left\{\right\}(⌐■_■)<ESC>T{i
+autocmd FileType tex inoremap @lr( \left(\right)ಠ_ಠ<ESC>2T(i
+autocmd FileType tex inoremap @lr[ \left[\right]ಠ_ಠ<ESC>T[i
+autocmd FileType tex inoremap @lr{ \left\{\right\}ಠ_ಠ<ESC>T{i
 autocmd FileType tex inoremap @{ \{\}<ESC>T{i
 autocmd FileType tex inoremap @t \mathrm{}<ESC>T{i

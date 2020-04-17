@@ -1,4 +1,4 @@
-let mapleader = " "
+let mapleader = ","
 if ! filereadable(expand('~/.vim/autoload/plug.vim'))
     echo "Downloading junegunn/vim-plug to manage plugins..."
     silent !mkdir -p ~/.vim/autoload/
@@ -7,44 +7,27 @@ if ! filereadable(expand('~/.vim/autoload/plug.vim'))
 endif
 
 call plug#begin('~/.vim/plugged')
-" Editing
+
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all'  }
 Plug 'junegunn/fzf.vim'
     command! -bang -nargs=? -complete=dir Files
     \ call fzf#vim#files('~/', fzf#vim#with_preview(), <bang>0)
-    map <leader><Tab> :Files<CR>
-
-Plug 'tpope/vim-commentary'
+    noremap <leader><Tab> :Files<CR>
+	noremap <C-f> :Lines<CR>
+	noremap <leader>b :Buffers<CR>
 
 Plug 'junegunn/vim-easy-align'
     xmap ga <Plug>(EasyAlign)
     nmap ga <Plug>(EasyAlign)
 
-Plug 'SirVer/ultisnips'
-    let g:UltiSnipsExpandTrigger="<tab>"
-    let g:UltiSnipsJumpForwardTrigger="<tab>"
-    let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
-
 Plug 'lervag/vimtex'
     let g:tex_flavor='latex'
-    let g:vimtex_quickfix_mode=0
-    let g:tex_conceal = ""
-
-Plug 'tpope/vim-surround'
-Plug 'skywind3000/asyncrun.vim'
-
-" Visual (Editor)
-Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
-    let g:Hexokinase_highlighters = ['backgroundfull']
-	let g:Hexokinase_optInPatterns = 'full_hex,rgb,rgba'
-
-Plug 'farmergreg/vim-lastplace'
+    let g:vimtex_quickfix_mode=2
 
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
     set updatetime=300
     set nobackup
     set nowritebackup
-
     inoremap <silent><expr> <c-space> coc#refresh()
     nmap <silent> gd <Plug>(coc-definition)
     nmap <silent> gi <Plug>(coc-implementation)
@@ -61,7 +44,10 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
         endif
     endfunction
 
-" Themes
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-surround'
+Plug 'skywind3000/asyncrun.vim'
+Plug 'farmergreg/vim-lastplace'
 Plug 'joshdick/onedark.vim'
 
 call plug#end()
@@ -73,17 +59,13 @@ set number relativenumber
 set splitbelow splitright
 set tabstop=4
 set shiftwidth=4
-set ignorecase
 set timeoutlen=3000 " timeout for macros and leader key in ms
 set viminfo+=n~/.cache/viminfo " change viminfo location
-" Disable Auto-Comment
-autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
+autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o "no auto comment
 autocmd BufWritePre * %s/\s\+$//e  " Delete Trailing white spaces
-autocmd BufNewFile,BufRead *.cls set syntax=tex
 
 syntax on
-" st uses ; instead of : as seperator
-if has('termguicolors')
+if has('termguicolors') " st uses ; as seperator
     let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
     let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
     set termguicolors
