@@ -1,8 +1,7 @@
 " Spellchecking
 map <leader>o :setlocal spell! spelllang=en_us<CR><CR>
 " Compiler & View Document
-" map <leader>c :w! \| !compiler <C-r>%<CR><CR>
-map <leader>c :w! \| AsyncRun compiler <C-r>%<CR>
+map <leader>c :w! \| !compiler <C-r>%<CR><CR>
 map <leader>p :w! \| !opout <C-r>%<CR><CR>
 " Window Movement
 map <leader>h <C-w>h

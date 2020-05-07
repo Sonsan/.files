@@ -46,7 +46,6 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
-Plug 'skywind3000/asyncrun.vim'
 Plug 'farmergreg/vim-lastplace'
 Plug 'joshdick/onedark.vim'
 
