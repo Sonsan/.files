@@ -1,12 +1,12 @@
 let mapleader = ","
-if ! filereadable(expand('~/.vim/autoload/plug.vim'))
+if ! filereadable(expand('~/.config/nvim/autoload/plug.vim'))
     echo "Downloading junegunn/vim-plug to manage plugins..."
-    silent !mkdir -p ~/.vim/autoload/
-    silent !curl "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim" > ~/.vim/autoload/plug.vim
+    silent !mkdir -p ~/.config/nvim/autoload/
+    silent !curl "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim" > ~/.config/nvim/autoload/plug.vim
     autocmd VimEnter * PlugInstall
 endif
 
-call plug#begin('~/.vim/plugged')
+call plug#begin('~/.config/nvim/autoload/plugged')
 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all'  }
 Plug 'junegunn/fzf.vim'
@@ -46,8 +46,11 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
+Plug 'jiangmiao/auto-pairs'
 Plug 'farmergreg/vim-lastplace'
 Plug 'joshdick/onedark.vim'
+Plug 'chuling/equinusocio-material.vim'
+Plug 'simeji/winresizer'
 
 call plug#end()
 
@@ -59,9 +62,13 @@ set splitbelow splitright
 set tabstop=4
 set shiftwidth=4
 set timeoutlen=3000 " timeout for macros and leader key in ms
-set viminfo+=n~/.cache/viminfo " change viminfo location
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o "no auto comment
 autocmd BufWritePre * %s/\s\+$//e  " Delete Trailing white spaces
+
+let fortran_free_source=1
+let fortran_have_tabs=1
+let fortran_more_precise=1
+let fortran_do_enddo=1
 
 syntax on
 if has('termguicolors') " st uses ; as seperator
@@ -69,10 +76,12 @@ if has('termguicolors') " st uses ; as seperator
     let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
     set termguicolors
 endif
-colorscheme onedark
+let g:equinusocio_material_style = 'darker'
+let g:equinusocio_material_less = 5
+colorscheme equinusocio_material
 
-source ~/.vim/statusline.vim " Statusline
-source ~/.vim/keybinds.vim   " Keybinds
-source ~/.vim/templates.vim  " Templates
-source ~/.vim/autocmdsnippets.vim
+source ~/.config/nvim/statusline.vim " Statusline
+source ~/.config/nvim/keybinds.vim   " Keybinds
+source ~/.config/nvim/templates.vim  " Templates
+source ~/.config/nvim/autocmdsnippets.vim
 

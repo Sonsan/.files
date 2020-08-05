@@ -1,0 +1,15 @@
+{
+	"languageserver": {
+		"fortran": {
+			"command": "fortls",
+			"args": ["--lowercase_intrinsics", "--max_line_length=90", "--hover_signature", "--autocomplete_no_snippets"],
+			"filetypes": ["fortran"],
+			"rootPatterns": [".fortls", ".git/"]
+		},
+		"sql": {
+      		"command": "sql-language-server",
+			"args" : ["up", "--method", "stdio"],
+			"filetypes": ["sql", "mysql"]
+		}
+	}
+}
