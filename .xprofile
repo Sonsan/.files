@@ -1,0 +1,16 @@
+#!/bin/sh
+
+setxkbmap de
+
+picom -b      # compositor
+dunst &       # notification deamon
+nabi &        # Hangul switcher
+mpd &
+nm-applet &
+unclutter &
+# pactl load-module module-loopback &  # So I can hear line-in audio (Nintendo Switch)
+
+while xsetroot -name "🔊 `pamixer --get-volume-human` | `date +"%m/%d %H:%M"`"; do
+    sleep 1
+done &
+

@@ -5,6 +5,7 @@ alias ls="ls -hN --color=auto --group-directories-first"
 alias grep="grep --color=auto"
 
 alias v="$EDITOR"
+alias rm="rm -i"
 
 # Basics
 alias mutt='neomutt'
